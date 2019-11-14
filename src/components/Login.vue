@@ -19,8 +19,21 @@
         </p>
         <!-- 滑块 -->
         <p class="submit">
-          <input type="submit" class="submit_login" value="登录" />
+        
+          <input type="submit" class="submit_login" value="登入" />
+         
+        
         </p>
+        <p class="notice">请先注册！Register first, plz!</p>
+        <p class="toregister">
+          
+          <router-link to="/register">
+          Register 
+          </router-link>| 
+
+          <router-view></router-view>
+           El Psy Congroo
+          </p>
       </form>
     </div>
   </div>
@@ -42,5 +55,11 @@ export default {
 <style scoped>
  .red{
    border:1px solid #ff5656;
+ }
+ .toregister,.notice{
+   text-align: center
+ }
+ .toregister a {
+   text-decoration: underline
  }
 </style>
