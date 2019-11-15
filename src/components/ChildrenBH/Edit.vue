@@ -1,17 +1,6 @@
 <template>
   <div class="edit">
-    <vue-particles
-      color="#E16B8C"
-      :particleOpacity="0.5"
-      :clickEffect="false"
-      :particlesNumber="99"
-      shapeType="circle"
-      :particleSize="1"
-      linesColor="#E16B8C"
-      :lineOpacity="0.5"
-      :moveSpeed="2"
-      class="lizi"
-    ></vue-particles>
+    
     <div class="content">
       <div class="content-header">
         <div class="container">

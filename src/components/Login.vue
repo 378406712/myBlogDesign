@@ -9,18 +9,18 @@
         <p>
           <label for="accounts">用户名或电子邮件</label>
           <br />
-          <input type="text"   @focus="flag=!flag" @blur="flag=!flag" :class="{'red':flag}" class="input account" />
+          <input type="text" v-model="username"   @focus="flag=!flag" @blur="flag=!flag" :class="{'red':flag}" class="input account" />
         </p>
 
         <p>
           <label for="password">密码</label>
           <br />
-          <input type="password"   @focus="tag=!tag" @blur="tag=!tag" :class="{'red':tag}" class="input password" />
+          <input type="password"   v-model="password"  @focus="tag=!tag" @blur="tag=!tag" :class="{'red':tag}" class="input password" />
         </p>
         <!-- 滑块 -->
         <p class="submit">
         
-          <input type="submit" class="submit_login" value="登入" />
+          <a  @click="tologin"   class="submit_login">登入</a>
          
         
         </p>
@@ -41,20 +41,40 @@
 
 <script>
 import './../assets/login_register.css'
+import $ from "jquery";
 export default {
   name: "Login",
   data() {
     return {
       flag:false,
-      tag:false
+      tag:false,
+
+      username:"",
+      password:""
     };
-  }
-};
+  },
+  methods:{
+    tologin(){
+      console.log(1)
+    }
+  },
+
+   
+ 
+}
 </script>
 
 <style scoped>
  .red{
    border:1px solid #ff5656;
+ }
+ .submit_login{
+   display: block;
+    padding: 12px 10px;
+    transition: color .3s ease
+ }
+ .submit_login:hover{
+   color:#fff!important
  }
  .toregister,.notice{
    text-align: center
@@ -62,4 +82,5 @@ export default {
  .toregister a {
    text-decoration: underline
  }
+ 
 </style>
