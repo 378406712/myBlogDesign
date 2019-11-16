@@ -1,7 +1,15 @@
 <template>
-  <div>home
-  <!-- <img src="@/assets/svg/loading.svg" alt=""> -->
- 
+  <div class="home_page">
+      <div class="scrollbar" id="bar"></div>
+      <!-- 主体区 -->
+      <section class="main_container"></section>
+  
+    <!-- 点击向上 -->
+    <button id="GoTop"></button>
+    <!-- 搜索页面框 -->
+      <form action=""></form>
+      
+   
   </div>
 </template>
 
