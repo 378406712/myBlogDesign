@@ -19,6 +19,7 @@ export default {
 
 <style  scoped>
 .foots {
+
     margin-top: 50px;
   margin-left: 240px;
   text-align: center;
