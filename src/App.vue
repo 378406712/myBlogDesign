@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style>
-
+  @import "./common/font.css";
 *{
   margin: 0;
   padding: 0;
@@ -39,8 +39,10 @@ export default {
 }
 
 html{
+  
     -ms-overflow-style:none;
-  overflow-x: hidden;
+  overflow: hidden;
+ 
 }
 /*  chrome，safari滚动条 */
  ::-webkit-scrollbar{
@@ -69,7 +71,7 @@ a,a:hover{
 
 
 img{
-  border:none;
+  border:0;
 }
  input:focus,textarea:focus { outline: none; }
 .clearFix::before,.clearFix::after{

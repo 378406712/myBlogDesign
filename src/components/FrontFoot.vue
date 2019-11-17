@@ -1,6 +1,6 @@
 <template>
   <div class="">
-  <div class="foot_front">
+  <div class="front_foot">
     <div class="about">
       <p class="copyright">Copyright &copy; by 轻度喵症 All Rights Reserved.</p>
       <p class="from">2019.11.16 | middle</p>
