@@ -34,3 +34,10 @@ P.S：还是觉得数据库跟后端还是自己写，火狐的firebase还是有
 
 渲染图：
 ![Image text](https://github.com/378406712/myBlogDesign/blob/master/showIMG/首页.png)
+![Image text](https://github.com/378406712/myBlogDesign/blob/master/showIMG/登录.png)
+![Image text](https://github.com/378406712/myBlogDesign/blob/master/showIMG/注册.png)
+![Image text](https://github.com/378406712/myBlogDesign/blob/master/showIMG/用户中心页.png)
+![Image text](https://github.com/378406712/myBlogDesign/blob/master/showIMG/撰写文章页.png)
+![Image text](https://github.com/378406712/myBlogDesign/blob/master/showIMG/修改文章页.png)
+![Image text](https://github.com/378406712/myBlogDesign/blob/master/showIMG/编辑文章页.png)
+![Image text](https://github.com/378406712/myBlogDesign/blob/master/showIMG/评论管理页.png)
