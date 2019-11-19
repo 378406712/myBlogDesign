@@ -33,4 +33,4 @@ P.S：还是觉得数据库跟后端还是自己写，火狐的firebase还是有
 ​																										时间:2019年11月19日22:54:04								
 
 渲染图：
-![Image text](https://github.com/378406712/myBlogDesign/tree/master/showIMG/首页.png)
+![Image text](https://github.com/378406712/myBlogDesign/blob/master/showIMG/首页.png)
