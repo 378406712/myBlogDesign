@@ -1,0 +1,30 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "160206",
+      "name": "search",
+      "font_class": "search",
+      "unicode": "f017c",
+      "unicode_decimal": 983420
+    },
+    {
+      "icon_id": "2076215",
+      "name": "音量",
+      "font_class": "yinliang",
+      "unicode": "e87a",
+      "unicode_decimal": 59514
+    },
+    {
+      "icon_id": "11536825",
+      "name": "雪花",
+      "font_class": "xuehua",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    }
+  ]
+}

@@ -49,6 +49,7 @@
 
       <!-- page内容 -->
       <div id="page" class="site wrapper">
+        <!-- 固定顶栏 -->
         <header class="site_header shadow" role="banner">
           <div class="site_top">
             <div class="site_branding">
@@ -101,6 +102,107 @@
             </div>
           </div>
         </header>
+        <!-- page主体 -->
+
+        <div class="page_content">
+          <!-- 一言 提示 -->
+          <div class="p_notice">
+            <i class="iconfont icon-yinliang"></i>
+            <div>
+              <p class="notice_content" v-changeColor="{font:15+'px'}">{{hitokoto}}</p>
+            </div>
+          </div>
+          <!-- 3张封面图 -->
+          <div class="feature">
+            <h1 class="fes-title">
+              <span class="faa-parent animated-hover">
+                <i class="fa fa-snowflake-o fa-spin" aria-hidden="true"></i> 白色相簿
+              </span>
+            </h1>
+
+            <div class="f_image" v-for="(item,index) in preson" :key="index">
+              <div class="the_feature from_right_left">
+                <a href>
+                  <div class="img" @mouseover="right(index)">
+                    <img class="f_imgs" :src="item.imgUrl" />
+                  </div>
+                  <div class="info" @mouseleave="left(index)">
+                    <h3>{{item.characters}}</h3>
+                    <p>{{item.name}}</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- 文章渲染区 -->
+          <div class="content-area" id="primary">
+            <main id="main" class="content-main">
+              <h1 class="main-title">
+                <i class="fa fa-envira" aria-hidden="true"></i> Dirctory
+              </h1>
+              <article class="post post-list-thumb post-list-thumb-left post-list-show">
+                <div class="post-thumb">
+                  <a href="https://www.qdmmz.cn/archives/387/378406712qq-com/">
+                    <img  class="lazyload" src="https://www.qdmmz.cn/wp-content/uploads/2019/11/64856256_p0_master1200-1024x509.jpg" alt />
+                  </a>
+                </div>
+                <div class="post-content-wrap">
+                  <div class="post-content">
+				<div class="post-date">
+					<i class="iconfont icon-time"></i>发布于 45 分钟前									</div>
+				<a href="https://www.qdmmz.cn/archives/387/378406712qq-com/" class="post-title"><h3>vue-thinking</h3></a>
+				<div class="post-meta">
+					<span><i class="iconfont icon-attention"></i>25 热度</span>
+					<span class="comments-number"><i class="iconfont icon-mark"></i><a href="https://www.qdmmz.cn/archives/387/378406712qq-com/#respond">NOTHING</a></span>
+					<span><i class="iconfont icon-file"></i><a href="https://www.qdmmz.cn/thinking/">随想</a>
+					</span>
+				</div>
+				<div class="float-content">
+					<p>上周由于主要精力放在微信小程序上，Vue这块儿又看得少了 事实证明，不论学习什么，都要经常复习，熟能生巧 晚上用vue写页面时，列 …</p>					<div class="post-bottom">
+						<a href="https://www.qdmmz.cn/archives/387/378406712qq-com/" class="button-normal"><i class="iconfont icon-caidan"></i></a>
+					</div>
+				</div>
+			</div>
+
+
+                </div>
+              </article>
+            </main>
+          </div>
+        </div>
+      </div>
+      <!-- 空格 -->
+      <div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </div>
     </section>
 
@@ -129,7 +231,31 @@ export default {
 
   data() {
     return {
-      flag: false
+      flag: false,
+      hitokoto: "",
+      preson: [
+        {
+          id: 0,
+          characters: "冬马和纱",
+          name: "とうま かずさ / Touma Kazusa",
+          imgUrl:
+            "https://www.qdmmz.cn/wp-content/uploads/2019/11/-e1574170806519.jpg"
+        },
+        {
+          id: 1,
+          characters: "轻度喵症",
+          name: "軽度 ニャース症 / Clover Liu",
+          imgUrl:
+            "https://www.qdmmz.cn/wp-content/uploads/2019/11/BA539A16F3F2F6DEDBD66A59AABEB1A6-e1574170914911.jpg"
+        },
+        {
+          id: 2,
+          characters: "小木曾雪菜",
+          name: "おぎそ せつな / Ogiso Setsuna",
+          imgUrl:
+            "https://www.qdmmz.cn/wp-content/uploads/2019/11/-e1574170877377.jpg"
+        }
+      ]
     };
   },
   methods: {
@@ -138,9 +264,38 @@ export default {
     },
     exitSearch() {
       $(".js_search").removeClass("is-visible");
+    },
+
+    right(e) {
+      console.log(e);
+      $(".info h3")
+        .eq(e)
+        .addClass("left");
+      $(".info p")
+        .eq(e)
+        .addClass("right");
+      $(".info")
+        .eq(e)
+        .addClass("visible");
+    },
+    left(e) {
+      $(".info h3")
+        .eq(e)
+        .removeClass("left");
+      $(".info p")
+        .eq(e)
+        .removeClass("right");
+      $(".info")
+        .eq(e)
+        .removeClass("visible");
     }
   },
   mounted() {
+    this.$axios.get("https://v1.hitokoto.cn/?c=b").then(res => {
+      console.log(res);
+      this.hitokoto = res.data.hitokoto + " ---" + res.data.from;
+    });
+
     function fun() {
       let h = $(window).height() + "px";
       $("#centerBg").css("height", h);

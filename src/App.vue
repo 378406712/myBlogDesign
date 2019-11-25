@@ -38,12 +38,7 @@ export default {
   box-sizing: border-box;
 }
 
-html{
-  
-    -ms-overflow-style:none;
-  overflow: hidden;
- 
-}
+
 /*  chrome，safari滚动条 */
  ::-webkit-scrollbar{
    width: 6px; 
@@ -57,7 +52,8 @@ html{
 }
 
 body{
- 
+       font-family: 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+
   color: #515a6e;
       text-shadow: 0 0 1px rgba(0,0,0,.1);
 }
