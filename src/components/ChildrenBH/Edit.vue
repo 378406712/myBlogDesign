@@ -82,7 +82,6 @@ export default {
       search: ""
     };
   },
-
   mounted() {
     this.$axios
       .get("https://myblog-bb162.firebaseio.com/essay.json")
@@ -93,17 +92,14 @@ export default {
         let dataArr = [];
         for (let key in data) {
           data[key].id = key; //添加唯一标识key值
-
           if (data[key].content.length > 75) {
             data[key].content = data[key].content.slice(0, 75) + " ...";
           }
           if (data[key].caption.length > 15) {
             data[key].caption = data[key].caption.slice(0, 75) + " ...";
           }
-
           dataArr.push(data[key]);
         }
-
         this.items = dataArr.reverse();
       });
   },
@@ -145,7 +141,6 @@ export default {
   border-color: transparent;
   margin-left: 10px;
 }
-
 .edits {
   background-color: #6666ff;
 }

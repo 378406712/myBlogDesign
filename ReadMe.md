@@ -32,17 +32,22 @@ P.S：还是觉得数据库跟后端还是自己写，火狐的firebase还是有
 
 ​																										时间:2019年11月19日22:54:04
 
-渲染图：
-![Image text](https://github.com/378406712/myBlogDesign/blob/master/showIMG/首页.png)
-![Image text](https://github.com/378406712/myBlogDesign/blob/master/showIMG/登录.png)
-![Image text](https://github.com/378406712/myBlogDesign/blob/master/showIMG/注册.png)
-![Image text](https://github.com/378406712/myBlogDesign/blob/master/showIMG/用户中心页.png)
-![Image text](https://github.com/378406712/myBlogDesign/blob/master/showIMG/撰写文章页.png)
-![Image text](https://github.com/378406712/myBlogDesign/blob/master/showIMG/修改文章页.png)
-![Image text](https://github.com/378406712/myBlogDesign/blob/master/showIMG/编辑文章页.png)
-![Image text](https://github.com/378406712/myBlogDesign/blob/master/showIMG/评论管理页.png)								
+关于后台这块：
 
-渲染图：
+​	后台我还是自己搭建一个，在另外一个文件夹下专门写后台和数据库的代码，图片上传到该目录文件下，数据渲染还是前台来做。
+
+​	之前一直在想后台可以用ejs模板来渲染数据，那么我用vue使用axios请求下数据也能渲染到前台页面，前后端分离之前理解的还是不够清晰。
+
+​	如果是使用前端框架开发，使用axios请求接口数据，然后前端渲染
+
+​	如果是jq，或者未用其他框架，那么后端可以用ejs渲染页面，前端也能用ajax请求
+
+​	今天收获很大
+
+
+
+
+
 ![Image text](https://github.com/378406712/myBlogDesign/blob/master/showIMG/首页.png)
 ![Image text](https://github.com/378406712/myBlogDesign/blob/master/showIMG/登录.png)
 ![Image text](https://github.com/378406712/myBlogDesign/blob/master/showIMG/注册.png)
