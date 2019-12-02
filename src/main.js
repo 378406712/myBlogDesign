@@ -9,6 +9,8 @@ import changeColor from './directive/randomColor' //随机颜色
 import VueParticles from 'vue-particles' //粒子特效 
 // import VueLazyload from 'vue-lazyload'//懒加载
 
+// import qs from 'qs';//qs模块，序列化传输数据给后台，否则后台拿不到
+// Vue.prototype.$qs = qs
 import Axios from 'axios'
 import BootstrapVue from 'bootstrap-vue'
 

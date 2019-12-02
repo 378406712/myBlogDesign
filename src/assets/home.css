@@ -795,3 +795,11 @@ h3 {
 p {
     margin-bottom: 1.5em;
 }
+.lazyload{
+    transition: all .6s;
+   
+}
+
+.lazyload:hover{
+    transform: scale(1.1);
+}

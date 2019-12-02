@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div id="bg_lr">
-      <img src="./../assets/bg_login.png" alt="">
+      <img src="./../assets/bg_login.png" alt />
     </div>
     <div v-if="checkin" class="logins">
       <h1 class="login_logo">用户登录</h1>
@@ -53,24 +53,20 @@
           欢迎,
           <strong>{{a_user}}</strong>
         </p>
-        <p  class="e_mail">378406712@qq.com</p>
+        <p class="e_mail">378406712@qq.com</p>
         <p class="ex-logout">
-            <a href="/">首页</a>
-            <a href="/backhome">后台</a>
-            <a href="#">登出？</a>
-
-
+          <a href="/">首页</a>
+          <a href="/backhome">后台</a>
+          <a href="#">登出？</a>
         </p>
       </div>
     </div>
-  
   </div>
- 
 </template>
 
 <script>
 import "./../assets/login_register.css";
-import resizeImage from './../assets/login'
+import resizeImage from "./../assets/login";
 import $ from "jquery";
 export default {
   name: "Login",
@@ -82,9 +78,7 @@ export default {
       checkin: true,
       user: "",
       password: "",
-      a_user:"",
-
-
+      a_user: ""
     };
   },
   methods: {
@@ -95,34 +89,32 @@ export default {
           pass: this.password
         })
         .then(res => {
-    var data =   JSON.parse(res.config.data)
-    this.a_user = data.user
+          var data = JSON.parse(res.config.data);
+          this.a_user = data.user;
           if (res.data == 1) {
             this.$message({
               message: "登录成功",
               type: "success"
             });
-            this.checkin = false
+            this.checkin = false;
           }
-        })
-        
+        });
     }
   },
-  mounted(){
-$('#bg_lr').css({
-		'position': 'absolute',
-		'top': '0px',
-		'left': '0px',
-		'width': '100%',
-		'height': '100%',
-		'z-index': -1,
-		'overflow': 'hidden'
-	});
+  mounted() {
+    $("#bg_lr").css({
+      position: "absolute",
+      top: "0px",
+      left: "0px",
+      width: "100%",
+      height: "100%",
+      "z-index": -1,
+      overflow: "hidden"
+    });
 
-
- $(window).resize(()=>{
-   resizeImage("bg_lr")
- })
+    $(window).resize(() => {
+      resizeImage("bg_lr");
+    });
   }
 };
 </script>
@@ -147,7 +139,6 @@ $('#bg_lr').css({
   text-decoration: underline;
 }
 
-
 .check {
   width: 100%;
   margin: 10% 0 12%;
@@ -164,22 +155,23 @@ $('#bg_lr').css({
   height: 110px;
   max-width: 100%;
 }
-.login_user{
-  margin:16px;
+.login_user {
+  margin: 16px;
   font-size: 20px;
   text-align: center;
 }
-.login_user strong{
+.login_user strong {
   font-weight: 700;
 }
-.e_mail ,.ex-logout,.login_avatar {
+.e_mail,
+.ex-logout,
+.login_avatar {
   margin: 12.8px;
 }
-.ex-logout  a{
-    color: #555;
-    text-decoration: underline;
-    margin: 0 20px;
-    font-size: 16px;
+.ex-logout a {
+  color: #555;
+  text-decoration: underline;
+  margin: 0 20px;
+  font-size: 16px;
 }
-
 </style>

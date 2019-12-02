@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://localhost:3000', //目标接口域名,后面会改成我自己的本地端口请求
+        target: 'http://localhost:3001', //目标接口域名,后面会改成我自己的本地端口请求
         changeOrigin: true, //是否跨域
         pathRewrite: {
         '^/api': '' //重写接口
