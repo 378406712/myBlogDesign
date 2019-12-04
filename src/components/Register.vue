@@ -88,6 +88,8 @@
 <script>
 import "./../assets/login_register.css";
 import $ from "jquery";
+import { JSEncrypt } from "jsencrypt";
+
 export default {
   name: "Register",
   data() {
@@ -146,117 +148,66 @@ export default {
         reg.test(this.pass1) &&
         exp.test(this.e_mail)
       ) {
-        // this.$axios
-        //   .get("https://myblog-bb162.firebaseio.com/account.json")
-        //   .then(res => {
-        //     let accountArr = [];
-        //     let mailArr = [];
-        //     for (let key in res.data) {
-        //       accountArr.push(res.data[key].username);
-        //       mailArr.push(res.data[key].e_mail);
-        //     }
-        //     var isAccount = accountArr.every((value, index, array) => {
-        //       return value != this.username;
-        //       //不重复，返回true
-        //     });
+    
+        this.$axios.get("api/getPublicKey").then(res => {
+      
+          if (res.data.status === 0) {
+            let encryptor = new JSEncrypt(); //实例化
+            encryptor.setPublicKey(res.data.resultmap); //设置公钥
 
-        //     var isMail = mailArr.every((value, index, array) => {
-        //       return value != this.e_mail;
-        //       //不重复，返回true
-        //     });
+       
 
-        //     if (isAccount && isMail) {
-        //       this.$axios
-        //         .post("https://myblog-bb162.firebaseio.com/account.json", {
-        //           username: this.username,
-        //           password: this.pass2,
-        //           e_mail: this.e_mail
-        //         })
-        //         .then(res => {
-        //           this.$message({
-        //             message: "注册成功,3秒后跳转~",
-        //             type: "success"
-        //           });
-        //           setTimeout(() => {
-        //             this.$router.push("/login");
-        //           }, 3000);
-        //         })
-        //         .catch(() => {
-        //           this.$message({
-        //             showClose: true,
-        //             message: "好像发生点问题,再试一次吧。",
-        //             type: "error"
-        //           });
-        //         });
-        //     }
-        //     if (!isAccount) {
-        //       this.$message({
-        //         showClose: true,
-        //         message: "用户名已被注册",
-        //         type: "warning",
-        //         duration: 2500
-        //       });
-        //     }
-        //     if (!isMail) {
-        //       this.$message({
-        //         showClose: true,
-        //         message: "邮箱已被注册",
-        //         type: "warning",
-        //         duration: 1000
-        //       });
-        //     }
-        //   });
-        let registerData = {
-          username: this.username,
-          password: this.pass2,
-          e_mail: this.e_mail
-        };
-
-        this.$axios
-          .post("api/userRegister", registerData)
-          .then(res => {
-            if (res.data == "-1") {
-              //用户名已经存在
+            let registerData = {
+              username: this.username,
+              password: encryptor.encrypt(this.pass2),
+              e_mail: this.e_mail
+            };
+      
+          this.$axios
+            .post("api/userRegister", registerData)
+            .then(res => {
+              if (res.data == "-1") {
+                //用户名已经存在
+                this.$message({
+                  showClose: true,
+                  message: "用户名已存在",
+                  type: "error"
+                });
+              }
+              if (res.data == "0") {
+                //邮箱已经被注册
+                this.$message({
+                  showClose: true,
+                  message: "邮箱已经被注册",
+                  type: "error"
+                });
+              }
+              if (res.data == "1") {
+                this.$message({
+                  message: "注册成功,3秒后跳转~",
+                  type: "success"
+                });
+                setTimeout(() => {
+                  this.$router.push("/login");
+                }, 3000);
+              }
+              if (res.data == "2") {
+                //注册失败
+                this.$message({
+                  showClose: true,
+                  message: "好像发生了点问题，再试一次吧~",
+                  type: "error"
+                });
+              }
+            })
+            .catch(() => {
               this.$message({
                 showClose: true,
-                message: "用户名已存在",
+                message: "网络好像有点问题~。",
                 type: "error"
               });
-            }
-            if (res.data == "0") {
-              //邮箱已经被注册
-              this.$message({
-                showClose: true,
-                message: "邮箱已经被注册",
-                type: "error"
-              });
-            }
-            if (res.data == "1") {
-              this.$message({
-                message: "注册成功,3秒后跳转~",
-                type: "success"
-              });
-              setTimeout(() => {
-                this.$router.push("/login");
-              }, 3000);
-            }
-            if (res.data == "2") {
-              //注册失败
-              this.$message({
-                showClose: true,
-                message: "好像发生了点问题，再试一次吧~",
-                type: "error"
-              });
-            }
-          })
-          .catch(() => {
-            
-            this.$message({
-              showClose: true,
-              message: "网络好像有点问题~。",
-              type: "error"
-            });
-          });
+            });    }
+        });
       }
     }
   }

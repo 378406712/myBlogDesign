@@ -68,6 +68,7 @@
 import "./../assets/login_register.css";
 import resizeImage from "./../assets/login";
 import $ from "jquery";
+import { JSEncrypt } from "jsencrypt";
 export default {
   name: "Login",
 
@@ -83,22 +84,47 @@ export default {
   },
   methods: {
     tologin() {
-      this.$axios
-        .post("api", {
-          user: this.user,
-          pass: this.password
-        })
-        .then(res => {
-          var data = JSON.parse(res.config.data);
-          this.a_user = data.user;
-          if (res.data == 1) {
-            this.$message({
-              message: "登录成功",
-              type: "success"
-            });
-            this.checkin = false;
-          }
-        });
+      this.$axios.get("api/getPublicKey").then(res => {
+        //先获取公钥
+        if (res.data.status === 0) {
+          let encryptor = new JSEncrypt(); //实例化
+          encryptor.setPublicKey(res.data.resultmap); //设置公钥
+
+          let LoginData = {
+            username: this.user,
+            password: encryptor.encrypt(this.password)
+          };
+
+          //登录
+          this.$axios.post("api/userLogin", LoginData).then(res => {
+            console.log(res);
+            if (res.data == "0") {
+              this.$message({
+                showClose: true,
+                message: "不存在用户",
+                type: "error"
+              });
+            } else if (res.data == "2") {
+              this.$message({
+                showClose: true,
+                message: "密码不正确",
+                type: "error"
+              });
+            } else if (res.data == "1") {
+              //用户名密码都正确
+              var data = JSON.parse(res.config.data);
+              this.a_user = data.username;
+          
+                this.$message({
+                  message: "登录成功",
+                  type: "success"
+                });
+                this.checkin = false;
+              
+            }
+          });
+        }
+      });
     }
   },
   mounted() {

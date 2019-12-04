@@ -13,6 +13,9 @@ import VueParticles from 'vue-particles' //粒子特效
 // Vue.prototype.$qs = qs
 import Axios from 'axios'
 import BootstrapVue from 'bootstrap-vue'
+// main.js 中
+ 
+
 
 
 Vue.prototype.$axios = Axios
