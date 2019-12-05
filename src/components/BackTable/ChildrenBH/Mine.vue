@@ -85,6 +85,6 @@ export default {
 
 <style>
 .content-header {
-  background-image: url("./../../assets/bg.png");
+  background-image: url("./../../../assets/bg/bg_back/bg.png");
 }
 </style>

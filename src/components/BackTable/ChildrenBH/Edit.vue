@@ -124,7 +124,7 @@ export default {
 
 <style  scoped>
 .content-header {
-  background-image: url("./../../assets/bg-edit.png");
+  background-image: url("./../../../assets/bg/bg_back/bg-edit.png");
 }
 </style>
 <style>

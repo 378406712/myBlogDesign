@@ -39,6 +39,20 @@ Vue.filter('limit',(words)=>{
 
  
 })
+//登录状态超过1分钟，清除localStorage下token
+let data = localStorage.token;
+if(data){
+  data = JSON.parse(data);
+
+let time = data.expiration;
+let value = data.data;
+console.log(time,value)
+if (new Date().getTime() > time) {
+    // 这里开始执行超时的代码
+  delete localStorage.token;
+
+}
+}
 
 
 

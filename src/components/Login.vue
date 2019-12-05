@@ -56,7 +56,7 @@
         <p class="e_mail">378406712@qq.com</p>
         <p class="ex-logout">
           <a href="/">首页</a>
-          <a href="/backhome">后台</a>
+          <a href="/backhome/mine">后台</a>
           <a href="#">登出？</a>
         </p>
       </div>
@@ -111,16 +111,31 @@ export default {
                 type: "error"
               });
             } else if (res.data == "1") {
+              //设置token作登录判断，存入localstorage并设置过期时间
+              let setTime = new Date().getTime() + 1000 * 60; // 设置1分钟后数据过期,main.js下做判断
+              let datas = res.data
+              localStorage.setItem(
+                "token",
+                JSON.stringify({
+                  data: datas,
+                  expiration: setTime
+                })
+              );
+
+             
+
               //用户名密码都正确
               var data = JSON.parse(res.config.data);
               this.a_user = data.username;
+
+              this.$message({
+                message: "登录成功",
+                type: "success"
+              });
+              this.checkin = false
           
-                this.$message({
-                  message: "登录成功",
-                  type: "success"
-                });
-                this.checkin = false;
-              
+            
+          
             }
           });
         }
@@ -138,10 +153,13 @@ export default {
       overflow: "hidden"
     });
 
+    
+
     $(window).resize(() => {
       resizeImage("bg_lr");
     });
-  }
+  },
+
 };
 </script>
 

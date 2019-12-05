@@ -2,7 +2,7 @@
   <div class="heads  navs clearFix">
     <div class="avatar" @click="show=!show">
       <a class="user" href="javascript:;">
-        <img src="./../assets/none.png" alt />
+        <img src="./../../assets/bg/icon/none.png" alt />
       </a>
       <transition name="slide-fade">
         <ul  v-if="show" class="options">

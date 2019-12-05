@@ -1,36 +1,8 @@
 <template>
-  <div class="essay">
+  <div class="compile">
     <div class="content">
-      <div class="content-header">
-        <div class="container">
-          <h1 class="content-heading">撰写文章</h1>
-        </div>
-      </div>
-
       <!-- 内容 -->
       <div class="container">
-
-    <section class="list">
-            <!-- 待循环 -->
-            <div class="card">
-              <div class="card-main">
-                <ul class="card-inner essay-card">
-                  <li v-changeColor="{font:32+'px'}">
-                    <p class="tit">
-                      <i class="el-icon-edit"></i>博文总览
-                    </p>
-                  </li>
-                  <li>
-                    <span>文章标题:{{caption | limit}}</span>
-                  </li>
-                  <li>
-                    <span>文章内容:{{content| limit}}</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
         <section class="list">
           <!-- 待循环 -->
           <div class="card">
@@ -40,12 +12,12 @@
                   <p class="tit">文章标题</p>
                   <input
                     type="text"
-                    @focus="flag=!flag"
-                    @blur="flag=!flag"
+                    @focus="flag=true"
+                    @blur="flag=false"
                     :class="{'orange':flag}"
                     class="essay-title"
                     placeholeder="标题"
-                    v-model.lazy="caption"
+                    v-model="caption"
                   />
                 </li>
                 <li>
@@ -57,9 +29,10 @@
                       :class="{'orange':tag}"
                       name="content"
                       class="area"
+                      tabindex="4"
                       rows="5"
                       col="4"
-                      v-model.lazy="content"
+                      v-model="content"
                     ></textarea>
                     <label :class="labelStyle ">等一个菠萝包 ...</label>
                   </div>
@@ -80,9 +53,7 @@
               </ul>
             </div>
           </div>
-         
         </section>
-     
       </div>
     </div>
   </div>
@@ -90,11 +61,11 @@
 
 <script>
 import $ from "jquery";
-
 export default {
-  name: "essay",
+  name: "compile",
   data() {
     return {
+      id: this.$route.params.id,
       content: "",
       caption: "",
       flag: false,
@@ -102,11 +73,26 @@ export default {
       reg: false,
       labelStyle: {
         input_label: true,
-        active: false
+        active: true
       }
     };
   },
-
+  computed: {
+    captions() {
+      if (this.caption !== "" && this.caption.length > 15) {
+        return this.caption.slice(0, 15) + "...";
+      } else {
+        return this.caption;
+      }
+    },
+    contents() {
+      if (this.content !== "" && this.content.length > 30) {
+        return this.content.slice(0, 30) + "...";
+      } else {
+        return this.content;
+      }
+    }
+  },
   methods: {
     changeStyle() {
       this.tag = true;
@@ -131,10 +117,11 @@ export default {
               message: "恭喜你，这是一条成功消息",
               type: "success"
             });
+         this.$router.push('/backhome/edit')
           });
       } else if (this.caption != "") {
         this.$message({
-          message: "标题为空~",
+          message: "标题为为空~",
           type: "warning"
         });
       } else if (this.content != "") {
@@ -155,6 +142,16 @@ export default {
   },
 
   mounted() {
+    //请求数据
+    // console.log(this.id)
+    this.$axios
+      .get("https://myblog-bb162.firebaseio.com/essay/" + this.id + ".json")
+      .then(res => {
+        console.log(res.data);
+        this.content= res.data.content;
+        this.caption = res.data.caption 
+      });
+
     //上传图片
     $('input[type="file"]').each(function() {
       // Refs
@@ -184,59 +181,15 @@ export default {
 
       // End loop of file input elements
     });
-
-    //文字点击特效
-    var a_idx = 0;
-    $(document).ready(function($) {
-      $("body").click(function(e) {
-        var a = new Array(
-          "ヾ(◍°∇°◍)ﾉﾞ",
-          "富强",
-          "民主",
-          "文明",
-          "和谐",
-          "自由",
-          "平等",
-          "公正",
-          "法治",
-          "爱国",
-          "敬业",
-          "诚信",
-          "友善"
-        );
-        var $i = $("<span/>").text(a[a_idx]);
-        a_idx = (a_idx + 1) % a.length;
-        var x = e.pageX,
-          y = e.pageY;
-        $i.css({
-          "z-index": 5,
-          top: y - 20,
-          left: x,
-          position: "absolute",
-          color: "#FF0000",
-          "font-weight": "bold",
-          "font-size": "14px"
-        });
-        $("body").append($i);
-        $i.animate({ top: y - 180, opacity: 0 }, 1500, function() {
-          $i.remove();
-        });
-      });
-    });
   }
 };
 </script>
 
-<style>
+<style >
 .area {
-  background-image: url("./../../assets/comment-bg.png");
+  background-image: url("./../../../assets/bg/icon/comment-icon.png");
 }
-
-.submit-btn {
-  margin: 30px 0;
-}
-
-.content-header {
-  background-image: url("./../../assets/bg-essay.png");
+.card{
+  margin-top: 65px;
 }
 </style>

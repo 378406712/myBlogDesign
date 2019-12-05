@@ -9,37 +9,37 @@
           <div class="focus_info">
             <div class="header_avatar">
               <a href>
-                <img src="./../assets/avatar.jpg" alt />
+                <img src="./../../assets/avatar.jpg" alt />
               </a>
             </div>
             <div class="header_info">
               <p>猫になりたい</p>
               <div class="social_media">
                 <li class="bg-pre">
-                  <img class="left_arrow" src="./../assets/media_icon/next-b.svg" alt />
+                  <img class="left_arrow" src="./../../assets/media_icon/next-b.svg" alt />
                 </li>
                 <li>
                   <a href>
-                    <img src="./../assets/media_icon/github.png" alt />
+                    <img src="./../../assets/media_icon/github.png" alt />
                   </a>
                 </li>
                 <li>
                   <a href>
-                    <img src="./../assets/media_icon/qq.png" alt />
+                    <img src="./../../assets/media_icon/qq.png" alt />
                   </a>
                 </li>
                 <li>
                   <a href>
-                    <img src="./../assets/media_icon/bilibili.png" alt />
+                    <img src="./../../assets/media_icon/bilibili.png" alt />
                   </a>
                 </li>
                 <li>
                   <a href>
-                    <img src="./../assets/media_icon/wangyiyun.png" alt />
+                    <img src="./../../assets/media_icon/wangyiyun.png" alt />
                   </a>
                 </li>
                 <li class="bg-next">
-                  <img src="./../assets/media_icon/next-b.svg" alt />
+                  <img src="./../../assets/media_icon/next-b.svg" alt />
                 </li>
               </div>
             </div>
@@ -59,7 +59,7 @@
             </div>
 
             <div class="h_user_avatar" @mouseenter="flag=!flag" @mouseleave="flag=!flag">
-              <img src="./../assets/avatar.jpg" alt />
+              <img src="./../../assets/avatar.jpg" alt />
               <transition name="fade">
                 <div class="header_user_menu" v-show="flag">
                   <div class="header_user_name">
@@ -224,7 +224,7 @@
 </template>
 
 <script>
-import "./../assets/home.css";
+import "./../../assets/home.css";
 import $ from "jquery";
 export default {
   name: "home",

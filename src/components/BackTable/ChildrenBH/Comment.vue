@@ -18,7 +18,7 @@
                     <tbody id="app">
                       <tr>
                         <td>
-                          <img class="c_avatar" src="./../../assets/none.png" alt />
+                          <img class="c_avatar" src="./../../../assets/bg/icon/none.png" alt />
                           <span class="names">Clover</span>
                         </td>
                         <td>2</td>
