@@ -15,9 +15,9 @@
             <div class="card-main">
               <ul class="card-inner">
                 <li>用户名</li>
-                <li>liu</li>
+                <li>{{username}}</li>
                 <li>邮箱</li>
-                <li>378406712@qq.com</li>
+                <li>{{e_mail}}</li>
               </ul>
             </div>
           </div>
@@ -79,6 +79,12 @@ export default {
         }
       ]
     };
+  },
+  created(){
+    let {userid,mail} =this.$route.params
+      this.username =userid
+    this.e_mail =mail
+   
   }
 };
 </script>

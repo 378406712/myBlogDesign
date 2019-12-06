@@ -1,13 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-
+//前台
 const Home = () => import('@/components/FrontTable/Home')
+
+
 const Register = () => import('@/components/Register')
 const Login = () => import('@/components/Login')
+const NotFound = () => import('@/components/NotFound')
 
-
-
+// /狗太
 const BackHome = () => import('@/components/BackTable/BackHome')
 const Mine = () => import('@/components/BackTable/ChildrenBH/Mine')
 const Essay = () => import('@/components/BackTable/ChildrenBH/Essay')
@@ -47,25 +49,28 @@ export default new Router({
     {
       path: '/backhome',
       name: 'BackHome',
+      
       component: BackHome,
      beforeEnter:(to,from,next)=>{
 
       let token = localStorage.getItem('token')
       if(token){
-      next()
+          next()
       }
       else{
         alert("请先登录")
         next({path:'/login'})
       }
-
-     
      },
 
       children: [
-
+        {
+          path: '/backhome',
+          component: Mine
+        },
         {
           path: 'mine',
+          name:"mine",
           component: Mine
         }, {
           path: 'essay',
@@ -85,6 +90,11 @@ export default new Router({
         },
       ]
     },
+    {
+      path:'*',
+      name:'NotFound',
+      component:NotFound
+    }
 
   ]
 })

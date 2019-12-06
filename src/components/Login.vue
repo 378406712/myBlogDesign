@@ -53,15 +53,18 @@
           欢迎,
           <strong>{{a_user}}</strong>
         </p>
-        <p class="e_mail">378406712@qq.com</p>
+        <p class="e_mail">{{e_mail}}</p>
         <p class="ex-logout">
-          <a href="/">首页</a>
-          <a href="/backhome/mine">后台</a>
-          <a href="#">登出？</a>
+          <!-- <a href="/">首页</a> -->
+          <router-link to ="/">首页</router-link>
+           <router-link :to ="{name:'mine',params:{userid:a_user,mail:e_mail}}">后台</router-link>
+           <router-view></router-view>
+          <a href="javascript:;" @click="toquit">登出？</a>
         </p>
       </div>
     </div>
   </div>
+  
 </template>
 
 <script>
@@ -79,10 +82,12 @@ export default {
       checkin: true,
       user: "",
       password: "",
-      a_user: ""
+      a_user: "",
+      e_mail:null
     };
   },
   methods: {
+    //登录
     tologin() {
       this.$axios.get("api/getPublicKey").then(res => {
         //先获取公钥
@@ -98,21 +103,23 @@ export default {
           //登录
           this.$axios.post("api/userLogin", LoginData).then(res => {
             console.log(res);
-            if (res.data == "0") {
+            if (res.data.status == "0") {
               this.$message({
                 showClose: true,
                 message: "不存在用户",
                 type: "error"
               });
-            } else if (res.data == "2") {
+            } else if (res.data.status == "2") {
               this.$message({
                 showClose: true,
                 message: "密码不正确",
                 type: "error"
               });
-            } else if (res.data == "1") {
+            } else if (res.data.status == "1") {
+              this.e_mail=res.data.e_mail
+
               //设置token作登录判断，存入localstorage并设置过期时间
-              let setTime = new Date().getTime() + 1000 * 60; // 设置1分钟后数据过期,main.js下做判断
+              let setTime = new Date().getTime() + 1000 * 60*15; // 设置15分钟后数据过期,main.js下做判断
               let datas = res.data
               localStorage.setItem(
                 "token",
@@ -140,6 +147,12 @@ export default {
           });
         }
       });
+    },
+    //登录
+    toquit(){
+      localStorage.removeItem("token")
+         this.checkin = true
+      
     }
   },
   mounted() {
@@ -217,5 +230,9 @@ export default {
   text-decoration: underline;
   margin: 0 20px;
   font-size: 16px;
+   transition: color 0.3s ease;
+}
+.ex-logout a:hover{
+  color:#fff
 }
 </style>
