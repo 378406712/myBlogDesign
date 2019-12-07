@@ -13,11 +13,11 @@
           <!-- 待循环 -->
           <div class="card">
             <div class="card-main">
-              <ul class="card-inner">
-                <li>用户名</li>
-                <li>{{username}}</li>
-                <li>邮箱</li>
-                <li>{{e_mail}}</li>
+              <ul class="card-inner card-mine">
+                <li>用户名 :</li>
+                <li v-changeColor="{font:21+'px'}">{{username}}</li>
+                <li>邮箱 :</li>
+                <li v-changeColor="{font:21+'px'}">{{e_mail}}</li>
               </ul>
             </div>
           </div>
@@ -27,9 +27,9 @@
           <div class="card">
             <div class="card-main">
               <el-table :data="tableData2" style="width: 100%" :row-class-name="tableRowClassName">
-                <el-table-column prop="date" label="日期" width="180"></el-table-column>
-                <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-                <el-table-column prop="address" label="地址"></el-table-column>
+                <el-table-column prop="date" label="登录时间" width="180"></el-table-column>
+                <el-table-column prop="name" label="ip" width="180"></el-table-column>
+                <el-table-column prop="address" label="设备信息"></el-table-column>
               </el-table>
             </div>
           </div>
@@ -43,7 +43,12 @@
 <script>
 export default {
   name: "mine",
-
+data(){
+  return {
+      username:'',
+  e_mail:''
+  }
+},
   methods: {
     tableRowClassName({ row, rowIndex }) {
       if (rowIndex === 1) {
@@ -62,29 +67,15 @@ export default {
           name: "王小虎",
           address: "上海市普陀区金沙江路 1518 弄"
         },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        }
       ]
     };
   },
-  created(){
-    let {userid,mail} =this.$route.params
-      this.username =userid
-    this.e_mail =mail
-   
+  created() {
+    let info  = JSON.parse(localStorage.getItem("token"));
+    this.username = info.data.username;
+    this.e_mail = info.data.e_mail;
+
+    
   }
 };
 </script>
@@ -92,5 +83,8 @@ export default {
 <style>
 .content-header {
   background-image: url("./../../../assets/bg/bg_back/bg.png");
+}
+.card-mine li {
+  margin-bottom: 10px!important;
 }
 </style>

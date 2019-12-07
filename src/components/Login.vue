@@ -57,7 +57,7 @@
         <p class="ex-logout">
           <!-- <a href="/">首页</a> -->
           <router-link to ="/">首页</router-link>
-           <router-link :to ="{name:'mine',params:{userid:a_user,mail:e_mail}}">后台</router-link>
+           <router-link :to ="{name:'mine'}">后台</router-link>
            <router-view></router-view>
           <a href="javascript:;" @click="toquit">登出？</a>
         </p>
@@ -70,6 +70,7 @@
 <script>
 import "./../assets/login_register.css";
 import resizeImage from "./../assets/login";
+import getInfo  from './../assets/info'
 import $ from "jquery";
 import { JSEncrypt } from "jsencrypt";
 export default {
@@ -129,8 +130,6 @@ export default {
                 })
               );
 
-             
-
               //用户名密码都正确
               var data = JSON.parse(res.config.data);
               this.a_user = data.username;
@@ -140,9 +139,24 @@ export default {
                 type: "success"
               });
               this.checkin = false
-          
-            
-          
+
+
+  //设备信息
+   /*
+ * 获取系统版本信息
+ */ 
+// console.log(getInfo.getOsInfo()) OS信息
+  console.log(getInfo.getDigits())
+  console.log(getInfo.getBrowser())
+
+
+
+
+     //登录信息,登录时间,ip,设备信息
+    // this.$axios.post('api/userip').then((res)=>{
+    //   console.log(res)
+    // })
+
             }
           });
         }
@@ -155,7 +169,9 @@ export default {
       
     }
   },
+
   mounted() {
+   
     $("#bg_lr").css({
       position: "absolute",
       top: "0px",

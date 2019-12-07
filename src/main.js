@@ -46,7 +46,7 @@ if(data){
 
 let time = data.expiration;
 let value = data.data;
-console.log(time,value)
+// console.log(time,value)
 if (new Date().getTime() > time) {
     // 这里开始执行超时的代码
   delete localStorage.token;
