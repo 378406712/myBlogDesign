@@ -27,9 +27,9 @@
           <div class="card">
             <div class="card-main">
               <el-table :data="tableData2" style="width: 100%" :row-class-name="tableRowClassName">
-                <el-table-column prop="date" label="登录时间" width="180"></el-table-column>
-                <el-table-column prop="name" label="ip" width="180"></el-table-column>
-                <el-table-column prop="address" label="设备信息"></el-table-column>
+                <el-table-column prop="time" label="登录时间" width="180"></el-table-column>
+                <el-table-column prop="ip" label="ip" width="180"></el-table-column>
+                <el-table-column prop="os" label="设备信息"></el-table-column>
               </el-table>
             </div>
           </div>
@@ -46,7 +46,10 @@ export default {
 data(){
   return {
       username:'',
-  e_mail:''
+  e_mail:'',
+  tableData2: [
+  
+      ]
   }
 },
   methods: {
@@ -59,23 +62,34 @@ data(){
       return "";
     }
   },
-  data() {
-    return {
-      tableData2: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-      ]
-    };
-  },
+ 
   created() {
     let info  = JSON.parse(localStorage.getItem("token"));
     this.username = info.data.username;
     this.e_mail = info.data.e_mail;
 
-    
+  },
+  mounted(){
+
+    this.$axios.get('/api/getUserInfo',{
+      params:{
+        username:this.username
+      }
+    }).then((res)=>{
+      console.log(res.data)
+
+    // res.data.match((item,res)=>{
+
+
+
+    // })
+
+
+
+      this.tableData2 = res.data
+    })
+
+
   }
 };
 </script>

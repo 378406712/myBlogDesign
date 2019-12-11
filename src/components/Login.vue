@@ -56,21 +56,20 @@
         <p class="e_mail">{{e_mail}}</p>
         <p class="ex-logout">
           <!-- <a href="/">首页</a> -->
-          <router-link to ="/">首页</router-link>
-           <router-link :to ="{name:'mine'}">后台</router-link>
-           <router-view></router-view>
+          <router-link to="/">首页</router-link>
+          <router-link :to="{name:'mine'}">后台</router-link>
+          <router-view></router-view>
           <a href="javascript:;" @click="toquit">登出？</a>
         </p>
       </div>
     </div>
   </div>
-  
 </template>
 
 <script>
 import "./../assets/login_register.css";
 import resizeImage from "./../assets/login";
-import getInfo  from './../assets/info'
+import getInfo from "./../assets/info";
 import $ from "jquery";
 import { JSEncrypt } from "jsencrypt";
 export default {
@@ -84,7 +83,7 @@ export default {
       user: "",
       password: "",
       a_user: "",
-      e_mail:null
+      e_mail: null
     };
   },
   methods: {
@@ -117,11 +116,11 @@ export default {
                 type: "error"
               });
             } else if (res.data.status == "1") {
-              this.e_mail=res.data.e_mail
+              this.e_mail = res.data.e_mail;
 
               //设置token作登录判断，存入localstorage并设置过期时间
-              let setTime = new Date().getTime() + 1000 * 60*15; // 设置15分钟后数据过期,main.js下做判断
-              let datas = res.data
+              let setTime = new Date().getTime() + 1000 * 60 * 15; // 设置15分钟后数据过期,main.js下做判断
+              let datas = res.data;
               localStorage.setItem(
                 "token",
                 JSON.stringify({
@@ -138,40 +137,40 @@ export default {
                 message: "登录成功",
                 type: "success"
               });
-              this.checkin = false
+              this.checkin = false;
 
+              //设备信息
+              /*
+               * 获取系统版本信息
+               */
 
-  //设备信息
-   /*
- * 获取系统版本信息
- */ 
-// console.log(getInfo.getOsInfo()) OS信息
-  console.log(getInfo.getDigits())
-  console.log(getInfo.getBrowser())
+              console.log(getInfo.getOsInfo()) //OS信息
+              console.log(getInfo.getDigits());
+              console.log(getInfo.getBrowser());
+            let InfoData = {
+              username: this.user,
+              os:getInfo.getOsInfo(),
+              digits:getInfo.getDigits(),
+              browser:getInfo.getBrowser()
 
-
-
-
-     //登录信息,登录时间,ip,设备信息
-    // this.$axios.post('api/userip').then((res)=>{
-    //   console.log(res)
-    // })
-
+            }
+              //登录信息,登录时间,ip,设备信息
+              this.$axios.post('api/postUserInfo',InfoData).then((res)=>{
+                console.log(res)
+              })
             }
           });
         }
       });
     },
-    //登录
-    toquit(){
-      localStorage.removeItem("token")
-         this.checkin = true
-      
+    //登出
+    toquit() {
+      localStorage.removeItem("token");
+      this.checkin = true;
     }
   },
 
   mounted() {
-   
     $("#bg_lr").css({
       position: "absolute",
       top: "0px",
@@ -182,13 +181,10 @@ export default {
       overflow: "hidden"
     });
 
-    
-
     $(window).resize(() => {
       resizeImage("bg_lr");
     });
-  },
-
+  }
 };
 </script>
 
@@ -246,9 +242,9 @@ export default {
   text-decoration: underline;
   margin: 0 20px;
   font-size: 16px;
-   transition: color 0.3s ease;
+  transition: color 0.3s ease;
 }
-.ex-logout a:hover{
-  color:#fff
+.ex-logout a:hover {
+  color: #fff;
 }
 </style>
