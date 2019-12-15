@@ -30,6 +30,11 @@
                 <el-table-column prop="time" label="登录时间" width="180"></el-table-column>
                 <el-table-column prop="ip" label="ip" width="180"></el-table-column>
                 <el-table-column prop="os" label="设备信息"></el-table-column>
+                <el-table-column prop="browser.version" label="浏览器信息"></el-table-column>
+                <el-table-column prop="" label="操作">
+ <el-button type="success" icon="el-icon-check" circle></el-button>
+                <el-button type="danger" icon="el-icon-delete" circle ></el-button>
+                </el-table-column>
               </el-table>
             </div>
           </div>
@@ -76,17 +81,17 @@ data(){
         username:this.username
       }
     }).then((res)=>{
-      console.log(res.data)
+   
+    
 
-    // res.data.match((item,res)=>{
+    res.data.map((item,index)=>{
+     item.browser.version= item.browser.version.replace('/',' ')
+     
+    
+    
+    })
 
-
-
-    // })
-
-
-
-      this.tableData2 = res.data
+      this.tableData2 = res.data.reverse()
     })
 
 
