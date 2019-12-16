@@ -102,7 +102,7 @@ export default {
 
           //登录
           this.$axios.post("api/userLogin", LoginData).then(res => {
-            console.log(res);
+          
             if (res.data.status == "0") {
               this.$message({
                 showClose: true,
@@ -119,7 +119,7 @@ export default {
               this.e_mail = res.data.e_mail;
 
               //设置token作登录判断，存入localstorage并设置过期时间
-              let setTime = new Date().getTime() + 1000 * 60 * 15; // 设置15分钟后数据过期,main.js下做判断
+              let setTime = new Date().getTime() + 1000 * 60 * 30; // 设置30分钟后数据过期,main.js下做判断
               let datas = res.data;
               localStorage.setItem(
                 "token",
@@ -144,9 +144,9 @@ export default {
                * 获取系统版本信息
                */
 
-              console.log(getInfo.getOsInfo()) //OS信息
-              console.log(getInfo.getDigits());
-              console.log(getInfo.getBrowser());
+              //console.log(getInfo.getOsInfo()) //OS信息
+              //console.log(getInfo.getDigits());
+              //console.log(getInfo.getBrowser());
             let InfoData = {
               username: this.user,
               os:getInfo.getOsInfo(),
@@ -156,7 +156,7 @@ export default {
             }
               //登录信息,登录时间,ip,设备信息
               this.$axios.post('api/postUserInfo',InfoData).then((res)=>{
-                console.log(res)
+             
               })
             }
           });

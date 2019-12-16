@@ -190,7 +190,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .area {
   background-image: url("./../../../assets/bg/icon/comment-icon.png");
 }

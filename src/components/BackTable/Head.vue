@@ -1,51 +1,72 @@
 <template >
-  <div class="heads  navs clearFix">
-    <div class="avatar" @click="show=!show">
-      <a class="user" href="javascript:;">
-        <img src="./../../assets/bg/icon/none.png" alt />
-      </a>
-      <transition name="slide-fade">
-        <ul  v-if="show" class="options">
+  <div class="heads navs clearFix">
+    <nav class="navbar">
+      <form class="form-inline mr-auto">
+        <ul class="navbar-nav mr-3">
           <li>
-            <a class="user-center" href="#">用户中心</a>
-          </li>
-          <li>
-            <a class="quit" href="#">退出</a>
+            <a href="#" data-toggle="sidebar" class="nav-link nav-link-lg">
+              <i class="fas fa-bars"></i>
+            </a>
           </li>
         </ul>
-      </transition>
-    </div>
+      </form>
+
+      <ul class="navbar-nav navbar-right">
+        <li class="dropdown">
+          <a
+            href="#"
+            data-toggle="dropdown"
+            class="nav-link dropdown-toggle nav-link-lg nav-link-user"
+            aria-expanded="false"
+          >
+            <img
+              alt="image"
+              src="https://q4.qlogo.cn/g?b=qq&amp;nk=378406712@qq.com&amp;s=3?d=retro"
+              class="rounded-circle mr-1"
+            />
+            <div class="d-sm-none d-lg-inline-block">Hi, clover_1996</div>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a href="/user/profile" class="dropdown-item has-icon">
+              <i class="fas fa-user"></i> 我的账号
+            </a>
+
+            <a href="/user/invite" class="dropdown-item has-icon">
+              <i class="fas fa-laugh-squint"></i> 修改资料
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="/user/logout" class="dropdown-item has-icon text-danger">
+              <i class="fas fa-sign-out-alt"></i> 退出登录
+            </a>
+          </div>
+        </li>
+      </ul>
+    </nav>
   </div>
 </template>
 
 <script>
-// import $ from 'jquery'
+import $ from "jquery";
 export default {
   name: "heads",
   data() {
     return {
       show: false
     };
-
-
   },
 
-  mounted(){
-    //   $(function(){
-    //     window.onscroll=function(){
-    //  var scrollTop = document.documentElement.scrollTop||document.body.scrollTop
-    //     if(scrollTop>56){
-    //       $(".heads").addClass('navs')
-         
-    //     }else{
-    //         $(".heads").removeClass('navs')
-    //     }
+  mounted() {
 
-
-    //     }
    
      
-    //   })
+      $(".navbar-nav").click( function(e) {
+      
+      $(".dropdown-menu").toggleClass("show");
+      e.stopPropagation();
+    });
+       $(window).click("click", function() {
+      $(".dropdown-menu").removeClass("show");
+    });
   }
 };
 </script>
@@ -56,79 +77,78 @@ export default {
   left: 0;
   top: 0;
   width: 100%;
-
+  background-color: rgba(200, 230, 232, 0.5);
   height: 56px;
   z-index: 30;
 }
-.navs::before {
-    background-color: hsla(0,0%,100%,.4);
-    box-shadow: 0 1px 2px rgba(0,0,0,.1);
-  content: "";
-  display: block;
+
+.navbar {
+  height: 56px;
+  left: 250px;
+  right: 5px;
+  position: absolute;
+  z-index: 890;
+  background-color: transparent;
+}
+.navbar .nav-link {
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
   height: 100%;
-  opacity: 1;
-  position: absolute;
-  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  width: 100%;
-  z-index: -1;
 }
-.avatar {
+.navbar .nav-link.nav-link-lg svg {
+  margin-left: 0 !important;
+  font-size: 18px;
+  line-height: 32px;
+  font-weight: 900;
+}
+
+.navbar-nav {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+.dropdown,
+.dropleft,
+.dropright,
+.dropup {
   position: relative;
-  float: right;
-  margin-right: 40px;
-  padding-top: 10px;
 }
-.options {
-  position: absolute;
-  right: 0px;
-  top: 56px;
-  z-index: 2;
-  transform: scale(1, 1);
-  min-width: 120px;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06), 0 0 3px rgba(0, 0, 0, 0.18),
-    0 1px 3px rgba(0, 0, 0, 0.18);
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  padding-bottom: 8px !important;
-padding-top: 8px !important;
-  border-radius: 4px 0 4px 4px;
-  transition-duration: 0.3s;
-  background-color: #fff;
-  text-align: center;
+.navbar .nav-link {
+  color: #007bff;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  height: 100%;
 }
-.options li {
-  line-height: 20px;
-}
-.options li a {
-  text-decoration: none;
-  padding: 7px 10px;
-  font-size: 14px;
-  text-overflow: unset;
-  white-space: normal;
-  transition: 0.3s all;
-  color: inherit;
-  z-index: 1;
-  display: block;
-}
-.user img {
+.navbar .nav-link.nav-link-user img {
   width: 30px;
-  height: 30px;
-  line-height: 30px;
 }
- .slide-fade-enter-active {
-  transition: all .3s ease;
+.mr-1,
+.mx-1 {
+  margin-right: 0.25rem !important;
 }
-.slide-fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+.rounded-circle {
+  border-radius: 50% !important;
 }
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active for below version 2.1.8 */ {
-  transform: translateX(10px);
-  opacity: 0;
+img {
+  vertical-align: middle;
+  border-style: none;
 }
-.user-center ,.quit{
-  transition: .3s all;
+.dropdown-menu {
+  position: absolute;
+  box-shadow: 0 10px 40px 0 rgba(51, 73, 94, 0.15);
+  border: none;
+  width: 200px;
 }
-.user-center:hover ,.quit:hover{
-    background-color: #f5f5f5;
+.dropdown-menu-right {
+  right: 0;
+  left: auto;
 }
 </style>
