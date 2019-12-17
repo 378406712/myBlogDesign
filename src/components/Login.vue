@@ -57,7 +57,7 @@
         <p class="ex-logout">
           <!-- <a href="/">首页</a> -->
           <router-link to="/">首页</router-link>
-          <router-link :to="{name:'mine'}">后台</router-link>
+          <router-link :to="{name:'center'}">后台</router-link>
           <router-view></router-view>
           <a href="javascript:;" @click="toquit">登出？</a>
         </p>

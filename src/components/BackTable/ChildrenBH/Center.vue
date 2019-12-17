@@ -1,5 +1,5 @@
 <template>
-  <div class="mine">
+  <div class="center">
     <div class="content">
       <div class="content-header">
         <div class="container">
@@ -58,7 +58,7 @@
 
 <script>
 export default {
-  name: "mine",
+  name: "center",
   data() {
     return {
       username: "",
@@ -148,6 +148,7 @@ export default {
 </script>
 
 <style>
+
 .content-header {
   background-image: url("./../../../assets/bg/bg_back/bg.png");
 }

@@ -16,6 +16,7 @@ import BootstrapVue from 'bootstrap-vue'
 // main.js 中
  
 import fontawesome from '@fortawesome/fontawesome'
+
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import solid from '@fortawesome/fontawesome-free-solid'
 import regular from '@fortawesome/fontawesome-free-regular'

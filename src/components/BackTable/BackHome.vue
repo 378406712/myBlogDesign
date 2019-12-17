@@ -1,34 +1,38 @@
 <template>
   <div class="backhome">
-    <Head />
+    <Head v-on:childByValue="childByValue" />
 
     <div class="slide">
       <div class="top">
-        <a class="title" href="/">MINT CANDY</a>
+        <a v-show="!flag" class="title chinese-font" href="/"><img src="./../../assets/media_icon/clover leaf.png" alt=""></a>
+        <a v-show="flag" class="title chinese-font" href="/">Clover Liu</a>
       </div>
+
       <ul class="menu">
+         <li>
+          <router-link to="/backhome/center">
+            <i class="fab fa-fort-awesome"></i><span>首页</span>
+          </router-link>
+        </li>
+        <li class="menu-title">我的</li>
+       
+
         <li>
-          <a class="menu-title" href="#">我的</a>
-          <ul class="menu-item">
-            <li>
-              <router-link to="/backhome/mine">
-                <span class="el-icon-s-custom iconSlide"></span>用户中心(Mine)
-              </router-link>
-            </li>
-            <li>
-              <router-link to="/backhome/essay"> <span class="el-icon-edit iconSlide"></span>撰写文章(Essay)</router-link>
-            </li>
-            <li>
-              <router-link to="/backhome/edit"><span class="el-icon-collection iconSlide"></span>我的博文(Edit)</router-link>
-            </li>
-            <li>
-              <router-link to="/backhome/comment"><span class="el-icon-chat-square iconSlide"></span>评论管理(Comment)</router-link>
-            </li>
-           
-            <!-- <li>
-              <a href="#">邀请链接</a>
-            </li> -->
-          </ul>
+          <router-link to="/backhome/essay">
+            <i class="fas fa-feather"></i><span>撰写文章</span>
+          </router-link>
+        </li>
+
+        <li>
+          <router-link to="/backhome/edit">
+            <i class="fas fa-edit"></i><span>编辑博文</span>
+          </router-link>
+        </li>
+
+        <li>
+          <router-link to="/backhome/comment">
+            <i class="fas fa-comment-dots"></i><span>评论管理</span>
+          </router-link>
         </li>
       </ul>
     </div>
@@ -43,81 +47,69 @@
 import Head from "./Head";
 
 import Foot from "./Foot";
-import $ from 'jquery'
+import $ from "jquery";
+
+// import func from '../../../vue-temp/vue-editor-bridge';
 export default {
   name: "backhome",
   components: { Head, Foot },
 
   data() {
-    return {};
+    return {
+      flag: true
+    };
   },
-  mounted(){
-       //文字点击特效
-    var a_idx = 0;
-    $(document).ready(function($) {
-      $("body").click(function(e) {
-        var a = new Array(
-          "ヾ(◍°∇°◍)ﾉﾞ",
-          "富强",
-          "民主",
-          "文明",
-          "和谐",
-          "自由",
-          "平等",
-          "公正",
-          "法治",
-          "爱国",
-          "敬业",
-          "诚信",
-          "友善"
-        );
-        var $i = $("<span/>").text(a[a_idx]);
-        a_idx = (a_idx + 1) % a.length;
-        var x = e.pageX,
-          y = e.pageY;
-        $i.css({
-          "z-index": 5,
-          top: y - 20,
-          left: x,
-          position: "absolute",
-          color: "#FF0000",
-          "font-weight": "bold",
-          "font-size": "14px"
-        });
-        $("body").append($i);
-        $i.animate({ top: y - 180, opacity: 0 }, 1500, function() {
-          $i.remove();
-        });
+  methods:{
+    childByValue: function (childValue) {
+        // childValue就是子组件传过来的值
+        this.flag = childValue
+      }
+  },
+  mounted() {
+    
+    $(function() {
+      $(".menu li").on("click", function() {
+        $(".menu li").removeClass("actives");
+        $(this).addClass("actives");
       });
+
+     
     });
+ 
   }
 };
 </script>
 
 <style  scoped>
 .slide {
+  
   width: 240px;
   position: fixed;
-  border-right: 1px solid #dadada;
+  transition: all .5s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
   left: 0;
   top: 0;
   z-index: 30;
-  background: transparent;
+  background: #fff;
 
   height: 100%;
+}
+.slide li a span {
+  width: 100%;
 }
 
 .title {
   display: block;
-  height: 56px;
-  line-height: 56px;
+  height: 70px;
+  line-height: 70px;
   padding: 0 20px;
   background: #fff;
-  border-bottom: 1px solid #dadada;
+  text-align: center;
 }
 .menu {
   display: flex;
   flex-direction: column;
+  margin-top: 20px;
 }
 .menu a {
   color: #515a6e;
@@ -129,18 +121,131 @@ export default {
 .menu-title {
   padding: 0 10px;
 }
-.menu-item li a {
-  font-weight: 400;
-  min-height: 36px;
-  padding-left: 36px;
-  display: block;
-  transition: 0.3s all;
+.menu li a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  padding: 0 20px;
+  width: 100%;
+  letter-spacing: 0.3px;
+  color: #78828a;
+  text-decoration: none;
+  transition: all 0.5s;
+  
+}
+.menu li {
+  font-size: 14px;
 }
 
-.menu-item a:hover {
+.menu li:hover  a{
   background-color: #f5f5f5;
 }
-.iconSlide{
+.siderbar-mini .menu li:hover a{
+      background-color: #6777ef;
+      color:#fff!important;
+ 
+      
+}
+.siderbar-mini .menu li  a::before{
+  transition: all .5s
+}
+.siderbar-mini .menu li:hover a::before{
+    background-color: #fff;
+}
+
+.iconSlide {
   margin-right: 25px;
 }
+.menu li a svg {
+  width: 28px;
+  margin-right: 20px;
+  text-align: center;
+}
+.menu-title {
+  padding: 3px 15px;
+  color: #a1a8ae;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  user-select: none;
+}
+
+.actives a {
+  color: #6777ef !important;
+  font-weight: 600;
+  padding-left: 16px !important;
+  background-color: transparent;
+}
+.siderbar-mini .actives a {
+  color: #6777ef !important;
+  font-weight: 600;
+  padding-left: 0px !important;
+  background-color: transparent;
+}
+
+.actives a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  height: 25px;
+  width: 4px;
+  background-color: #6777ef;
+}
+
+
+/* siderbar mini */
+.siderbar-mini {
+  width: 65px;
+  overflow: initial !important;
+  position: absolute;
+  box-shadow: none;
+
+}
+.siderbar-mini menu {
+  padding: 0;
+}
+.siderbar-mini li {
+  padding: 10px;
+}
+.siderbar-mini li a {
+  box-shadow: 0 4px 8px #acb5f6;
+  background-color: #6777ef;
+  color: #fff;
+  
+}
+.siderbar-mini .title{
+  padding:0!important
+}
+.siderbar-mini li a svg {
+  margin: 0;
+  font-size: 20px;
+}
+
+.siderbar-mini li a span{
+
+  display: none;
+    margin-top: 3px;
+    width: 100%;
+}
+.siderbar-mini li a {
+  border-radius: 3px;
+    height: 45px;
+    padding: 0;
+    justify-content: center;
+}
+.siderbar-mini a svg {
+  margin: 0
+}
+.siderbar-mini .menu-title{
+  display: none
+}
+.top a img{
+  width: 50px;
+  height: 50px;
+}
+
 </style>

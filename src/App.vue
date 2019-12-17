@@ -56,6 +56,9 @@ body {
   color: #515a6e;
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
 }
+.chinese-font{
+  font-family: 'Merriweather Sans', Helvetica, Tahoma, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif;
+}
 li {
   list-style: none;
 }
@@ -77,9 +80,21 @@ textarea:focus {
   display: block;
   clear: both;
 }
+.content-mini{
+   padding-left: 90px!important;
+}
+.navbar-mini{
+  left:65px!important
+}
 
 .content {
-  margin-left: 240px;
+   padding-left: 270px;
+    padding-right: 30px;
+    padding-top: 80px;
+    width: 100%;
+    position: relative;
+    transition: padding .5s;
+    background-color: #f4f6f9;
 }
 .content-header {
   background-position: 50% 50%;
@@ -95,9 +110,10 @@ textarea:focus {
 .container {
   margin-right: auto;
   margin-left: auto;
+  width:100%;
   padding-right: 10px;
   padding-left: 10px;
-  max-width: 960px;
+ 
 }
 .content-heading {
   font-weight: 300;
@@ -326,5 +342,8 @@ textarea:focus {
 }
 .wrap-custom-file label.file-ok .fa {
   display: none;
+}
+.none{
+  display: none
 }
 </style>

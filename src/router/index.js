@@ -11,7 +11,7 @@ const NotFound = () => import('@/components/NotFound')
 
 // /狗太
 const BackHome = () => import('@/components/BackTable/BackHome')
-const Mine = () => import('@/components/BackTable/ChildrenBH/Mine')
+const Center = () => import('@/components/BackTable/ChildrenBH/Center')
 const Essay = () => import('@/components/BackTable/ChildrenBH/Essay')
 const Edit = () => import('@/components/BackTable/ChildrenBH/Edit')
 const Compile = () => import('@/components/BackTable/ChildrenBH/Compile')
@@ -66,12 +66,12 @@ export default new Router({
       children: [
         {
           path: '/backhome',
-          component: Mine
+          component: Center
         },
         {
-          path: 'mine',
-          name:"mine",
-          component: Mine
+          path: 'center',
+          name:"center",
+          component: Center
         }, {
           path: 'essay',
           component: Essay

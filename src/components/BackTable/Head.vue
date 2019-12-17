@@ -4,17 +4,17 @@
       <form class="form-inline mr-auto">
         <ul class="navbar-nav mr-3">
           <li>
-            <a href="#" data-toggle="sidebar" class="nav-link nav-link-lg">
+            <a href="javascript:;" data-toggle="sidebar" @click="childClick" class="navclick nav-link nav-link-lg">
               <i class="fas fa-bars"></i>
             </a>
           </li>
         </ul>
       </form>
 
-      <ul class="navbar-nav navbar-right">
+      <ul class="navb-nav navbar-right">
         <li class="dropdown">
           <a
-            href="#"
+            href="javascript:;"
             data-toggle="dropdown"
             class="nav-link dropdown-toggle nav-link-lg nav-link-user"
             aria-expanded="false"
@@ -28,11 +28,11 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right">
             <a href="/user/profile" class="dropdown-item has-icon">
-              <i class="fas fa-user"></i> 我的账号
+              <i class="fas fa-paw"></i> 我的账号
             </a>
 
             <a href="/user/invite" class="dropdown-item has-icon">
-              <i class="fas fa-laugh-squint"></i> 修改资料
+              <i class="fas fa-user-cog"></i> 修改资料
             </a>
             <div class="dropdown-divider"></div>
             <a href="/user/logout" class="dropdown-item has-icon text-danger">
@@ -51,15 +51,31 @@ export default {
   name: "heads",
   data() {
     return {
-      show: false
+      show: true
     };
+  },
+  methods:{
+    childClick(){
+        this.show = !this.show
+         this.$emit('childByValue', this.show)
+    }
   },
 
   mounted() {
-
+ $(".navclick").on("click",function(){
+      $(".slide").toggleClass("siderbar-mini")
+      $(".content").toggleClass("content-mini")
+      // $(".navbar").toggleClass("navbar-mini")
+      //     $(".siderbar-mini .menu li a").on("mouseover",function(){
+      //        $(".siderbar-mini .menu li a").removeClass("aria")
+      //       $(this).toggleClass("aria")
+            
+          
+      // })
+    })
    
      
-      $(".navbar-nav").click( function(e) {
+      $(".navbar-right").click( function(e) {
       
       $(".dropdown-menu").toggleClass("show");
       e.stopPropagation();
@@ -67,6 +83,7 @@ export default {
        $(window).click("click", function() {
       $(".dropdown-menu").removeClass("show");
     });
+   
   }
 };
 </script>
@@ -79,7 +96,7 @@ export default {
   width: 100%;
   background-color: rgba(200, 230, 232, 0.5);
   height: 56px;
-  z-index: 30;
+  z-index: 29
 }
 
 .navbar {
@@ -89,6 +106,7 @@ export default {
   position: absolute;
   z-index: 890;
   background-color: transparent;
+      transition: all .5s;
 }
 .navbar .nav-link {
   padding-left: 15px !important;
@@ -129,6 +147,9 @@ export default {
 }
 .navbar .nav-link.nav-link-user img {
   width: 30px;
+}
+.navbar-right{
+  margin-bottom: 0;
 }
 .mr-1,
 .mx-1 {
