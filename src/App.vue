@@ -82,6 +82,7 @@ textarea:focus {
 }
 .content-mini{
    padding-left: 90px!important;
+   
 }
 .navbar-mini{
   left:65px!important

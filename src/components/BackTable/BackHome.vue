@@ -5,7 +5,7 @@
     <div class="slide">
       <div class="top">
         <a v-show="!flag" class="title chinese-font" href="/"><img src="./../../assets/media_icon/clover leaf.png" alt=""></a>
-        <a v-show="flag" class="title chinese-font" href="/">Clover Liu</a>
+        <a v-show="flag" class="title chinese-font" href="/">Clover</a>
       </div>
 
       <ul class="menu">

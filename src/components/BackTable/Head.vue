@@ -4,7 +4,12 @@
       <form class="form-inline mr-auto">
         <ul class="navbar-nav mr-3">
           <li>
-            <a href="javascript:;" data-toggle="sidebar" @click="childClick" class="navclick nav-link nav-link-lg">
+            <a
+              href="javascript:;"
+              data-toggle="sidebar"
+              @click="childClick"
+              class="navclick nav-link nav-link-lg"
+            >
               <i class="fas fa-bars"></i>
             </a>
           </li>
@@ -54,36 +59,38 @@ export default {
       show: true
     };
   },
-  methods:{
-    childClick(){
-        this.show = !this.show
-         this.$emit('childByValue', this.show)
+  methods: {
+    childClick() {
+      this.show = !this.show;
+      this.$emit("childByValue", this.show);
     }
   },
 
   mounted() {
- $(".navclick").on("click",function(){
-      $(".slide").toggleClass("siderbar-mini")
-      $(".content").toggleClass("content-mini")
-      // $(".navbar").toggleClass("navbar-mini")
-      //     $(".siderbar-mini .menu li a").on("mouseover",function(){
-      //        $(".siderbar-mini .menu li a").removeClass("aria")
-      //       $(this).toggleClass("aria")
-            
-          
-      // })
+    $(".navclick").on("click", function() {
+      $(".slide").toggleClass("siderbar-mini");
+      $(".content").toggleClass("content-mini"); 
+      $(".navbar").toggleClass("navbar-mini");
+      // $(".siderbar-mini .menu li a").on("mouseover", function() {
+      //   $(".siderbar-mini .menu li a").removeClass("aria");
+      //   $(this).toggleClass("aria");
+      // });
+      $(".siderbar-mini .menu li").on("click",function(){
+       
+      $(".slide").removeClass("siderbar-mini");
+      $(".content").removeClass("content-mini"); 
+      $(".navbar").removeClass("navbar-mini");
     })
-   
-     
-      $(".navbar-right").click( function(e) {
-      
+    });
+
+
+    $(".navbar-right").click(function(e) {
       $(".dropdown-menu").toggleClass("show");
       e.stopPropagation();
     });
-       $(window).click("click", function() {
+    $(window).click("click", function() {
       $(".dropdown-menu").removeClass("show");
     });
-   
   }
 };
 </script>
@@ -96,7 +103,7 @@ export default {
   width: 100%;
   background-color: rgba(200, 230, 232, 0.5);
   height: 56px;
-  z-index: 29
+  z-index: 29;
 }
 
 .navbar {
@@ -106,7 +113,7 @@ export default {
   position: absolute;
   z-index: 890;
   background-color: transparent;
-      transition: all .5s;
+  transition: all 0.5s;
 }
 .navbar .nav-link {
   padding-left: 15px !important;
@@ -148,7 +155,7 @@ export default {
 .navbar .nav-link.nav-link-user img {
   width: 30px;
 }
-.navbar-right{
+.navbar-right {
   margin-bottom: 0;
 }
 .mr-1,
