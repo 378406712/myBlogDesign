@@ -70,6 +70,7 @@
                                 class="card-cta"
                                 data-toggle="modal"
                                 data-target="#kill-modal"
+                                @click="removePass"
                               >
                                 申请删除
                                 <i class="fas fa-chevron-right"></i>
@@ -187,7 +188,7 @@ import $ from "jquery";
 import { JSEncrypt } from "jsencrypt";
 
 export default {
-  inject:['reload'],   
+  inject: ["reload"],
   name: "personal",
   data() {
     return {
@@ -200,8 +201,8 @@ export default {
     };
   },
   methods: {
+    //修改密码
     alterPass() {
-      
       if (this.originPass == this.newPass) {
         swal({
           title: "修改密码失败!",
@@ -223,20 +224,15 @@ export default {
             };
             this.$axios.post("/api/userPassAlter", PwdData).then(res => {
               if (res.data.status == "0") {
-                
                 swal({
                   title: "修改密码成功!",
                   text: "请重新登录",
                   icon: "success",
                   button: "OK"
-                }).then(()=>{
-             delete localStorage.token
-             this.$router.go(0);
-        });
-               
-              
-
-
+                }).then(() => {
+                  delete localStorage.token;
+                  this.$router.go(0);
+                });
               } else if (res.data.status == "1") {
                 swal({
                   title: "修改密码失败!",
@@ -263,20 +259,64 @@ export default {
           text: "两次输入不符合",
           icon: "error",
           button: "OK"
-        })
-         
+        });
       }
     },
+    //设置个人资料
     setPersonal() {
       console.log(456);
+    },
+    //删除账号
+    removePass() {
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+            let removeData = {
+        params: {
+         e_mail:this.e_mail
+        }
+      };
+      console.log(removeData)
+      this.$axios.get("/api/userRemove", removeData).then(res => {
+        console.log(res)
+        if(res.data.status == '0'){
+  swal({
+            title: "删除成功!",
+            icon: "success",
+            button: "Aww yiss!"
+          }).then(() => {
+                  delete localStorage.token;
+                  this.$router.go(0);
+                });;
+        }
+        else{
+            swal({
+            title: "删除失败,网络好像出了小差～",
+            icon: "error",
+            button: "yiss Aww!"
+          })
+        }
+
+      });
+        
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    
     }
   },
   created() {
     let info = JSON.parse(localStorage.getItem("token"));
     this.username = info.data.username;
     this.e_mail = info.data.e_mail;
-  },
-  mounted() {}
+  }
 };
 </script>
 
@@ -376,6 +416,7 @@ ol {
   font-weight: 900;
 }
 </style>
+
 <style>
 .el-form-item__label {
   font-weight: 800;
