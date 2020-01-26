@@ -89,8 +89,10 @@ export default {
   methods: {
     //登录
     tologin() {
+    
       this.$axios.get("api/getPublicKey").then(res => {
         //先获取公钥
+        console.log(res,11123123131232)
         if (res.data.status === 0) {
           let encryptor = new JSEncrypt(); //实例化
           encryptor.setPublicKey(res.data.resultmap); //设置公钥

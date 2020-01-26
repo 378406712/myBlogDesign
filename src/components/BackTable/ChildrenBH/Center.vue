@@ -28,6 +28,7 @@
 
                   <el-drawer style="padding:20px" title="个人资料" :visible.sync="drawer" :with-header="false">
                     <!-- 头像 -->
+                      <!-- <el-divider content-position="left"  style="padding:20px">123</el-divider> -->
                     <div class="demo-fit" style="padding:20px">
                       <div class="block" v-for="fit in fits" :key="fit">
                         <el-avatar
@@ -41,6 +42,14 @@
                         
                   
                       </div>
+                    </div>
+                    <!-- 个性签名，地区，职业等 -->
+                    <div class="more_detail">
+                        <p>个性签名：当你的才华还撑不起你的野心时，那你就应该静下来学习</p>
+                        <p>职业：前端</p>
+                        <p>家乡：安徽</p>
+                        <p>生日：1996.10.20</p>
+
                     </div>
                   </el-drawer>
                 </div>
@@ -200,6 +209,9 @@ button:focus {
 }
 .account {
   float: right;
+}
+.more_detail{
+  padding: 20px;
 }
 
 </style>

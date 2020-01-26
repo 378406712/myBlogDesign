@@ -11,7 +11,10 @@ import VueParticles from 'vue-particles' //粒子特效
 import store from './store/store' //vuex
 // import qs from 'qs';//qs模块，序列化传输数据给后台，否则后台拿不到
 // Vue.prototype.$qs = qs
-import Axios from 'axios'
+import Axios from 'axios'//axios请求后台
+import VueSwal from 'vue-swal'//弹窗
+
+Vue.use(VueSwal)
 import BootstrapVue from 'bootstrap-vue'
 // main.js 中
  
@@ -34,7 +37,6 @@ Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 
 // Vue.use(VueLazyload)
-
 Vue.use(VueParticles)
 Vue.use(changeColor)
 Vue.use(ElementUI)
@@ -50,7 +52,7 @@ Vue.filter('limit',(words)=>{
 
  
 })
-//登录状态超过1分钟，清除localStorage下token
+//登录状态超过15分钟，清除localStorage下token
 let data = localStorage.token;
 if(data){
   data = JSON.parse(data);

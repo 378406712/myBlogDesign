@@ -15,7 +15,7 @@
                     </div>
                     <div class="section-body">
                       <h2 class="section-title">欢迎, clover_1996!</h2>
-                      <p class="section-lead">378406712@qq.com</p>
+                      <p class="section-lead">{{ e_mail }}</p>
                       <div class="row mt-sm-4">
                         <div class="col-lg-6">
                           <div class="card card-large-icons">
@@ -23,14 +23,12 @@
                               <i class="fas fa-lock"></i>
                             </div>
                             <div class="card-body">
-                              <h4 >修改密码</h4>
+                              <h4>修改密码</h4>
                               <p>定期修改为高强度密码以保护您的账号</p>
                               <a
-                                href="##"
+                                href="javascript:;"
                                 class="card-cta"
-                                data-toggle="modal"
-                                data-target="#change-password-modal"
-                                @click="alterPass"
+                                @click="dialogFormVisible = true"
                               >
                                 立即修改
                                 <i class="fas fa-chevron-right"></i>
@@ -44,15 +42,16 @@
                               <i class="fas fa-shield-alt"></i>
                             </div>
                             <div class="card-body">
-                              <h4>二步验证</h4>
-                              <p>为您的帐号添加一道额外的安全保障</p>
+                              <h4>个人信息</h4>
+                              <p>个性化设置资料</p>
                               <a
                                 href="##"
                                 class="card-cta"
                                 data-toggle="modal"
                                 data-target="#ga-modal"
+                                @click="setPersonal"
                               >
-                                立即开启
+                                立即设置
                                 <i class="fas fa-chevron-right"></i>
                               </a>
                             </div>
@@ -150,28 +149,134 @@
         </section>
       </div>
     </div>
+
+    <!-- 表单 修改密码 -->
+    <el-dialog
+      top="2%"
+      width="35%"
+      title="修改账号密码"
+      :visible.sync="dialogFormVisible"
+    >
+      <el-form v-model="form">
+        <el-form-item id="labels" label="原密码">
+          <el-input
+            v-model="originPass"
+            autocomplete="off"
+            clearable
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item id="labels" label="新密码">
+          <el-input v-model="newPass" show-password clearable></el-input>
+        </el-form-item>
+
+        <el-form-item id="labels" label="再次输入新密码">
+          <el-input v-model="againPass" show-password clearable></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="alterPass">确 定</el-button>
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import $ from "jquery";
+import { JSEncrypt } from "jsencrypt";
+
 export default {
-    name:"personal",
-    data(){
-        return {
+  inject:['reload'],   
+  name: "personal",
+  data() {
+    return {
+      dialogTableVisible: false,
+      dialogFormVisible: false,
+      originPass: "",
+      newPass: "",
+      againPass: "",
+      form: ""
+    };
+  },
+  methods: {
+    alterPass() {
+      
+      if (this.originPass == this.newPass) {
+        swal({
+          title: "修改密码失败!",
+          text: "原密码与新密码相同",
+          icon: "warning",
+          button: "OK"
+        });
+      } else if (this.newPass == this.againPass && this.newPass != "") {
+        this.$axios.get("/api/getPublicKey").then(res => {
+          //先获取公钥
+          if (res.data.status === 0) {
+            let encryptor = new JSEncrypt(); //实例化
+            encryptor.setPublicKey(res.data.resultmap); //设置公钥
 
-        }
-    },
-    methods:{
-          alterPass(){
-                   console.log(123)
-        this.$axios.post('/api/userPassAlter').then((res)=>{
-                console.log(res)
-         
+            let PwdData = {
+              e_mail: this.e_mail,
+              originPass: encryptor.encrypt(this.originPass),
+              againPass: encryptor.encrypt(this.againPass)
+            };
+            this.$axios.post("/api/userPassAlter", PwdData).then(res => {
+              if (res.data.status == "0") {
+                
+                swal({
+                  title: "修改密码成功!",
+                  text: "请重新登录",
+                  icon: "success",
+                  button: "OK"
+                }).then(()=>{
+             delete localStorage.token
+             this.$router.go(0);
+        });
+               
+              
+
+
+              } else if (res.data.status == "1") {
+                swal({
+                  title: "修改密码失败!",
+                  text: "原密码错误",
+                  icon: "error",
+                  button: "OK"
+                });
+              } else if (res.date.status == "2") {
+                swal({
+                  title: "修改密码失败!",
+                  text: "网络好像有点问题～",
+                  icon: "warn",
+                  button: "OK"
+                });
+              }
+            });
+          } else {
+            //网络问题
+          }
+        });
+      } else if (this.newPass != this.againPass) {
+        swal({
+          title: "修改密码失败!",
+          text: "两次输入不符合",
+          icon: "error",
+          button: "OK"
         })
+         
+      }
+    },
+    setPersonal() {
+      console.log(456);
     }
-    }
-  
-
+  },
+  created() {
+    let info = JSON.parse(localStorage.getItem("token"));
+    this.username = info.data.username;
+    this.e_mail = info.data.e_mail;
+  },
+  mounted() {}
 };
 </script>
 
@@ -269,5 +374,41 @@ ol {
 .fa,
 .fas {
   font-weight: 900;
+}
+</style>
+<style>
+.el-form-item__label {
+  font-weight: 800;
+  color: #34395e;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+
+  font-family: none;
+}
+.el-dialog__body {
+  padding: 25px;
+  padding-top: 15px;
+}
+.el-dialog {
+  border-radius: 0.3rem;
+}
+.el-dialog__title {
+  font-size: 18px;
+  margin-bottom: 0;
+  line-height: 1.5;
+  font-weight: 700;
+  color: #6c757d;
+}
+.swal-button {
+  padding: 7px 19px;
+  border-radius: 5px;
+  background-color: #3085d6;
+  font-size: 1.1rem;
+  font-family: none;
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+  padding: 10px 25px;
+}
+.swal-footer {
+  text-align: center;
 }
 </style>

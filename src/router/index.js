@@ -60,8 +60,14 @@ export default new Router({
           next()
       }
       else{
-        alert("请先登录")
-        next({path:'/login'})
+        swal({
+          title: "请先登录!",
+          icon: "info",
+          button: "OK"
+        }).then(()=>{
+          next({path:'/login'})
+        })
+       
       }
      },
 
