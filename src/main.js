@@ -31,6 +31,7 @@ fontawesome.library.add(brands)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
+// Vue.prototype.$liu = new Vue() //添加liu属性，用于监听
 
 Vue.prototype.$axios = Axios
 Vue.config.productionTip = false
@@ -78,7 +79,7 @@ new Vue({
 
 
   router,
-  store,
+  store,//挂载
   components: { App },
   template: '<App/>'
 })

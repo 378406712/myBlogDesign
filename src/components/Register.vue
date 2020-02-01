@@ -106,7 +106,9 @@ export default {
 
       w_user: "",
       w_pass: "",
-      w_mail: ""
+      w_mail: "",
+      timer:null,
+      num:3
     };
   },
   methods: {
@@ -184,7 +186,7 @@ export default {
               }
               if (res.data == "1") {
                 this.$message({
-                  message: "注册成功,3秒后跳转~",
+                  message: `注册成功,${this.num}秒后跳转~`,
                   type: "success"
                 });
                 setTimeout(() => {

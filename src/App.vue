@@ -350,4 +350,13 @@ width: 0;
 overflow: hidden;
 visibility: hidden;
 } */
+
+
+/* icon font */
+.icon_svg{
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+  vertical-align: middle
+}
 </style>

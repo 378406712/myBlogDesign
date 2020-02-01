@@ -151,15 +151,14 @@ export default {
               //console.log(getInfo.getBrowser());
             let InfoData = {
               username: this.user,
+              e_mail:this.e_mail,
               os:getInfo.getOsInfo(),
               digits:getInfo.getDigits(),
               browser:getInfo.getBrowser()
 
             }
               //登录信息,登录时间,ip,设备信息
-              this.$axios.post('api/postUserInfo',InfoData).then((res)=>{
-             
-              })
+              this.$axios.post('api/postServerInfo',InfoData)
             }
           });
         }

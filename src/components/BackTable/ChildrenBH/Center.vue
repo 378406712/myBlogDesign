@@ -16,7 +16,7 @@
               <div class="myAccount">
                 <div class="account">
                   <a
-                    @click="drawer = true"
+                    @click="showUserInfo"
                     style="color:white"
                     href="javascript:;"
                     to="/backhome/personal"
@@ -26,10 +26,23 @@
                     我的资料
                   </a>
 
-                  <el-drawer style="padding:20px" title="个人资料" :visible.sync="drawer" :with-header="false">
+                  <el-drawer
+                    custom-class="drawers"
+                    title="个人资料"
+                    :visible.sync="drawer"
+                    :with-header="false"
+                  >
                     <!-- 头像 -->
-                      <!-- <el-divider content-position="left"  style="padding:20px">123</el-divider> -->
-                    <div class="demo-fit" style="padding:20px">
+                    <el-divider content-position="left" style="padding:20px"
+                      ><el-button type="primary" round
+                      @click="jumpToPersonal"
+                        >编辑资料</el-button
+                      ></el-divider
+                    >
+                    <div
+                      class="demo-fit"
+                      style="padding:20px 20px 0px 20px;diplay:flex"
+                    >
                       <div class="block" v-for="fit in fits" :key="fit">
                         <el-avatar
                           style="vertical-align:middle"
@@ -38,27 +51,67 @@
                           :fit="fit"
                           :src="url"
                         ></el-avatar>
-                        <span class="title" style="margin-left:20px">昵称 ： {{ fit }}</span>
-                        
-                  
+                        <div class="block_item1">
+                          <span class="title" style="margin-left:20px"
+                            >昵称 ： {{ userInfoData.nickname }}</span
+                          >
+                          <span
+                            class="title"
+                            style="margin-left:20px;marginTop:10px"
+                            >性别 ：
+                            <svg
+                              v-if="userInfoData.sex == '男'"
+                              aria-hidden="true"
+                              class="icon_svg"
+                            >
+                              <use xlink:href="#iconnan"></use>
+                            </svg>
+                            <svg
+                              v-if="userInfoData.sex == '女'"
+                              aria-hidden="true"
+                              class="icon_svg"
+                            >
+                              <use xlink:href="#iconnv"></use>
+                            </svg>
+                          </span>
+                        </div>
                       </div>
+                      <el-divider></el-divider>
                     </div>
                     <!-- 个性签名，地区，职业等 -->
                     <div class="more_detail">
-                        <p>个性签名：当你的才华还撑不起你的野心时，那你就应该静下来学习</p>
-                        <p>职业：前端</p>
-                        <p>家乡：安徽</p>
-                        <p>生日：1996.10.20</p>
+                      <p>
+                        <svg aria-hidden="true" class="icon_svg">
+                          <use xlink:href="#iconqianming"></use></svg
+                        >个性签名：{{ userInfoData.desc }}
+                      </p>
+                      <el-divider></el-divider>
+                      <p>
+                        <svg aria-hidden="true" class="icon_svg">
+                          <use xlink:href="#iconlingdai"></use></svg
+                        >职业：{{ userInfoData.job }}
+                      </p>
 
+                      <p>
+                        <svg aria-hidden="true" class="icon_svg">
+                          <use xlink:href="#iconnb-"></use></svg
+                        >家乡：{{ userInfoData.hometown }}
+                      </p>
+
+                      <p>
+                        <svg aria-hidden="true" class="icon_svg">
+                          <use xlink:href="#icondangao"></use></svg
+                        >生日：{{ userInfoData.birthday }}
+                      </p>
                     </div>
                   </el-drawer>
                 </div>
               </div>
               <ul class="card-inner card-mine">
                 <li>用户名 :</li>
-                <li v-changeColor="{font:21+'px'}">{{username}}</li>
+                <li v-changeColor="{ font: 21 + 'px' }">{{ username }}</li>
                 <li>邮箱 :</li>
-                <li v-changeColor="{font:21+'px'}">{{e_mail}}</li>
+                <li v-changeColor="{ font: 21 + 'px' }">{{ e_mail }}</li>
               </ul>
             </div>
           </div>
@@ -67,15 +120,35 @@
           <!-- 待循环 -->
           <div class="card">
             <div class="card-main">
-              <el-table :data="tableData2" style="width: 100%" :row-class-name="tableRowClassName">
-                <el-table-column prop="time" label="登录时间" width="180"></el-table-column>
-                <el-table-column prop="ip" label="ip" width="180"></el-table-column>
+              <el-table
+                :data="tableData2"
+                style="width: 100%"
+                :row-class-name="tableRowClassName"
+              >
+                <el-table-column
+                  prop="time"
+                  label="登录时间"
+                  width="180"
+                ></el-table-column>
+                <el-table-column
+                  prop="ip"
+                  label="ip"
+                  width="180"
+                ></el-table-column>
                 <el-table-column prop="os" label="设备信息"></el-table-column>
-                <el-table-column prop="browser.version" label="浏览器信息"></el-table-column>
+                <el-table-column
+                  prop="browser.version"
+                  label="浏览器信息"
+                ></el-table-column>
                 <el-table-column prop label="操作">
                   <!-- <el-button type="primary" icon="el-icon-check"  @click="open" circle></el-button> -->
                   <template slot-scope="scope">
-                    <el-button type="danger" icon="el-icon-delete" @click="open(scope.row)" circle></el-button>
+                    <el-button
+                      type="danger"
+                      icon="el-icon-delete"
+                      @click="open(scope.row)"
+                      circle
+                    ></el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -87,9 +160,10 @@
   </div>
 </template>
 
-
 <script>
 import store from "./../../../store/store";
+import { CodeToText, TextToCode } from "element-china-area-data";
+
 export default {
   name: "center",
   data() {
@@ -105,7 +179,9 @@ export default {
       numberValidateForm: {
         age: ""
       },
-      radio: "1"
+      radio: "1",
+
+      userInfoData: ""
     };
   },
   methods: {
@@ -127,7 +203,7 @@ export default {
       })
         .then(() => {
           this.$axios
-            .get("/api/deleteUserInfo", {
+            .get("/api/deleteServerInfo", {
               params: {
                 _id: val._id
               }
@@ -147,9 +223,9 @@ export default {
           });
         });
     },
-    getInfo() {
+    getServerInfo() {
       this.$axios
-        .get("/api/getUserInfo", {
+        .get("/api/getServerInfo", {
           params: {
             username: this.username
           }
@@ -164,7 +240,9 @@ export default {
     },
     jumpToPersonal() {
       this.$router.push("/backhome/personal");
-      this.$store.commit("initstoreList", "true");
+       this.$store.commit('sliderList',2);
+       this.$router.go(0)
+      //this.$store.commit("initstoreList", "true");
     },
     submitForm(formName) {
       // this.$refs[formName].validate(valid => {
@@ -178,6 +256,36 @@ export default {
     },
     resetForm(formName) {
       // this.$refs[formName].resetFields();
+    },
+    getUserInfo() {
+      console.log(123);
+      this.$axios
+        .get("/api/userInfoData", {
+          params: {
+            username: this.username
+          }
+        })
+        .then(res => {
+          this.userInfoData = res.data;
+          console.log(this.userInfoData, 222);
+          //this.$store.commit("userAvatar", res.data.fileList);
+          let hometown = [];
+          res.data.hometown.map((item, index) => {
+            hometown += CodeToText[item] + " ";
+            this.userInfoData.hometown = hometown;
+          });
+          if(this.userInfoData.hometown.length==0){
+        this.userInfoData.hometown=''
+          }
+          
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    showUserInfo() {
+      this.drawer = true;
+      this.getUserInfo();
     }
   },
 
@@ -185,13 +293,17 @@ export default {
     let info = JSON.parse(localStorage.getItem("token"));
     this.username = info.data.username;
     this.e_mail = info.data.e_mail;
+        this.getUserInfo();
+
   },
   mounted() {
-    this.getInfo();
+    this.getServerInfo();
+ 
   }
 };
 </script>
 
+<style scoped></style>
 <style>
 .content-header {
   background-image: url("./../../../assets/bg/bg_back/bg.png");
@@ -210,8 +322,20 @@ button:focus {
 .account {
   float: right;
 }
-.more_detail{
-  padding: 20px;
+.more_detail {
+  padding: 0 20px 20px 20px;
 }
-
+.demo-fit .block {
+  display: flex;
+}
+.demo-fit .block .block_item1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.drawers {
+  background-image: url("../../../assets/media_icon/iloli.gif");
+  background-position: 150px 420px;
+  background-repeat: no-repeat;
+}
 </style>

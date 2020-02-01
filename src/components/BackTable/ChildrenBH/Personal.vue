@@ -49,7 +49,7 @@
                                 class="card-cta"
                                 data-toggle="modal"
                                 data-target="#ga-modal"
-                                @click="setPersonal"
+                                @click="dialogPersonalVisible = true"
                               >
                                 立即设置
                                 <i class="fas fa-chevron-right"></i>
@@ -156,6 +156,7 @@
       top="2%"
       width="35%"
       title="修改账号密码"
+      custom-class="alertPwd"
       :visible.sync="dialogFormVisible"
     >
       <el-form v-model="form">
@@ -180,30 +181,163 @@
         <el-button @click="dialogFormVisible = false">取 消</el-button>
       </div>
     </el-dialog>
+
+    <!-- 表单 个人信息 -->
+    <el-dialog
+      top="2%"
+      width="50%"
+      title="个人信息"
+      :visible.sync="dialogPersonalVisible"
+    >
+      <el-form
+        :model="ruleForm"
+        ref="ruleForm"
+        :label-position="labelPosition"
+        label-width="80px"
+      >
+        <el-row :gutter="10">
+          <el-col :span="12">
+            <el-form-item
+              prop="nickname"
+              :rules="{ required: true, message: '昵称不能为空' }"
+              id="labels"
+              label="昵称"
+            >
+              <el-input
+                type="nickname"
+                v-model="ruleForm.nickname"
+                clearable
+              ></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-form-item id="labels" label="性别">
+          <el-radio v-model="ruleForm.sex" label="男" border size="small"
+            >男</el-radio
+          >
+          <el-radio v-model="ruleForm.sex" label="女" border size="small"
+            >女</el-radio
+          >
+        </el-form-item>
+        <el-form-item label="生日">
+          <el-col :span="12">
+            <el-form-item prop="birthday">
+              <el-date-picker
+                type="date"
+                placeholder="选择日期"
+                v-model="ruleForm.birthday"
+                style="width: 85%;"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-form-item>
+        <el-row :gutter="10">
+          <el-col :span="12">
+            <el-form-item id="labels" label="职业">
+              <el-input v-model.trim="ruleForm.job" clearable></el-input>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item id="labels" label="家乡">
+              <el-cascader
+                :options="area.options"
+                v-model="area.hometown"
+                @change="handleChange"
+                clearable
+              ></el-cascader>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-form-item label="头像">
+          <el-upload
+            action="#"
+            list-type="picture-card"
+            :limit="1"
+            show-file-list
+
+            :file-list="ruleForm.fileList"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove"
+          >
+            <i class="el-icon-plus"></i>
+          </el-upload>
+          <el-dialog
+            :append-to-body="true"
+            :visible.sync="ruleForm.dialogVisible"
+          >
+            <img width="100%" :src="ruleForm.dialogImageUrl" alt="" />
+          
+          </el-dialog>
+        </el-form-item>
+        <el-form-item label="个性签名" id="labels" prop="desc">
+          <el-input
+            type="textarea"
+            style="width: 90%;"
+            v-model="ruleForm.desc"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="setPersonal">提 交</el-button>
+        <el-button @click="dialogPersonalVisible = false">取 消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import $ from "jquery";
 import { JSEncrypt } from "jsencrypt";
+import { regionData } from "element-china-area-data";
 
 export default {
-  inject: ["reload"],
   name: "personal",
   data() {
     return {
-      dialogTableVisible: false,
+      //地区多选
+      src:"",
+      area: {
+        options: regionData
+      },
       dialogFormVisible: false,
       originPass: "",
       newPass: "",
       againPass: "",
-      form: ""
+      form: "",
+
+      ruleForm: {
+        username: "",
+        nickname: "",
+        sex: "",
+        hometown: [],
+        job: "",
+        birthday: "",
+        desc: "",
+        dialogImageUrl: "",
+        dialogVisible: false,
+fileList:[]      },
+
+      labelPosition: "right",
+      dialogPersonalVisible: false //个人信息
     };
   },
   methods: {
+    handleChange(value) {
+      console.log(value);
+      this.ruleForm.hometown = value;
+    },
     //修改密码
     alterPass() {
-      if (this.originPass == this.newPass) {
+      if (this.originPass == "" || this.againPass == "" || this.newPass == "") {
+        swal({
+          title: "有未输入内容!",
+          text: "请重新输入",
+          icon: "warning",
+          button: "OK"
+        });
+      } else if (this.originPass == this.newPass && this.originPass != "") {
         swal({
           title: "修改密码失败!",
           text: "原密码与新密码相同",
@@ -264,7 +398,66 @@ export default {
     },
     //设置个人资料
     setPersonal() {
-      console.log(456);
+      let {
+        username,
+        nickname,
+        sex,
+        desc,
+        hometown,
+        job,
+        birthday,
+        fileList
+      } = this.ruleForm;
+      let userInfo = {
+        username,
+        nickname,
+        desc,
+        sex,
+        hometown,
+        job,
+        birthday,
+    fileList
+};
+
+//
+
+this.param = new FormData();
+      this.param.append("file", file, file.name);
+
+      let config = {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      };
+      this.$axios.post("/api/userInfoAdd", userInfo).then(res => {
+        console.log(res);
+        if (res.data == "0") {
+          swal({
+            title: "设置成功!",
+            icon: "success",
+            button: "Aww yiss!"
+          }).then(() => {
+            this.$router.go(0);
+          });
+        } else if (res.data == "1") {
+          swal({
+            title: "更新成功!",
+
+            icon: "success",
+            button: "Aww yiss!"
+          }).then(() => {
+            this.$router.go(0);
+          });
+        } else {
+          swal({
+            title: "设置失败!",
+            text: "网络好像有点问题",
+            icon: "error",
+            button: "yiss Aww!"
+          });
+        }
+      });
+      console.log(userInfo);
     },
     //删除账号
     removePass() {
@@ -274,34 +467,29 @@ export default {
         type: "warning"
       })
         .then(() => {
-            let removeData = {
-        params: {
-         e_mail:this.e_mail
-        }
-      };
-      console.log(removeData)
-      this.$axios.get("/api/userRemove", removeData).then(res => {
-        console.log(res)
-        if(res.data.status == '0'){
-  swal({
-            title: "删除成功!",
-            icon: "success",
-            button: "Aww yiss!"
-          }).then(() => {
-                  delete localStorage.token;
-                  this.$router.go(0);
-                });;
-        }
-        else{
-            swal({
-            title: "删除失败,网络好像出了小差～",
-            icon: "error",
-            button: "yiss Aww!"
-          })
-        }
-
-      });
-        
+          let removeData = {
+            params: {
+              e_mail: this.e_mail
+            }
+          };
+          this.$axios.get("/api/userRemove", removeData).then(res => {
+            if (res.data.status == "0") {
+              swal({
+                title: "删除成功!",
+                icon: "success",
+                button: "Aww yiss!"
+              }).then(() => {
+                delete localStorage.token;
+                this.$router.go(0);
+              });
+            } else {
+              swal({
+                title: "删除失败,网络好像出了小差～",
+                icon: "error",
+                button: "yiss Aww!"
+              });
+            }
+          });
         })
         .catch(() => {
           this.$message({
@@ -309,12 +497,24 @@ export default {
             message: "已取消删除"
           });
         });
-    
-    }
+    },
+    //图片上传
+    handleRemove(file, fileList) {
+      //console.log(file, fileList);
+    },
+    //图片点击放大
+    handlePictureCardPreview(file) {
+      this.ruleForm.dialogImageUrl = file.url;
+      this.ruleForm.dialogVisible = true;
+    },
+   
+    //覆盖默认的上传行为
+    httprequest() {}
   },
   created() {
     let info = JSON.parse(localStorage.getItem("token"));
-    this.username = info.data.username;
+
+    this.ruleForm.username = info.data.username;
     this.e_mail = info.data.e_mail;
   }
 };
@@ -414,6 +614,9 @@ ol {
 .fa,
 .fas {
   font-weight: 900;
+}
+.el-radio {
+  margin: 0;
 }
 </style>
 

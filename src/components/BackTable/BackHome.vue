@@ -11,17 +11,17 @@
       </div>
 
       <ul class="menu">
-        <li  :class="{actives:personalFlag}">
+        <li >
           <router-link to="/backhome/center">
             <i class="fab fa-fort-awesome"></i>
             <span>首页</span>
           </router-link>
         </li>
         <li class="menu-title">我的</li>
-        <li >
+        <li>
           <router-link to="/backhome/personal">
             <i class="fas fa-user"></i>
-            <span>资料</span>
+            <span>账号</span>
           </router-link>
         </li>
 
@@ -61,7 +61,7 @@ import Head from "./Head";
 
 import Foot from "./Foot";
 import $ from "jquery";
-import store from './../../store/store'
+import store from "./../../store/store";
 // import func from '../../../vue-temp/vue-editor-bridge';
 export default {
   name: "backhome",
@@ -70,7 +70,6 @@ export default {
   data() {
     return {
       flag: true,
-      personalFlag:false
     };
   },
   methods: {
@@ -80,23 +79,28 @@ export default {
     }
   },
   mounted() {
+
     $(function() {
+        let index = sessionStorage.getItem("sliderStatus")
+       $(".menu li").removeClass("actives");
+        $(".menu li").eq(index).addClass("actives");
       $(".menu li").on("click", function() {
+
+         store.commit('sliderList',$(this).index());
+
         $(".menu li").removeClass("actives");
         $(this).addClass("actives");
       });
     });
-this.personalFlag = store.state.flag
-  },
-
+  }
 };
 </script>
 
-<style  scoped>
+<style scoped>
 .slide {
   width: 240px;
   position: fixed;
-  transition: all .5s;
+  transition: all 0.5s;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
   left: 0;
   top: 0;
@@ -116,7 +120,7 @@ this.personalFlag = store.state.flag
   padding: 0 20px;
   background: #fff;
   text-align: center;
-  white-space: nowrap
+  white-space: nowrap;
 }
 .menu {
   display: flex;
@@ -144,7 +148,7 @@ this.personalFlag = store.state.flag
   color: #78828a;
   text-decoration: none;
   transition: all 0.5s;
-  white-space: nowrap
+  white-space: nowrap;
 }
 .menu li {
   font-size: 14px;
@@ -234,16 +238,13 @@ this.personalFlag = store.state.flag
 }
 
 .slider .menu li a {
-white-space: nowrap!important
- 
+  white-space: nowrap !important;
 }
 .siderbar-mini li a span {
- 
-width: 0;
-overflow: hidden;
-visibility: hidden;
-white-space:nowrap;
-
+  width: 0;
+  overflow: hidden;
+  visibility: hidden;
+  white-space: nowrap;
 }
 .siderbar-mini li a {
   border-radius: 3px;
