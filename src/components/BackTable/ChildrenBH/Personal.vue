@@ -28,7 +28,7 @@
                               <a
                                 href="javascript:;"
                                 class="card-cta"
-                                @click="dialogFormVisible = true"
+                                @click="alterForm.dialogFormVisible = true"
                               >
                                 立即修改
                                 <i class="fas fa-chevron-right"></i>
@@ -49,7 +49,7 @@
                                 class="card-cta"
                                 data-toggle="modal"
                                 data-target="#ga-modal"
-                                @click="dialogPersonalVisible = true"
+                                @click="ruleForm.dialogPersonalVisible = true"
                               >
                                 立即设置
                                 <i class="fas fa-chevron-right"></i>
@@ -81,14 +81,14 @@
                         <div class="col-12">
                           <div class="card">
                             <div class="card-header">
-                              <h4>最近五分钟使用IP</h4>
+                              <h4>最近五分钟使用服务</h4>
                             </div>
                             <div class="card-body">
                               <table class="table table-striped">
                                 <thead>
                                   <tr>
-                                    <th scope="col">IP</th>
-                                    <th scope="col">归属地</th>
+                                    <th scope="col">时间</th>
+                                    <th scope="col">操作</th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -101,43 +101,7 @@
                               </table>
                             </div>
                           </div>
-                          <div class="card">
-                            <div class="card-header">
-                              <h4>最近十次登录IP</h4>
-                            </div>
-                            <div class="card-body">
-                              <table class="table table-striped">
-                                <thead>
-                                  <tr>
-                                    <th scope="col">IP</th>
-                                    <th scope="col">归属地</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>180.168.208.130</td>
-                                    <td>上海市电信</td>
-                                  </tr>
-                                  <tr>
-                                    <td>112.65.61.94</td>
-                                    <td>上海市徐汇区联通漕河泾数据中心</td>
-                                  </tr>
-                                  <tr>
-                                    <td>35.194.133.30</td>
-                                    <td>台湾省彰化县Google云计算数据中心</td>
-                                  </tr>
-                                  <tr>
-                                    <td>120.204.218.64</td>
-                                    <td>上海市移动</td>
-                                  </tr>
-                                  <tr>
-                                    <td>121.69.97.22</td>
-                                    <td>北京市鹏博士宽带</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
+                          
                         </div>
                       </div>
                     </div>
@@ -157,28 +121,38 @@
       width="35%"
       title="修改账号密码"
       custom-class="alertPwd"
-      :visible.sync="dialogFormVisible"
+      :visible.sync="alterForm.dialogFormVisible"
     >
-      <el-form v-model="form">
+      <el-form v-model="alterForm.form">
         <el-form-item id="labels" label="原密码">
           <el-input
-            v-model="originPass"
+            v-model="alterForm.originPass"
             autocomplete="off"
             clearable
           ></el-input>
         </el-form-item>
 
         <el-form-item id="labels" label="新密码">
-          <el-input v-model="newPass" show-password clearable></el-input>
+          <el-input
+            v-model="alterForm.newPass"
+            show-password
+            clearable
+          ></el-input>
         </el-form-item>
 
         <el-form-item id="labels" label="再次输入新密码">
-          <el-input v-model="againPass" show-password clearable></el-input>
+          <el-input
+            v-model="alterForm.againPass"
+            show-password
+            clearable
+          ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="alterPass">确 定</el-button>
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button @click="alterForm.dialogFormVisible = false"
+          >取 消</el-button
+        >
       </div>
     </el-dialog>
 
@@ -187,12 +161,12 @@
       top="2%"
       width="50%"
       title="个人信息"
-      :visible.sync="dialogPersonalVisible"
+      :visible.sync="ruleForm.dialogPersonalVisible"
     >
       <el-form
         :model="ruleForm"
         ref="ruleForm"
-        :label-position="labelPosition"
+        :label-position="ruleForm.labelPosition"
         label-width="80px"
       >
         <el-row :gutter="10">
@@ -241,47 +215,52 @@
           <el-col :span="12">
             <el-form-item id="labels" label="家乡">
               <el-cascader
-                :options="area.options"
-                v-model="area.hometown"
+                :options="ruleForm.area.options"
+                v-model="ruleForm.area.hometown"
                 @change="handleChange"
                 clearable
               ></el-cascader>
             </el-form-item>
           </el-col>
         </el-row>
-
-        <el-form-item label="头像">
-          <el-upload
-            action="#"
-            list-type="picture-card"
-            :limit="1"
-            show-file-list
-
-            :file-list="ruleForm.fileList"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove"
-          >
-            <i class="el-icon-plus"></i>
-          </el-upload>
-          <el-dialog
-            :append-to-body="true"
-            :visible.sync="ruleForm.dialogVisible"
-          >
-            <img width="100%" :src="ruleForm.dialogImageUrl" alt="" />
-          
-          </el-dialog>
-        </el-form-item>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="头像">
+              <el-upload
+                action="#"
+                list-type="picture-card"
+                :limit="1"
+                show-file-list
+                :before-upload="beforeupload"
+              >
+                <i class="el-icon-plus"></i>
+              </el-upload>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item>
+              <el-image width="80%" class="showPic"   :src="ruleForm.src" alt="" >
+                 <div slot="error" class="image-slot">
+        <i style="fontSize:28px" class="el-icon-picture-outline"></i>
+      </div>
+              </el-image>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item label="个性签名" id="labels" prop="desc">
           <el-input
             type="textarea"
-            style="width: 90%;"
+            style="width: 91.5%;"
             v-model="ruleForm.desc"
           ></el-input>
         </el-form-item>
       </el-form>
+
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="setPersonal">提 交</el-button>
-        <el-button @click="dialogPersonalVisible = false">取 消</el-button>
+        <el-button @click="ruleForm.dialogPersonalVisible = false"
+          >取 消</el-button
+        >
       </div>
     </el-dialog>
   </div>
@@ -296,17 +275,15 @@ export default {
   name: "personal",
   data() {
     return {
-      //地区多选
-      src:"",
-      area: {
-        options: regionData
+      //修改密码表单
+      alterForm: {
+        dialogFormVisible: false,
+        originPass: "",
+        newPass: "",
+        againPass: "",
+        form: ""
       },
-      dialogFormVisible: false,
-      originPass: "",
-      newPass: "",
-      againPass: "",
-      form: "",
-
+      //个人信息表单
       ruleForm: {
         username: "",
         nickname: "",
@@ -315,36 +292,39 @@ export default {
         job: "",
         birthday: "",
         desc: "",
-        dialogImageUrl: "",
-        dialogVisible: false,
-fileList:[]      },
-
-      labelPosition: "right",
-      dialogPersonalVisible: false //个人信息
+        src: "",
+        area: {
+          options: regionData
+        },
+        param: new FormData(),
+        labelPosition: "right",
+        dialogPersonalVisible: false
+      }
     };
   },
   methods: {
+    //地区处理
     handleChange(value) {
-      console.log(value);
       this.ruleForm.hometown = value;
     },
     //修改密码
     alterPass() {
-      if (this.originPass == "" || this.againPass == "" || this.newPass == "") {
+      let { originPass, againPass, newPass } = this.alterForm;
+      if (originPass == "" || againPass == "" || newPass == "") {
         swal({
           title: "有未输入内容!",
           text: "请重新输入",
           icon: "warning",
           button: "OK"
         });
-      } else if (this.originPass == this.newPass && this.originPass != "") {
+      } else if (originPass == newPass && originPass != "") {
         swal({
           title: "修改密码失败!",
           text: "原密码与新密码相同",
           icon: "warning",
           button: "OK"
         });
-      } else if (this.newPass == this.againPass && this.newPass != "") {
+      } else if (newPass == againPass && newPass != "") {
         this.$axios.get("/api/getPublicKey").then(res => {
           //先获取公钥
           if (res.data.status === 0) {
@@ -353,8 +333,8 @@ fileList:[]      },
 
             let PwdData = {
               e_mail: this.e_mail,
-              originPass: encryptor.encrypt(this.originPass),
-              againPass: encryptor.encrypt(this.againPass)
+              originPass: encryptor.encrypt(originPass),
+              againPass: encryptor.encrypt(againPass)
             };
             this.$axios.post("/api/userPassAlter", PwdData).then(res => {
               if (res.data.status == "0") {
@@ -387,7 +367,7 @@ fileList:[]      },
             //网络问题
           }
         });
-      } else if (this.newPass != this.againPass) {
+      } else if (newPass != againPass) {
         swal({
           title: "修改密码失败!",
           text: "两次输入不符合",
@@ -413,51 +393,40 @@ fileList:[]      },
         nickname,
         desc,
         sex,
-        hometown,
         job,
         birthday,
-    fileList
-};
-
-//
-
-this.param = new FormData();
-      this.param.append("file", file, file.name);
-
-      let config = {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
+        hometown
       };
-      this.$axios.post("/api/userInfoAdd", userInfo).then(res => {
-        console.log(res);
-        if (res.data == "0") {
-          swal({
-            title: "设置成功!",
-            icon: "success",
-            button: "Aww yiss!"
-          }).then(() => {
-            this.$router.go(0);
-          });
-        } else if (res.data == "1") {
-          swal({
-            title: "更新成功!",
+      this.ruleForm.param.append("message", JSON.stringify(userInfo));
+      this.$axios
+        .post("/api/userInfoAdd", this.ruleForm.param)
+        .then(res => {
+          if (res.data == "0") {
+            swal({
+              title: "设置成功!",
+              icon: "success",
+              button: "Aww yiss!"
+            }).then(() => {
+              this.$router.go(0);
+            });
+          } else if (res.data == "1") {
+            swal({
+              title: "更新成功!",
 
-            icon: "success",
-            button: "Aww yiss!"
-          }).then(() => {
-            this.$router.go(0);
-          });
-        } else {
-          swal({
-            title: "设置失败!",
-            text: "网络好像有点问题",
-            icon: "error",
-            button: "yiss Aww!"
-          });
-        }
-      });
-      console.log(userInfo);
+              icon: "success",
+              button: "Aww yiss!"
+            }).then(() => {
+              this.$router.go(0);
+            });
+          } else {
+            swal({
+              title: "设置失败!",
+              text: "网络好像有点问题",
+              icon: "error",
+              button: "yiss Aww!"
+            });
+          }
+        });
     },
     //删除账号
     removePass() {
@@ -498,16 +467,16 @@ this.param = new FormData();
           });
         });
     },
-    //图片上传
-    handleRemove(file, fileList) {
-      //console.log(file, fileList);
+
+    //阻止upload的自动上传，进行再操作
+    beforeupload(file) {
+      //创建临时的路径来展示图片
+      var windowURL = window.URL || window.webkitURL;
+     this.ruleForm.src = windowURL.createObjectURL(file);
+      //重新写一个表单上传的方法
+      this.ruleForm.param.append("file", file, file.name);
+      return false;
     },
-    //图片点击放大
-    handlePictureCardPreview(file) {
-      this.ruleForm.dialogImageUrl = file.url;
-      this.ruleForm.dialogVisible = true;
-    },
-   
     //覆盖默认的上传行为
     httprequest() {}
   },
@@ -617,6 +586,21 @@ ol {
 }
 .el-radio {
   margin: 0;
+}
+.showPic {
+  background-color: #fbfdff;
+    border: 1px dashed #c0ccda;
+    border-radius: 6px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 148px;
+    height: 148px;
+    line-height: 146px;
+    vertical-align: top;
+    text-align: center;
+    cursor: pointer;
+    outline: 0;
+
 }
 </style>
 

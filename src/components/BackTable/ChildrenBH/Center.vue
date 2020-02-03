@@ -6,7 +6,6 @@
           <h1 class="content-heading">用户中心</h1>
         </div>
       </div>
-
       <!-- 内容 -->
       <div class="container">
         <section class="list">
@@ -34,8 +33,7 @@
                   >
                     <!-- 头像 -->
                     <el-divider content-position="left" style="padding:20px"
-                      ><el-button type="primary" round
-                      @click="jumpToPersonal"
+                      ><el-button type="primary" round @click="jumpToPersonal"
                         >编辑资料</el-button
                       ></el-divider
                     >
@@ -111,7 +109,7 @@
                 <li>用户名 :</li>
                 <li v-changeColor="{ font: 21 + 'px' }">{{ username }}</li>
                 <li>邮箱 :</li>
-                <li v-changeColor="{ font: 21 + 'px' }">{{ e_mail }}</li>
+                <li v-changeColor="{ font: 21 + 'px' }">582463379@qq.com</li>
               </ul>
             </div>
           </div>
@@ -163,7 +161,6 @@
 <script>
 import store from "./../../../store/store";
 import { CodeToText, TextToCode } from "element-china-area-data";
-
 export default {
   name: "center",
   data() {
@@ -209,7 +206,7 @@ export default {
               }
             })
             .then(res => {
-              this.getInfo();
+              this.getServerInfo();
               this.$message({
                 type: "success",
                 message: "删除成功!"
@@ -240,8 +237,8 @@ export default {
     },
     jumpToPersonal() {
       this.$router.push("/backhome/personal");
-       this.$store.commit('sliderList',2);
-       this.$router.go(0)
+      this.$store.commit("sliderList", 2);
+      this.$router.go(0);
       //this.$store.commit("initstoreList", "true");
     },
     submitForm(formName) {
@@ -274,10 +271,9 @@ export default {
             hometown += CodeToText[item] + " ";
             this.userInfoData.hometown = hometown;
           });
-          if(this.userInfoData.hometown.length==0){
-        this.userInfoData.hometown=''
+          if (this.userInfoData.hometown.length == 0) {
+            this.userInfoData.hometown = "";
           }
-          
         })
         .catch(err => {
           console.log(err);
@@ -293,12 +289,10 @@ export default {
     let info = JSON.parse(localStorage.getItem("token"));
     this.username = info.data.username;
     this.e_mail = info.data.e_mail;
-        this.getUserInfo();
-
+    this.getUserInfo();
   },
   mounted() {
     this.getServerInfo();
- 
   }
 };
 </script>

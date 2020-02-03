@@ -72,6 +72,7 @@ import resizeImage from "./../assets/login";
 import getInfo from "./../assets/info";
 import $ from "jquery";
 import { JSEncrypt } from "jsencrypt";
+
 export default {
   name: "Login",
 
@@ -89,10 +90,11 @@ export default {
   methods: {
     //登录
     tologin() {
-    
+      this.$store.commit('sliderList',0);
+
       this.$axios.get("api/getPublicKey").then(res => {
+        
         //先获取公钥
-      
         if (res.data.status === 0) {
           let encryptor = new JSEncrypt(); //实例化
           encryptor.setPublicKey(res.data.resultmap); //设置公钥

@@ -11,7 +11,7 @@
       </div>
 
       <ul class="menu">
-        <li >
+        <li>
           <router-link to="/backhome/center">
             <i class="fab fa-fort-awesome"></i>
             <span>首页</span>
@@ -47,6 +47,27 @@
             <span>评论</span>
           </router-link>
         </li>
+
+        <li class="menu-title">个性化</li>
+        <li>
+          <router-link to="/backhome/home_picture">
+            <i class="fas fa-comment-dots"></i>
+            <span>封面设置</span>
+          </router-link>
+        </li>
+          <li>
+          <router-link to="/backhome/top_column">
+            <i class="fas fa-comment-dots"></i>
+            <span>顶栏定制</span>
+          </router-link>
+          </li>
+          <li>
+            <router-link to="/backhome/background">
+            <i class="fas fa-comment-dots"></i>
+            <span>背景模式</span>
+          </router-link>
+        </li>
+
       </ul>
     </div>
     <router-view></router-view>
@@ -69,7 +90,7 @@ export default {
 
   data() {
     return {
-      flag: true,
+      flag: true
     };
   },
   methods: {
@@ -79,14 +100,14 @@ export default {
     }
   },
   mounted() {
-
     $(function() {
-        let index = sessionStorage.getItem("sliderStatus")
-       $(".menu li").removeClass("actives");
-        $(".menu li").eq(index).addClass("actives");
+      let index = sessionStorage.getItem("sliderStatus");
+      $(".menu li").removeClass("actives");
+      $(".menu li")
+        .eq(index)
+        .addClass("actives");
       $(".menu li").on("click", function() {
-
-         store.commit('sliderList',$(this).index());
+        store.commit("sliderList", $(this).index());
 
         $(".menu li").removeClass("actives");
         $(this).addClass("actives");
