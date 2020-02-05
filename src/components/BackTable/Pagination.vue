@@ -3,37 +3,35 @@
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :page-sizes="[2, 4, 6,8,10 ]"
-      :page-size="10"
+      :page-sizes="[2, 4, 6, 8, 10]"
+      :page-size="size"
+      :current-page="page"
       layout="total, sizes, prev, pager, next, jumper"
-      :total='msg'>
+      :total="Number(msg)"
+    >
     </el-pagination>
   </div>
 </template>
 
 <script>
 export default {
-    name:"paginations",
-    props:['msg'],
-    data(){
-        return{
-        total:'',
-        }
+  name: "paginations",
+  props: ["msg", "size", "page"],
+  data() {
+    return {}
+  },
+  methods: {
+    handleSizeChange(size) {
+      this.$emit("sizeValue", size)
     },
-    methods:{
-         handleSizeChange(size) {
-       this.$emit('sizeValue', size)
-      },
-      handleCurrentChange(page) {
-    this.$emit('pageValue', page)
+    handleCurrentChange(page) {
+      if (page != this.page) {
+        this.$emit("pageValue", page - 1)
       }
-    },
-    mounted(){
-        console.log(this.msg)
+      this.$emit("pageValue", page)
     }
+  },
+  mounted() {
+  }
 }
 </script>
-
-<style>
-
-</style>

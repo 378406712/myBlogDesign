@@ -1,120 +1,120 @@
 <template>
   <div class="personal">
     <div class="grey_bg">
-    <div class="content">
-      <!-- 内容 -->
-      <div class="container">
-        <section class="list">
-          <!-- 待循环 -->
-          <div class="card">
-            <div class="card-main">
-              <ul class="card-inner essay-card">
-                <li>
-                  <section class="section">
-                    <div class="section-header">
-                      <h1>我的账号</h1>
-                    </div>
-                    <div class="section-body">
-                      <h2 class="section-title">欢迎, clover_1996!</h2>
-                      <p class="section-lead">{{ e_mail }}</p>
-                      <div class="row mt-sm-4">
-                        <div class="col-lg-6">
-                          <div class="card card-large-icons">
-                            <div class="card-icon bg-primary text-white">
-                              <i class="fas fa-lock"></i>
-                            </div>
-                            <div class="card-body">
-                              <h4>修改密码</h4>
-                              <p>定期修改为高强度密码以保护您的账号</p>
-                              <a
-                                href="javascript:;"
-                                class="card-cta"
-                                @click="alterForm.dialogFormVisible = true"
-                              >
-                                立即修改
-                                <i class="fas fa-chevron-right"></i>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-lg-6">
-                          <div class="card card-large-icons">
-                            <div class="card-icon bg-primary text-white">
-                              <i class="fas fa-shield-alt"></i>
-                            </div>
-                            <div class="card-body">
-                              <h4>个人信息</h4>
-                              <p>个性化设置资料</p>
-                              <a
-                                href="##"
-                                class="card-cta"
-                                data-toggle="modal"
-                                data-target="#ga-modal"
-                                @click="ruleForm.dialogPersonalVisible = true"
-                              >
-                                立即设置
-                                <i class="fas fa-chevron-right"></i>
-                              </a>
+      <div class="content">
+        <!-- 内容 -->
+        <div class="container">
+          <section class="list">
+            <!-- 待循环 -->
+            <div class="card">
+              <div class="card-main">
+                <ul class="card-inner essay-card">
+                  <li>
+                    <section class="section">
+                      <div class="section-header">
+                        <h1>我的账号</h1>
+                      </div>
+                      <div class="section-body">
+                        <h2 class="section-title">欢迎, clover_1996!</h2>
+                        <p class="section-lead">{{ e_mail }}</p>
+                        <div class="row mt-sm-4">
+                          <div class="col-lg-6">
+                            <div class="card card-large-icons">
+                              <div class="card-icon bg-primary text-white">
+                                <i class="fas fa-lock"></i>
+                              </div>
+                              <div class="card-body">
+                                <h4>修改密码</h4>
+                                <p>定期修改为高强度密码以保护您的账号</p>
+                                <a
+                                  href="javascript:;"
+                                  class="card-cta"
+                                  @click="alterForm.dialogFormVisible = true"
+                                >
+                                  立即修改
+                                  <i class="fas fa-chevron-right"></i>
+                                </a>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div class="col-lg-6">
-                          <div class="card card-large-icons">
-                            <div class="card-icon bg-primary text-white">
-                              <i class="fas fa-skull"></i>
-                            </div>
-                            <div class="card-body">
-                              <h4>删除账号</h4>
-                              <p>您的所有数据都会被删除，无法找回</p>
-                              <a
-                                href="##"
-                                class="card-cta"
-                                data-toggle="modal"
-                                data-target="#kill-modal"
-                                @click="removePass"
-                              >
-                                申请删除
-                                <i class="fas fa-chevron-right"></i>
-                              </a>
+                          <div class="col-lg-6">
+                            <div class="card card-large-icons">
+                              <div class="card-icon bg-primary text-white">
+                                <i class="fas fa-shield-alt"></i>
+                              </div>
+                              <div class="card-body">
+                                <h4>个人信息</h4>
+                                <p>个性化设置资料</p>
+                                <a
+                                  href="##"
+                                  class="card-cta"
+                                  data-toggle="modal"
+                                  data-target="#ga-modal"
+                                  @click="ruleForm.dialogPersonalVisible = true"
+                                >
+                                  立即设置
+                                  <i class="fas fa-chevron-right"></i>
+                                </a>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div class="col-12">
-                          <div class="card">
-                            <div class="card-header">
-                              <h4>最近五分钟使用服务</h4>
+                          <div class="col-lg-6">
+                            <div class="card card-large-icons">
+                              <div class="card-icon bg-primary text-white">
+                                <i class="fas fa-skull"></i>
+                              </div>
+                              <div class="card-body">
+                                <h4>删除账号</h4>
+                                <p>您的所有数据都会被删除，无法找回</p>
+                                <a
+                                  href="##"
+                                  class="card-cta"
+                                  data-toggle="modal"
+                                  data-target="#kill-modal"
+                                  @click="removePass"
+                                >
+                                  申请删除
+                                  <i class="fas fa-chevron-right"></i>
+                                </a>
+                              </div>
                             </div>
-                            <div class="card-body">
-                              <table class="table table-striped">
-                                <thead>
-                                  <tr>
-                                    <th scope="col">时间</th>
-                                    <th scope="col">操作</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td colspan="2">
-                                      <strong>最近五分钟未使用服务</strong>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
+                          </div>
+                          <div class="col-12">
+                            <div class="card">
+                              <div class="card-header">
+                                <h4>最近五分钟使用服务</h4>
+                              </div>
+                              <div class="card-body">
+                                <table class="table table-striped">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">时间</th>
+                                      <th scope="col">操作</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td colspan="2">
+                                        <strong>最近五分钟未使用服务</strong>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </section>
-                </li>
-                <li></li>
-              </ul>
+                    </section>
+                  </li>
+                  <li></li>
+                </ul>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
       </div>
     </div>
-</div>
     <!-- 表单 修改密码 -->
     <el-dialog
       top="2%"
@@ -201,7 +201,7 @@
                 type="date"
                 placeholder="选择日期"
                 v-model="ruleForm.birthday"
-                style="width: 85%;"
+                style="width: 85%"
               ></el-date-picker>
             </el-form-item>
           </el-col>
@@ -251,7 +251,7 @@
         <el-form-item label="个性签名" id="labels" prop="desc">
           <el-input
             type="textarea"
-            style="width: 91.5%;"
+            style="width: 91.5%"
             v-model="ruleForm.desc"
           ></el-input>
         </el-form-item>
@@ -392,7 +392,7 @@ export default {
       } = this.ruleForm;
       let userInfo = {
         username,
-         e_mail,
+        e_mail,
         nickname,
         desc,
         sex,
@@ -487,8 +487,7 @@ export default {
     this.ruleForm.username = info.data.username;
     this.e_mail = info.data.e_mail;
     this.ruleForm.e_mail = info.data.e_mail;
-  },
-
+  }
 };
 </script>
 

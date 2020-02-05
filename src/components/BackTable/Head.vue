@@ -54,7 +54,8 @@ export default {
     return {
       show: true,
       username: "",
-      avatar: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+      avatar:
+        "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
     };
   },
   methods: {
@@ -83,9 +84,9 @@ export default {
       $(".content").toggleClass("content-mini");
       $(".navbar").toggleClass("navbar-mini");
       // $(".siderbar-mini .menu li a").on("mouseover", function() {
-      //   $(".siderbar-mini .menu li a").removeClass("aria");
-      //   $(this).toggleClass("aria");
-      // });
+      //   $(".siderbar-mini .menu li a").removeClass("aria")
+      //   $(this).toggleClass("aria")
+      // })
       $(".siderbar-mini .menu li").on("click", function() {
         $(".slide").removeClass("siderbar-mini");
         $(".content").removeClass("content-mini");
@@ -163,7 +164,7 @@ export default {
 }
 .navbar .nav-link.nav-link-user img {
   width: 30px;
-  height:30px;
+  height: 30px;
 }
 .navbar-right {
   margin-bottom: 0;

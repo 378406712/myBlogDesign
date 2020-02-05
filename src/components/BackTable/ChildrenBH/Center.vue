@@ -139,7 +139,6 @@
                     label="浏览器信息"
                   ></el-table-column>
                   <el-table-column prop label="操作">
-                    <!-- <el-button type="primary" icon="el-icon-check"  @click="open" circle></el-button> -->
                     <template slot-scope="scope">
                       <el-button
                         type="danger"
@@ -153,9 +152,12 @@
               </div>
             </div>
             <!-- 分页 -->
-            <Paginations  :msg = 'length'  
-            v-on:sizeValue="sizeValue"
-            v-on:pageValue="pageValue"
+            <Paginations
+              :msg="length"
+              :size="size"
+              :page="page"
+              v-on:sizeValue="sizeValue"
+              v-on:pageValue="pageValue"
             />
           </section>
         </div>
@@ -179,14 +181,14 @@ export default {
       drawer: false,
       e_mail: "",
       username: "",
-      length:'',
+      length: "",
       tableData2: [],
       userInfoData: {
         url:
           "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
       },
-      page:1,
-      size:10
+      page: 1,
+      size: 8
     };
   },
   methods: {
@@ -214,6 +216,7 @@ export default {
             })
             .then(res => {
               this.getServerInfo();
+
               this.$message({
                 type: "success",
                 message: "删除成功!"
@@ -238,9 +241,14 @@ export default {
           res.data.map((item, index) => {
             item.browser.version = item.browser.version.replace("/", " ");
           });
-          this.length = res.data.length
-          this.tableData2 = res.data.reverse().slice(this.size*(this.page-1),this.size*this.page)
-           console.log(this.tableData2)
+          this.length = res.data.length;
+          this.tableData2 = res.data
+            .reverse()
+            .slice(this.size * (this.page - 1), this.size * this.page);
+          if (this.tableData2.length == 0) {
+            this.page -= 1;
+            this.getServerInfo();
+          }
         });
     },
     jumpToPersonal() {
@@ -276,17 +284,16 @@ export default {
       this.drawer = true;
       this.getUserInfo();
     },
-     pageValue: function (pageValue) {
-        this.page = pageValue
-        console.log(`当前页数${this.page}`)
-        this.getServerInfo()
-      },
-       sizeValue: function (sizeValue) {
-         
-        this.size = sizeValue
-           this.getServerInfo()
-        console.log(`当前页数${this.size}`)
-      }
+    pageValue(pageValue) {
+      this.page = pageValue;
+      console.log(`当前页数${this.page}`);
+      this.getServerInfo();
+    },
+    sizeValue(sizeValue) {
+      this.size = sizeValue;
+      this.getServerInfo();
+      console.log(`每页${this.size}条`);
+    }
   },
   created() {
     let info = JSON.parse(localStorage.getItem("token"));
@@ -299,11 +306,13 @@ export default {
   }
 };
 </script>
-
-<style>
+<style scoped>
 .content-header {
   background-image: url("./../../../assets/bg/bg_back/bg.png");
 }
+</style>
+
+<style>
 .card-mine li {
   margin-bottom: 10px !important;
 }

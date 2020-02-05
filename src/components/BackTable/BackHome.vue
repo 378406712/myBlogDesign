@@ -55,19 +55,18 @@
             <span>封面设置</span>
           </router-link>
         </li>
-          <li>
+        <li>
           <router-link to="/backhome/top_column">
             <i class="fas fa-comment-dots"></i>
             <span>顶栏定制</span>
           </router-link>
-          </li>
-          <li>
-            <router-link to="/backhome/background">
+        </li>
+        <li>
+          <router-link to="/backhome/background">
             <i class="fas fa-comment-dots"></i>
             <span>背景模式</span>
           </router-link>
         </li>
-
       </ul>
     </div>
     <router-view></router-view>
@@ -83,7 +82,7 @@ import Head from "./Head";
 import Foot from "./Foot";
 import $ from "jquery";
 import store from "./../../store/store";
-// import func from '../../../vue-temp/vue-editor-bridge';
+// import func from '../../../vue-temp/vue-editor-bridge'
 export default {
   name: "backhome",
   components: { Head, Foot },

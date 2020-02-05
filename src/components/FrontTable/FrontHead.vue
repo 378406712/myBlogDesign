@@ -1,19 +1,14 @@
 <template>
-  <div class="front_head">
-
-  </div>
+  <div class="front_head"></div>
 </template>
 
 <script>
 export default {
-  name: 'front_head',
-  data() { 
-    return {
-
-    }
+  name: "front_head",
+  data() {
+    return {};
   }
- }
+};
 </script>
 
-<style  scoped>
-</style>
+<style scoped></style>

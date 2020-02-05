@@ -1,98 +1,100 @@
 <template>
   <div class="essay">
-     <div class="grey_bg">
-    <div class="content">
-      <div class="content-header">
-        <div class="container">
-          <h1 class="content-heading">撰写文章</h1>
+    <div class="grey_bg">
+      <div class="content">
+        <div class="content-header">
+          <div class="container">
+            <h1 class="content-heading">撰写文章</h1>
+          </div>
         </div>
-      </div>
 
-      <!-- 内容 -->
-      <div class="container">
-
-    <section class="list">
+        <!-- 内容 -->
+        <div class="container">
+          <section class="list">
             <!-- 待循环 -->
             <div class="card">
               <div class="card-main">
                 <ul class="card-inner essay-card">
-                  <li v-changeColor="{font:32+'px'}">
-                    <p class="tit">
-                      <i class="el-icon-edit"></i>博文总览
-                    </p>
+                  <li v-changeColor="{ font: 32 + 'px' }">
+                    <p class="tit"><i class="el-icon-edit"></i>博文总览</p>
                   </li>
                   <li>
-                    <span>文章标题:{{caption | limit}}</span>
+                    <span>文章标题:{{ caption | limit }}</span>
                   </li>
                   <li>
-                    <span>文章内容:{{content| limit}}</span>
+                    <span>文章内容:{{ content | limit }}</span>
                   </li>
                 </ul>
               </div>
             </div>
           </section>
 
-        <section class="list">
-          <!-- 待循环 -->
-          <div class="card">
-            <div class="card-main">
-              <ul class="card-inner">
-                <li>
-                  <p class="tit">文章标题</p>
-                  <input
-                    type="text"
-                    @focus="flag=!flag"
-                    @blur="flag=!flag"
-                    :class="{'orange':flag}"
-                    class="essay-title"
-                    placeholeder="标题"
-                    v-model.lazy="caption"
-                  />
-                </li>
-                <li>
-                  <div class="essay-content">
-                    <textarea
-                      @focus="changeStyle"
-                      @blur="removeStyle"
-                      ref="textarea"
-                      :class="{'orange':tag}"
-                      name="content"
-                      class="area"
-                      rows="5"
-                      col="4"
-                      v-model.lazy="content"
-                    ></textarea>
-                    <label :class="labelStyle ">等一个菠萝包 ...</label>
-                  </div>
-                </li>
-
-                <li>
-                  <div class="submit-btn">
-                    <a @click="publish" href="javascript:;" class="publish">发布~</a>
-                    <div class="wrap-custom-file">
-                      <input type="file" name="image2" id="image2" accept=".gif, .jpg, .png" />
-                      <label for="image2">
-                        <span>Select Image</span>
-                        <i class="fa fa-plus-circle"></i>
-                      </label>
+          <section class="list">
+            <!-- 待循环 -->
+            <div class="card">
+              <div class="card-main">
+                <ul class="card-inner">
+                  <li>
+                    <p class="tit">文章标题</p>
+                    <input
+                      type="text"
+                      @focus="flag = !flag"
+                      @blur="flag = !flag"
+                      :class="{ orange: flag }"
+                      class="essay-title"
+                      placeholeder="标题"
+                      v-model.lazy="caption"
+                    />
+                  </li>
+                  <li>
+                    <div class="essay-content">
+                      <textarea
+                        @focus="changeStyle"
+                        @blur="removeStyle"
+                        ref="textarea"
+                        :class="{ orange: tag }"
+                        name="content"
+                        class="area"
+                        rows="5"
+                        col="4"
+                        v-model.lazy="content"
+                      ></textarea>
+                      <label :class="labelStyle">等一个菠萝包 ...</label>
                     </div>
-                  </div>
-                </li>
-              </ul>
+                  </li>
+
+                  <li>
+                    <div class="submit-btn">
+                      <a @click="publish" href="javascript:;" class="publish"
+                        >发布~</a
+                      >
+                      <div class="wrap-custom-file">
+                        <input
+                          type="file"
+                          name="image2"
+                          id="image2"
+                          accept=".gif, .jpg, .png"
+                        />
+                        <label for="image2">
+                          <span>Select Image</span>
+                          <i class="fa fa-plus-circle"></i>
+                        </label>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
-         
-        </section>
-     
+          </section>
+        </div>
       </div>
     </div>
-     </div>
   </div>
 </template>
 
 <script>
 import $ from "jquery";
-import '../../../../assets/css/essay_compile.css';
+import "../../../../assets/css/essay_compile_edit.css";
 export default {
   name: "essay",
   data() {
@@ -104,7 +106,7 @@ export default {
       reg: false,
       labelStyle: {
         input_label: true,
-        active: false
+        active_essay: false
       }
     };
   },
@@ -112,11 +114,11 @@ export default {
   methods: {
     changeStyle() {
       this.tag = true;
-      this.labelStyle.active = true;
+      this.labelStyle.active_essay = true;
     },
     removeStyle() {
       if (this.$refs.textarea.value == "") {
-        this.labelStyle.active = false;
+        this.labelStyle.active_essay = false;
       }
       this.tag = false;
     },
@@ -186,12 +188,9 @@ export default {
 
       // End loop of file input elements
     });
-
- 
   }
 };
 </script>
-
 <style scoped>
 .area {
   background-image: url("./../../../assets/bg/icon/comment-icon.png");

@@ -1,37 +1,39 @@
 <template>
   <div class="edit">
-     <div class="grey_bg">
-    <div class="content">
-      <div class="content-header">
-        <div class="container">
-          <h1 class="content-heading">编辑文章</h1>
-        </div>
-      </div>
-
-      <!-- 内容 -->
-      <div class="container">
-        <section class="list">
-          <!-- 待循环 -->
-          <div class="card">
-            <div class="card-main">
-              <ul class="card-inner">
-                <li class="card-search">
-                  <span class="el-icon-search" :class="{'searh_color':flag}"></span>
-                  <input
-                    @focus="flag=!flag"
-                    @blur="flag=!flag"
-                    :class="{'orange':flag}"
-                    class="search"
-                    type="text"
-                    v-model="search"
-                  />
-                </li>
-              </ul>
-            </div>
+    <div class="grey_bg">
+      <div class="content">
+        <div class="content-header">
+          <div class="container">
+            <h1 class="content-heading">编辑文章</h1>
           </div>
-         
-        </section>
-         <section class="list">
+        </div>
+
+        <!-- 内容 -->
+        <div class="container">
+          <section class="list">
+            <!-- 待循环 -->
+            <div class="card">
+              <div class="card-main">
+                <ul class="card-inner">
+                  <li class="card-search">
+                    <span
+                      class="el-icon-search"
+                      :class="{ searh_color: flag }"
+                    ></span>
+                    <input
+                      @focus="flag = !flag"
+                      @blur="flag = !flag"
+                      :class="{ orange: flag }"
+                      class="search"
+                      type="text"
+                      v-model="search"
+                    />
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+          <section class="list">
             <!-- 待循环 -->
             <div class="card">
               <div class="card-main">
@@ -40,19 +42,28 @@
                     <table class="table table-striped">
                       <thead>
                         <tr id="first">
-                          <td v-for="item of characters" :key="item">{{item}}</td>
+                          <td v-for="item of characters" :key="item">
+                            {{ item }}
+                          </td>
                         </tr>
                       </thead>
                       <tbody id="app">
-                        <tr v-for="(item) of filterItem" :key="item.id">
-                          <td>{{item.caption | limit}}</td>
-                          <td>{{item.content | limit}}</td>
+                        <tr v-for="item of filterItem" :key="item.id">
+                          <td>{{ item.caption | limit }}</td>
+                          <td>{{ item.content | limit }}</td>
                           <td>
-                            <router-link :to="'/backhome/compile/'+item.id">
-                              <button class="btn btn-primary edits">编辑</button>
+                            <router-link :to="'/backhome/compile/' + item.id">
+                              <button class="btn btn-primary edits">
+                                编辑
+                              </button>
                             </router-link>
 
-                            <button class="btn btn-danger del" @click="del(item.id)">删除</button>
+                            <button
+                              class="btn btn-danger del"
+                              @click="del(item.id)"
+                            >
+                              删除
+                            </button>
                           </td>
                           <router-view></router-view>
                         </tr>
@@ -64,13 +75,15 @@
               </div>
             </div>
           </section>
+        </div>
       </div>
     </div>
-     </div>
   </div>
 </template>
 
 <script>
+import "../../../../assets/css/essay_compile_edit.css";
+
 export default {
   inject: ["reload"],
   name: "edit",
@@ -123,7 +136,7 @@ export default {
 };
 </script>
 
-<style  scoped>
+<style scoped>
 .content-header {
   background-image: url("./../../../assets/bg/bg_back/bg-edit.png");
 }
@@ -136,42 +149,4 @@ export default {
   top: 0;
 }
 </style>
-<style >
-.del {
-  background-color: #ff0033 !important;
-  border-color: transparent;
-  margin-left: 10px;
-}
-.edits {
-  background-color: #6666ff;
-}
-.search {
-  width: 100%;
-  height: 60px;
-  margin-bottom: 30px;
-  padding-left: 55px;
-  border-radius: 3px;
-  border: 1px solid #ddd;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-}
-.card-search {
-  position: relative;
-}
-.el-icon-search {
-  position: absolute;
-  font-size: 32px;
-  left: 10px;
-  top: 14px;
-  transition: color 0.3s;
-  cursor: pointer;
-  color: #515a6e;
-  text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
-}
-.el-icon-search:hover {
-  color: #fe9600;
-}
-.searh_color {
-  color: #fe9600;
-}
-</style>
+<style></style>

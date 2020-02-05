@@ -1,68 +1,76 @@
 <template>
   <div class="compile">
-     <div class="grey_bg">
-    <div class="content">
-      <!-- 内容 -->
-      <div class="container">
-        <section class="list">
-          <!-- 待循环 -->
-          <div class="card">
-            <div class="card-main">
-              <ul class="card-inner">
-                <li>
-                  <p class="tit">文章标题</p>
-                  <input
-                    type="text"
-                    @focus="flag=true"
-                    @blur="flag=false"
-                    :class="{'orange':flag}"
-                    class="essay-title"
-                    placeholeder="标题"
-                    v-model="caption"
-                  />
-                </li>
-                <li>
-                  <div class="essay-content">
-                    <textarea
-                      @focus="changeStyle"
-                      @blur="removeStyle"
-                      ref="textarea"
-                      :class="{'orange':tag}"
-                      name="content"
-                      class="area"
-                      tabindex="4"
-                      rows="5"
-                      col="4"
-                      v-model="content"
-                    ></textarea>
-                    <label :class="labelStyle ">等一个菠萝包 ...</label>
-                  </div>
-                </li>
-
-                <li>
-                  <div class="submit-btn">
-                    <a @click="publish" href="javascript:;" class="publish">发布~</a>
-                    <div class="wrap-custom-file">
-                      <input type="file" name="image2" id="image2" accept=".gif, .jpg, .png" />
-                      <label for="image2">
-                        <span>Select Image</span>
-                        <i class="fa fa-plus-circle"></i>
-                      </label>
+    <div class="grey_bg">
+      <div class="content">
+        <!-- 内容 -->
+        <div class="container">
+          <section class="list">
+            <!-- 待循环 -->
+            <div class="card">
+              <div class="card-main">
+                <ul class="card-inner">
+                  <li>
+                    <p class="tit">文章标题</p>
+                    <input
+                      type="text"
+                      @focus="flag = true"
+                      @blur="flag = false"
+                      :class="{ orange: flag }"
+                      class="essay-title"
+                      placeholeder="标题"
+                      v-model="caption"
+                    />
+                  </li>
+                  <li>
+                    <div class="essay-content">
+                      <textarea
+                        @focus="changeStyle"
+                        @blur="removeStyle"
+                        ref="textarea"
+                        :class="{ orange: tag }"
+                        name="content"
+                        class="area"
+                        tabindex="4"
+                        rows="5"
+                        col="4"
+                        v-model="content"
+                      ></textarea>
+                      <label :class="labelStyle">等一个菠萝包 ...</label>
                     </div>
-                  </div>
-                </li>
-              </ul>
+                  </li>
+
+                  <li>
+                    <div class="submit-btn">
+                      <a @click="publish" href="javascript:;" class="publish"
+                        >发布~</a
+                      >
+                      <div class="wrap-custom-file">
+                        <input
+                          type="file"
+                          name="image2"
+                          id="image2"
+                          accept=".gif, .jpg, .png"
+                        />
+                        <label for="image2">
+                          <span>Select Image</span>
+                          <i class="fa fa-plus-circle"></i>
+                        </label>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
       </div>
     </div>
-     </div>
   </div>
 </template>
 
 <script>
 import $ from "jquery";
+import "../../../../assets/css/essay_compile_edit.css";
 export default {
   name: "compile",
   data() {
@@ -75,7 +83,7 @@ export default {
       reg: false,
       labelStyle: {
         input_label: true,
-        active: true
+        active_essay: true
       }
     };
   },
@@ -98,11 +106,11 @@ export default {
   methods: {
     changeStyle() {
       this.tag = true;
-      this.labelStyle.active = true;
+      this.labelStyle.active_essay = true;
     },
     removeStyle() {
       if (this.$refs.textarea.value == "") {
-        this.labelStyle.active = false;
+        this.labelStyle.active_essay = false;
       }
       this.tag = false;
     },
@@ -119,7 +127,7 @@ export default {
               message: "恭喜你，这是一条成功消息",
               type: "success"
             });
-         this.$router.push('/backhome/edit')
+            this.$router.push("/backhome/edit");
           });
       } else if (this.caption != "") {
         this.$message({
@@ -150,8 +158,8 @@ export default {
       .get("https://myblog-bb162.firebaseio.com/essay/" + this.id + ".json")
       .then(res => {
         console.log(res.data);
-        this.content= res.data.content;
-        this.caption = res.data.caption 
+        this.content = res.data.content;
+        this.caption = res.data.caption;
       });
 
     //上传图片
@@ -186,12 +194,11 @@ export default {
   }
 };
 </script>
-
-<style >
+<style>
 .area {
   background-image: url("./../../../assets/bg/icon/comment-icon.png");
 }
-.card{
+.card {
   margin-top: 65px;
 }
 </style>
