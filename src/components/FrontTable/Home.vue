@@ -268,7 +268,7 @@
 </template>
 
 <script>
-import "./../../assets/home.css";
+import "../../assets/css/home.css";
 import $ from "jquery";
 export default {
   name: "home",

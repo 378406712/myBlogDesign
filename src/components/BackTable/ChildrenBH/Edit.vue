@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import "../../../../assets/css/essay_compile_edit.css";
+import "../../../assets/css/essay_compile_edit.css";
 
 export default {
   inject: ["reload"],

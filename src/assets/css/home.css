@@ -4,7 +4,7 @@
 }
 
 .header_top::before {
-    background-image: url(../assets/grid/grid_line.png);
+    background-image: url(../grid/grid_line.png);
     content: '';
     position: absolute;
     top: 0;
@@ -21,7 +21,7 @@
     height: 550px;
     margin: 0;
     padding: 0;
-    background-image: url(../assets/bg/bg_front/bg_home/64856256_p0_master1200.jpg);
+    background-image: url(../bg/bg_front/bg_home/蓬莱山辉夜.jpg);
     background-position: top center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -363,7 +363,7 @@ section {
 .is-visible{
     visibility: visible!important;
     opacity: .99!important;
-    background-image: url('../assets/media_icon/iloli.gif')!important;
+    background-image: url(../media_icon/iloli.gif)!important;
     background-repeat: no-repeat!important;
     background-position: bottom right!important;
   

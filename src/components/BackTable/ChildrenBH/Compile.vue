@@ -70,7 +70,7 @@
 
 <script>
 import $ from "jquery";
-import "../../../../assets/css/essay_compile_edit.css";
+import "../../../assets/css/essay_compile_edit.css";
 export default {
   name: "compile",
   data() {
