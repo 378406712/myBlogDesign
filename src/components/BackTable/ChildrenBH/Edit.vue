@@ -1,6 +1,6 @@
 <template>
   <div class="edit">
-    
+     <div class="grey_bg">
     <div class="content">
       <div class="content-header">
         <div class="container">
@@ -66,6 +66,7 @@
           </section>
       </div>
     </div>
+     </div>
   </div>
 </template>
 

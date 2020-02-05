@@ -1,5 +1,6 @@
 <template>
   <div class="comment">
+     <div class="grey_bg">
     <div class="content">
       <!-- 内容 -->
       <div class="container">
@@ -38,6 +39,7 @@
         </section>
       </div>
     </div>
+     </div>
   </div>
 </template>
 

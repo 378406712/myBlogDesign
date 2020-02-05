@@ -96,7 +96,7 @@ export default new Router({
           path: 'comment',
           component: Comment
         },
-        {
+        { name:"Personal",
           path:'personal',
           component: Personal
         }

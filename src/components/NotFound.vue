@@ -336,7 +336,7 @@
 </template>
 
 <script>
-import "./../assets/404.css";
+import "../../assets/css/404.css";
 export default {
   name: "notFound",
   data() {

@@ -1,5 +1,6 @@
 <template>
   <div class="essay">
+     <div class="grey_bg">
     <div class="content">
       <div class="content-header">
         <div class="container">
@@ -85,11 +86,13 @@
      
       </div>
     </div>
+     </div>
   </div>
 </template>
 
 <script>
 import $ from "jquery";
+import '../../../../assets/css/essay_compile.css';
 export default {
   name: "essay",
   data() {

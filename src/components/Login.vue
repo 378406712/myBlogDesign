@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div id="bg_lr">
-      <img src="./../assets/bg_login.png" alt />
+      <img src="../../assets/bg_login.png" alt />
     </div>
     <div v-if="checkin" class="logins">
       <h1 class="login_logo">用户登录</h1>
@@ -67,8 +67,9 @@
 </template>
 
 <script>
-import "./../assets/login_register.css";
-import resizeImage from "./../assets/login";
+import "../../assets/css/login_register.css";
+import resizeImage from "../../assets/login";
+
 import getInfo from "./../assets/info";
 import $ from "jquery";
 import { JSEncrypt } from "jsencrypt";
@@ -141,6 +142,7 @@ export default {
                 message: "登录成功",
                 type: "success"
               });
+              
               this.checkin = false;
 
               //设备信息

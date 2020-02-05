@@ -1,5 +1,6 @@
 <template>
   <div class="personal">
+    <div class="grey_bg">
     <div class="content">
       <!-- 内容 -->
       <div class="container">
@@ -101,7 +102,6 @@
                               </table>
                             </div>
                           </div>
-                          
                         </div>
                       </div>
                     </div>
@@ -114,11 +114,12 @@
         </section>
       </div>
     </div>
-
+</div>
     <!-- 表单 修改密码 -->
     <el-dialog
       top="2%"
       width="35%"
+      :close-on-click-modal="false"
       title="修改账号密码"
       custom-class="alertPwd"
       :visible.sync="alterForm.dialogFormVisible"
@@ -239,10 +240,10 @@
           </el-col>
           <el-col :span="12">
             <el-form-item>
-              <el-image width="80%" class="showPic"   :src="ruleForm.src" alt="" >
-                 <div slot="error" class="image-slot">
-        <i style="fontSize:28px" class="el-icon-picture-outline"></i>
-      </div>
+              <el-image width="80%" class="showPic" :src="ruleForm.src" alt="">
+                <div slot="error" class="image-slot">
+                  <i style="fontSize:28px" class="el-icon-picture-outline"></i>
+                </div>
               </el-image>
             </el-form-item>
           </el-col>
@@ -380,6 +381,7 @@ export default {
     setPersonal() {
       let {
         username,
+        e_mail,
         nickname,
         sex,
         desc,
@@ -390,6 +392,7 @@ export default {
       } = this.ruleForm;
       let userInfo = {
         username,
+         e_mail,
         nickname,
         desc,
         sex,
@@ -398,35 +401,33 @@ export default {
         hometown
       };
       this.ruleForm.param.append("message", JSON.stringify(userInfo));
-      this.$axios
-        .post("/api/userInfoAdd", this.ruleForm.param)
-        .then(res => {
-          if (res.data == "0") {
-            swal({
-              title: "设置成功!",
-              icon: "success",
-              button: "Aww yiss!"
-            }).then(() => {
-              this.$router.go(0);
-            });
-          } else if (res.data == "1") {
-            swal({
-              title: "更新成功!",
+      this.$axios.post("/api/userInfoAdd", this.ruleForm.param).then(res => {
+        if (res.data == "0") {
+          swal({
+            title: "设置成功!",
+            icon: "success",
+            button: "Aww yiss!"
+          }).then(() => {
+            this.$router.go(0);
+          });
+        } else if (res.data == "1") {
+          swal({
+            title: "更新成功!",
 
-              icon: "success",
-              button: "Aww yiss!"
-            }).then(() => {
-              this.$router.go(0);
-            });
-          } else {
-            swal({
-              title: "设置失败!",
-              text: "网络好像有点问题",
-              icon: "error",
-              button: "yiss Aww!"
-            });
-          }
-        });
+            icon: "success",
+            button: "Aww yiss!"
+          }).then(() => {
+            this.$router.go(0);
+          });
+        } else {
+          swal({
+            title: "设置失败!",
+            text: "网络好像有点问题",
+            icon: "error",
+            button: "yiss Aww!"
+          });
+        }
+      });
     },
     //删除账号
     removePass() {
@@ -472,7 +473,7 @@ export default {
     beforeupload(file) {
       //创建临时的路径来展示图片
       var windowURL = window.URL || window.webkitURL;
-     this.ruleForm.src = windowURL.createObjectURL(file);
+      this.ruleForm.src = windowURL.createObjectURL(file);
       //重新写一个表单上传的方法
       this.ruleForm.param.append("file", file, file.name);
       return false;
@@ -485,13 +486,14 @@ export default {
 
     this.ruleForm.username = info.data.username;
     this.e_mail = info.data.e_mail;
-  }
+    this.ruleForm.e_mail = info.data.e_mail;
+  },
+
 };
 </script>
 
 <style scoped>
 .section .section-header {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
   background-color: #6777ef;
 
@@ -589,18 +591,17 @@ ol {
 }
 .showPic {
   background-color: #fbfdff;
-    border: 1px dashed #c0ccda;
-    border-radius: 6px;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 148px;
-    height: 148px;
-    line-height: 146px;
-    vertical-align: top;
-    text-align: center;
-    cursor: pointer;
-    outline: 0;
-
+  border: 1px dashed #c0ccda;
+  border-radius: 6px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 148px;
+  height: 148px;
+  line-height: 146px;
+  vertical-align: top;
+  text-align: center;
+  cursor: pointer;
+  outline: 0;
 }
 </style>
 

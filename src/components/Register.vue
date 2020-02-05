@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import "./../assets/login_register.css";
+import "../../assets/css/login_register.css";
 import $ from "jquery";
 import { JSEncrypt } from "jsencrypt";
 

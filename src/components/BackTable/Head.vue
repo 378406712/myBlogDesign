@@ -1,4 +1,4 @@
-<template >
+<template>
   <div class="heads navs clearFix">
     <nav class="navbar">
       <form class="form-inline mr-auto">
@@ -24,12 +24,8 @@
             class="nav-link dropdown-toggle nav-link-lg nav-link-user"
             aria-expanded="false"
           >
-            <img
-              alt="image"
-              src="https://q4.qlogo.cn/g?b=qq&amp;nk=378406712@qq.com&amp;s=3?d=retro"
-              class="rounded-circle mr-1"
-            />
-            <div class="d-sm-none d-lg-inline-block">Hi, clover_1996</div>
+            <img alt="image" :src="avatar" class="rounded-circle mr-1" />
+            <div class="d-sm-none d-lg-inline-block">Hi, {{ username }}</div>
           </a>
           <div class="dropdown-menu dropdown-menu-right">
             <a href="/user/profile" class="dropdown-item has-icon">
@@ -56,7 +52,9 @@ export default {
   name: "heads",
   data() {
     return {
-      show: true
+      show: true,
+      username: "",
+      avatar: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
     };
   },
   methods: {
@@ -65,24 +63,35 @@ export default {
       this.$emit("childByValue", this.show);
     }
   },
+  created() {
+    let info = JSON.parse(localStorage.getItem("token"));
+    this.username = info.data.username;
+    this.$axios
+      .get("/api/userInfoData", {
+        params: {
+          username: this.username
+        }
+      })
+      .then(res => {
+        this.avatar = res.data.url;
+      });
+  },
 
   mounted() {
     $(".navclick").on("click", function() {
       $(".slide").toggleClass("siderbar-mini");
-      $(".content").toggleClass("content-mini"); 
+      $(".content").toggleClass("content-mini");
       $(".navbar").toggleClass("navbar-mini");
       // $(".siderbar-mini .menu li a").on("mouseover", function() {
       //   $(".siderbar-mini .menu li a").removeClass("aria");
       //   $(this).toggleClass("aria");
       // });
-      $(".siderbar-mini .menu li").on("click",function(){
-       
-      $(".slide").removeClass("siderbar-mini");
-      $(".content").removeClass("content-mini"); 
-      $(".navbar").removeClass("navbar-mini");
-    })
+      $(".siderbar-mini .menu li").on("click", function() {
+        $(".slide").removeClass("siderbar-mini");
+        $(".content").removeClass("content-mini");
+        $(".navbar").removeClass("navbar-mini");
+      });
     });
-
 
     $(".navbar-right").click(function(e) {
       $(".dropdown-menu").toggleClass("show");
@@ -95,7 +104,7 @@ export default {
 };
 </script>
 
-<style  scoped>
+<style scoped>
 .heads {
   position: fixed;
   left: 0;
@@ -154,6 +163,7 @@ export default {
 }
 .navbar .nav-link.nav-link-user img {
   width: 30px;
+  height:30px;
 }
 .navbar-right {
   margin-bottom: 0;
