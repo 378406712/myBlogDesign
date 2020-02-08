@@ -47,7 +47,7 @@
                             style="vertical-align:middle"
                             shape="circle"
                             :size="100"
-                            :src="userInfoData.url"
+                            :src="userInfoData.uploadUrl"
                           ></el-avatar>
                           <div class="block_item1">
                             <span class="title" style="margin-left:20px"
@@ -169,7 +169,7 @@
 <script>
 import store from "./../../../store/store";
 import Paginations from "../Pagination";
-import { CodeToText, TextToCode } from "element-china-area-data";
+import { CodeToText } from "element-china-area-data";
 export default {
   name: "center",
   components: { Paginations },

@@ -13,7 +13,9 @@ import qs from 'qs';//qs模块，序列化传输数据给后台，否则后台�
 Vue.prototype.$qs = qs
 import Axios from 'axios'//axios请求后台
 import VueSwal from 'vue-swal'//弹窗
-
+// 引入echarts
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
 Vue.use(VueSwal)
 import BootstrapVue from 'bootstrap-vue'
 // main.js 中

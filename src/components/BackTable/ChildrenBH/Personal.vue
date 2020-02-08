@@ -82,24 +82,13 @@
                           <div class="col-12">
                             <div class="card">
                               <div class="card-header">
-                                <h4>最近五分钟使用服务</h4>
+                                <h4>最近使用服务</h4>
                               </div>
                               <div class="card-body">
-                                <table class="table table-striped">
-                                  <thead>
-                                    <tr>
-                                      <th scope="col">时间</th>
-                                      <th scope="col">操作</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <td colspan="2">
-                                        <strong>最近五分钟未使用服务</strong>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
+                                <div
+                                  id="main"
+                                  style="width: 600px;height:400px;"
+                                ></div>
                               </div>
                             </div>
                           </div>
@@ -240,7 +229,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item>
-              <el-image width="80%" class="showPic" :src="ruleForm.src" alt="">
+              <el-image width="80%" class="showPic" :src="ruleForm.url" alt="">
                 <div slot="error" class="image-slot">
                   <i style="fontSize:28px" class="el-icon-picture-outline"></i>
                 </div>
@@ -270,7 +259,7 @@
 <script>
 import $ from "jquery";
 import { JSEncrypt } from "jsencrypt";
-import { regionData } from "element-china-area-data";
+import { regionData ,CodeToText} from "element-china-area-data";
 
 export default {
   name: "personal",
@@ -293,20 +282,23 @@ export default {
         job: "",
         birthday: "",
         desc: "",
-        src: "",
+        url: "",
         area: {
           options: regionData
         },
         param: new FormData(),
         labelPosition: "right",
         dialogPersonalVisible: false
-      }
+      },
+      //数据可视化
+      settingData: {},
     };
   },
   methods: {
     //地区处理
     handleChange(value) {
       this.ruleForm.hometown = value;
+      console.log( this.ruleForm.hometown,'000000')
     },
     //修改密码
     alterPass() {
@@ -348,7 +340,7 @@ export default {
                   delete localStorage.token;
                   this.$router.go(0);
                 });
-              } else if (res.data.status == "1") {
+              } else if (res.data.status === "1") {
                 swal({
                   title: "修改密码失败!",
                   text: "原密码错误",
@@ -380,6 +372,7 @@ export default {
     //设置个人资料
     setPersonal() {
       let {
+        url,
         username,
         e_mail,
         nickname,
@@ -387,10 +380,13 @@ export default {
         desc,
         hometown,
         job,
-        birthday,
-        fileList
-      } = this.ruleForm;
+        birthday
+      } = this.ruleForm
+    if(hometown.length === 0){
+      hometown = this.ruleForm.area.hometown
+    }
       let userInfo = {
+        url,
         username,
         e_mail,
         nickname,
@@ -428,6 +424,41 @@ export default {
           });
         }
       });
+    },
+    //获取个人资料显示在表单
+    getPersonal() {
+      let getPersonalData = this.$axios
+        .get("/api/userInfoData", {
+          params: {
+            username: this.ruleForm.username
+          }
+        })
+        .then(res => {
+          let {
+            nickname,
+            sex,
+            hometown,
+            job,
+            birthday,
+            desc,
+            uploadUrl
+          } = res.data;
+          this.ruleForm.nickname=nickname
+          this.ruleForm.sex=sex
+          //this.ruleForm.hometown=hometown
+          this.ruleForm.job=job
+          this.ruleForm.birthday=birthday
+          this.ruleForm.desc=desc
+          this.ruleForm.url=uploadUrl
+          this.ruleForm.area.hometown = hometown
+          console.log(this.ruleForm.area.hometown)
+         // let Texthometown = [];
+        // hometown.map((item, index) => {
+        //     Texthometown += CodeToText[item] + "/";
+        //     this.ruleForm.hometown = Texthometown;
+        //   });
+        //    console.log(this.ruleForm.area.options)
+        });
     },
     //删除账号
     removePass() {
@@ -473,20 +504,172 @@ export default {
     beforeupload(file) {
       //创建临时的路径来展示图片
       var windowURL = window.URL || window.webkitURL;
-      this.ruleForm.src = windowURL.createObjectURL(file);
+      this.ruleForm.url = windowURL.createObjectURL(file);
       //重新写一个表单上传的方法
       this.ruleForm.param.append("file", file, file.name);
       return false;
     },
     //覆盖默认的上传行为
-    httprequest() {}
+    httprequest() {},
+    //echarts可视化图
+    drawChart() {
+      // 基于准备好的dom，初始化echarts实例
+      let myChart = this.$echarts.init(document.getElementById("main"));
+      // 指定图表的配置项和数据
+      let option = {
+        title: [
+          {
+            text: "Echats Provide",
+            textStyle: {
+              fontSize: 16,
+              color: "black"
+            },
+            left: "2%"
+          },
+          {
+            text: "合计",
+            subtext: 12312 + "个",
+            textStyle: {
+              fontSize: 20,
+              color: "black"
+            },
+            subtextStyle: {
+              fontSize: 20,
+              color: "black"
+            },
+            textAlign: "center",
+            x: "34.5%",
+            y: "44%"
+          }
+        ],
+        tooltip: {
+          trigger: "item",
+          formatter: function(parms) {
+            var str =
+              parms.seriesName +
+              "</br>" +
+              parms.marker +
+              "" +
+              parms.data.legendname +
+              "</br>" +
+              "数量：" +
+              parms.data.value +
+              "</br>" +
+              "占比：" +
+              parms.percent +
+              "%";
+            return str;
+          }
+        },
+        legend: {
+          type: "scroll",
+          orient: "vertical",
+          left: "70%",
+          align: "left",
+          top: "middle",
+          textStyle: {
+            color: "#8C8C8C"
+          },
+          height: 250
+        },
+        series: [
+          {
+            name: "标题",
+            type: "pie",
+            center: ["35%", "50%"],
+            radius: ["40%", "65%"],
+            clockwise: false, //饼图的扇区是否是顺时针排布
+            avoidLabelOverlap: false,
+            label: {
+              normal: {
+                show: true,
+                position: "outter",
+                formatter: function(parms) {
+                  return parms.data.legendname;
+                }
+              }
+            },
+            labelLine: {
+              normal: {
+                length: 5,
+                length2: 3,
+                smooth: true
+              }
+            },
+            data: [
+              {
+                value: this.settingData.alterPass,
+                legendname: "修改密码",
+                name: `修改密码  ${this.settingData.alterPass}`,
+                itemStyle: { color: "#8d7fec" }
+              },
+              {
+                value: this.settingData.setData,
+                legendname: "设置资料",
+                name: `设置资料  ${this.settingData.setData}`,
+                itemStyle: { color: "#5085f2" }
+              },
+              {
+                value: this.settingData.updateData,
+                legendname: "更新资料",
+                name: `更新资料  ${this.settingData.updateData}`,
+                itemStyle: { color: "#e75fc3" }
+              },
+              {
+                value: this.settingData.editEssay,
+                legendname: "撰写文章",
+                name: `撰写文章  ${this.settingData.editEssay}`,
+                itemStyle: { color: "#f87be2" }
+              },
+              {
+                value: this.settingData.readComment,
+                legendname: "查看评论",
+                name: `查看评论  ${this.settingData.readComment}`,
+                itemStyle: { color: "#f2719a" }
+              },
+              {
+                value: this.settingData.coverSetting,
+                legendname: "封面设置",
+                name: `封面设置  ${this.settingData.coverSetting}`,
+                itemStyle: { color: "#fca4bb" }
+              },
+              {
+                value: this.settingData.bgSetting,
+                legendname: "背景设置",
+                name: `背景设置  ${this.settingData.bgSetting}`,
+                itemStyle: { color: "#f59a8f" }
+              },
+              {
+                value: this.settingData.topColumnSet,
+                legendname: "顶栏设置",
+                name: `顶栏设置  ${this.settingData.topColumnSet}`,
+                itemStyle: { color: "#fdb301" }
+              },
+              {
+                value: this.settingData.loginCounts,
+                legendname: "登陆次数",
+                name: `登陆次数  ${this.settingData.loginCounts}`,
+                itemStyle: { color: "#57e7ec" }
+              }
+            ]
+          }
+        ]
+      };
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+    }
   },
   created() {
     let info = JSON.parse(localStorage.getItem("token"));
-
     this.ruleForm.username = info.data.username;
     this.e_mail = info.data.e_mail;
     this.ruleForm.e_mail = info.data.e_mail;
+    this.getPersonal();
+  },
+  mounted() {
+    let data = this.$store.state.setting;
+    this.settingData = data;
+    this.drawChart();
   }
 };
 </script>

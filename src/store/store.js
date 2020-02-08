@@ -6,7 +6,18 @@ const store = new Vuex.Store({
         //存储共有数据
         flag:true,
         avatar:null,
-        slider:0
+        slider:0,
+        setting:{
+            alterPass:0,
+            setData:0,
+            updateData:0,
+            editEssay:0,
+            readComment:0,
+            coverSetting:0,
+            bgSetting:0,
+            topColumnSet:0,
+            loginCounts:0
+        }
     },
     mutations:{
         initstoreList(state,payload){
@@ -17,10 +28,13 @@ const store = new Vuex.Store({
             state.slider = payload
                 
             sessionStorage.setItem('sliderStatus',payload)
-            console.log(sessionStorage)
                 },
         userAvatar(state,payload){
             state.avatar = payload
+        },
+        setting(state,payload){
+            console.log(payload,'000000000')
+            sessionStorage.setItem('setting',state.setting)
         }
     }
 })

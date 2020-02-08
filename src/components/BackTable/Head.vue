@@ -74,7 +74,7 @@ export default {
         }
       })
       .then(res => {
-        this.avatar = res.data.url;
+        this.avatar = res.data.uploadUrl;
       });
   },
 
