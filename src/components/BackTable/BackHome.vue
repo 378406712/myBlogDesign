@@ -82,7 +82,6 @@ import Head from "./Head";
 import Foot from "./Foot";
 import $ from "jquery";
 import store from "./../../store/store";
-// import func from '../../../vue-temp/vue-editor-bridge'
 export default {
   name: "backhome",
   components: { Head, Foot },
@@ -97,7 +96,10 @@ export default {
       // childValue就是子组件传过来的值
       this.flag = childValue;
     }
+
+
   },
+ 
   mounted() {
     $(function() {
       let index = sessionStorage.getItem("sliderStatus");

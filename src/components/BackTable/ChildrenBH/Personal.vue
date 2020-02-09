@@ -87,7 +87,7 @@
                               <div class="card-body">
                                 <div
                                   id="main"
-                                  style="width: 600px;height:400px;"
+                                  style="width: 600px;height:400px"
                                 ></div>
                               </div>
                             </div>
@@ -96,7 +96,6 @@
                       </div>
                     </section>
                   </li>
-                  <li></li>
                 </ul>
               </div>
             </div>
@@ -259,7 +258,8 @@
 <script>
 import $ from "jquery";
 import { JSEncrypt } from "jsencrypt";
-import { regionData ,CodeToText} from "element-china-area-data";
+import { mapState } from "vuex";
+import { regionData, CodeToText } from "element-china-area-data";
 
 export default {
   name: "personal",
@@ -292,13 +292,13 @@ export default {
       },
       //数据可视化
       settingData: {},
+      settingSum: 0
     };
   },
   methods: {
     //地区处理
     handleChange(value) {
       this.ruleForm.hometown = value;
-      console.log( this.ruleForm.hometown,'000000')
     },
     //修改密码
     alterPass() {
@@ -336,10 +336,23 @@ export default {
                   text: "请重新登录",
                   icon: "success",
                   button: "OK"
-                }).then(() => {
-                  delete localStorage.token;
-                  this.$router.go(0);
-                });
+                })
+                  .then(() => {
+                    delete localStorage.token;
+                    this.$router.go(0);
+                  })
+                  .then(() => {
+                    this.$store.commit("settingList", {
+                      username: this.ruleForm.username,
+                      mode: "alterPass",
+                      data: 1
+                    });
+
+                    this.$axios.post(
+                      "/api/optionStatistical",
+                      this.statistical
+                    );
+                  });
               } else if (res.data.status === "1") {
                 swal({
                   title: "修改密码失败!",
@@ -381,10 +394,10 @@ export default {
         hometown,
         job,
         birthday
-      } = this.ruleForm
-    if(hometown.length === 0){
-      hometown = this.ruleForm.area.hometown
-    }
+      } = this.ruleForm;
+      if (hometown.length === 0) {
+        hometown = this.ruleForm.area.hometown;
+      }
       let userInfo = {
         url,
         username,
@@ -443,21 +456,13 @@ export default {
             desc,
             uploadUrl
           } = res.data;
-          this.ruleForm.nickname=nickname
-          this.ruleForm.sex=sex
-          //this.ruleForm.hometown=hometown
-          this.ruleForm.job=job
-          this.ruleForm.birthday=birthday
-          this.ruleForm.desc=desc
-          this.ruleForm.url=uploadUrl
-          this.ruleForm.area.hometown = hometown
-          console.log(this.ruleForm.area.hometown)
-         // let Texthometown = [];
-        // hometown.map((item, index) => {
-        //     Texthometown += CodeToText[item] + "/";
-        //     this.ruleForm.hometown = Texthometown;
-        //   });
-        //    console.log(this.ruleForm.area.options)
+          this.ruleForm.nickname = nickname;
+          this.ruleForm.sex = sex;
+          this.ruleForm.job = job;
+          this.ruleForm.birthday = birthday;
+          this.ruleForm.desc = desc;
+          this.ruleForm.url = uploadUrl;
+          this.ruleForm.area.hometown = hometown;
         });
     },
     //删除账号
@@ -513,8 +518,8 @@ export default {
     httprequest() {},
     //echarts可视化图
     drawChart() {
-      // 基于准备好的dom，初始化echarts实例
       let myChart = this.$echarts.init(document.getElementById("main"));
+
       // 指定图表的配置项和数据
       let option = {
         title: [
@@ -528,7 +533,7 @@ export default {
           },
           {
             text: "合计",
-            subtext: 12312 + "个",
+            subtext: this.settingSum + "个",
             textStyle: {
               fontSize: 20,
               color: "black"
@@ -665,11 +670,31 @@ export default {
     this.e_mail = info.data.e_mail;
     this.ruleForm.e_mail = info.data.e_mail;
     this.getPersonal();
+
+    this.$axios
+      .get("/api/optionStatistical", {
+        params: {
+          username: info.data.username
+        }
+      })
+      .then(res => {
+        if (res.data.length != 0) {
+          this.$store.commit("settingList", ...res.data);
+        }
+        this.settingData = this.statistical;
+        Object.keys(this.settingData).forEach((item, key) => {
+          if (item != "_id" && item != "username") {
+            this.settingSum += this.settingData[item];
+          }
+        });
+        this.drawChart();
+      });
   },
-  mounted() {
-    let data = this.$store.state.setting;
-    this.settingData = data;
-    this.drawChart();
+  mounted() {},
+  computed: {
+    ...mapState({
+      statistical: state => state.setting
+    })
   }
 };
 </script>
