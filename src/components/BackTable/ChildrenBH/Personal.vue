@@ -257,8 +257,9 @@
 
 <script>
 import $ from "jquery";
-import { JSEncrypt } from "jsencrypt";
 import { mapState } from "vuex";
+import { JSEncrypt } from "jsencrypt";
+import "../../../assets/css/personal.css";
 import { regionData, CodeToText } from "element-china-area-data";
 
 export default {
@@ -425,9 +426,19 @@ export default {
 
             icon: "success",
             button: "Aww yiss!"
-          }).then(() => {
-            this.$router.go(0);
-          });
+          })
+            .then(() => {
+              this.$router.go(0);
+            })
+            .then(() => {
+              this.$store.commit("settingList", {
+                username: this.ruleForm.username,
+                mode: "updateData",
+                data: 1
+              });
+
+              this.$axios.post("/api/optionStatistical", this.statistical);
+            });
         } else {
           swal({
             title: "设置失败!",
@@ -609,12 +620,6 @@ export default {
                 itemStyle: { color: "#8d7fec" }
               },
               {
-                value: this.settingData.setData,
-                legendname: "设置资料",
-                name: `设置资料  ${this.settingData.setData}`,
-                itemStyle: { color: "#5085f2" }
-              },
-              {
                 value: this.settingData.updateData,
                 legendname: "更新资料",
                 name: `更新资料  ${this.settingData.updateData}`,
@@ -631,24 +636,6 @@ export default {
                 legendname: "查看评论",
                 name: `查看评论  ${this.settingData.readComment}`,
                 itemStyle: { color: "#f2719a" }
-              },
-              {
-                value: this.settingData.coverSetting,
-                legendname: "封面设置",
-                name: `封面设置  ${this.settingData.coverSetting}`,
-                itemStyle: { color: "#fca4bb" }
-              },
-              {
-                value: this.settingData.bgSetting,
-                legendname: "背景设置",
-                name: `背景设置  ${this.settingData.bgSetting}`,
-                itemStyle: { color: "#f59a8f" }
-              },
-              {
-                value: this.settingData.topColumnSet,
-                legendname: "顶栏设置",
-                name: `顶栏设置  ${this.settingData.topColumnSet}`,
-                itemStyle: { color: "#fdb301" }
               },
               {
                 value: this.settingData.loginCounts,
@@ -681,6 +668,8 @@ export default {
         if (res.data.length != 0) {
           this.$store.commit("settingList", ...res.data);
         }
+        delete this.statistical._id;
+
         this.settingData = this.statistical;
         Object.keys(this.settingData).forEach((item, key) => {
           if (item != "_id" && item != "username") {
@@ -698,119 +687,6 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.section .section-header {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
-  background-color: #6777ef;
-
-  border-radius: 3px;
-  border: none;
-  position: relative;
-  margin-bottom: 30px;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-}
-.section > *:first-child {
-  margin-top: -7px;
-}
-.section .section-header h1 {
-  margin-bottom: 0;
-  font-weight: 700;
-  display: inline-block;
-  font-size: 24px;
-  margin-top: 3px;
-  color: #fff;
-}
-.navbar-bg {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 115px;
-  background-color: #6777ef;
-  z-index: -1;
-}
-.section .section-title {
-  font-size: 18px;
-  color: #191d21;
-  font-weight: 600;
-  position: relative;
-  margin: 30px 0 25px 0;
-}
-.section .section-title:before {
-  content: " ";
-  border-radius: 5px;
-  height: 8px;
-  width: 30px;
-  background-color: #6777ef;
-  display: inline-block;
-  margin-top: 6px;
-  margin-right: 15px;
-}
-.section .section-title + .section-lead {
-  margin-top: -20px;
-}
-.section .section-lead {
-  margin-left: 45px;
-}
-p,
-ul:not(.list-unstyled),
-ol {
-  line-height: 28px;
-}
-.card.card-large-icons .card-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 150px;
-  border-radius: 3px 0 0 3px;
-}
-.card-icon svg {
-  font-size: 60px !important;
-}
-.card.card-large-icons .card-body {
-  padding: 25px 30px;
-}
-.card.card-large-icons .card-body h4 {
-  font-size: 18px;
-}
-.card.card-large-icons .card-body p {
-  opacity: 0.6;
-  font-weight: 500;
-}
-.bg-primary {
-  background-color: #6777ef !important;
-}
-.card.card-large-icons {
-  display: flex;
-  flex-direction: row;
-}
-.fa,
-.fas {
-  font-weight: 900;
-}
-.el-radio {
-  margin: 0;
-}
-.showPic {
-  background-color: #fbfdff;
-  border: 1px dashed #c0ccda;
-  border-radius: 6px;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 148px;
-  height: 148px;
-  line-height: 146px;
-  vertical-align: top;
-  text-align: center;
-  cursor: pointer;
-  outline: 0;
-}
-</style>
 
 <style>
 .el-form-item__label {

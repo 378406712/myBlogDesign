@@ -246,6 +246,11 @@ export default {
             item.browser.version = item.browser.version.replace("/", " ");
           });
           this.length = res.data.length;
+          this.$store.commit("settingList",{
+                      username: this.username,
+                      mode: "loginCounts",
+                      data: this.length
+                    })
           this.tableData2 = res.data
             .reverse()
             .slice(this.size * (this.page - 1), this.size * this.page);

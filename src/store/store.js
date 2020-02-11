@@ -13,13 +13,9 @@ store = new Vuex.Store({
     setting: {
       username: "",
       alterPass: 0,
-      setData: 0,
       updateData: 0,
       editEssay: 0,
       readComment: 0,
-      coverSetting: 0,
-      bgSetting: 0,
-      topColumnSet: 0,
       loginCounts: 0
     }
   },
@@ -39,15 +35,17 @@ store = new Vuex.Store({
       let data = payload.data;
       if (payload.mode) {
         console.log("liu");
-        Object.keys(state.setting).forEach(item => {
+        Object.keys(state.setting).forEach(key => {
           if (payload.mode == key) {
             state.setting[key] += data;
+            if (payload.mode == "loginCounts") {
+              state.setting.loginCounts = data;
+            }
             state.setting.username = payload.username;
           }
         });
       } else {
         state.setting = payload;
-        console.log("找到了");
       }
     }
   }

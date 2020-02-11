@@ -41,7 +41,7 @@
           </router-link>
         </li>
 
-        <li>
+        <li @click="readComment">
           <router-link to="/backhome/comment">
             <i class="fas fa-comment-dots"></i>
             <span>评论</span>
@@ -78,7 +78,7 @@
 
 <script>
 import Head from "./Head";
-
+import { mapState } from "vuex";
 import Foot from "./Foot";
 import $ from "jquery";
 import store from "./../../store/store";
@@ -95,11 +95,19 @@ export default {
     childByValue: function(childValue) {
       // childValue就是子组件传过来的值
       this.flag = childValue;
+    },
+    readComment() {
+      this.$store.commit("settingList", {
+        username: this.username,
+        mode: "readComment",
+        data: 1
+      });
+      console.log(this.statistical,'liuliu')
+
+      this.$axios.post("/api/optionStatistical", this.statistical);
     }
-
-
   },
- 
+
   mounted() {
     $(function() {
       let index = sessionStorage.getItem("sliderStatus");
@@ -114,6 +122,30 @@ export default {
         $(this).addClass("actives");
       });
     });
+  },
+  created() {
+    let info = JSON.parse(localStorage.getItem("token"));
+    this.username = info.data.username;
+    this.$axios
+      .get("/api/optionStatistical", {
+        params: {
+          username: this.username
+        }
+      })
+      .then(res => {
+        if (res.data.length != 0) {
+          this.$store.commit("settingList", ...res.data);
+        }
+       
+      delete this.statistical._id
+
+        this.settingData = this.statistical;
+      });
+  },
+  computed: {
+    ...mapState({
+      statistical: state => state.setting
+    })
   }
 };
 </script>
