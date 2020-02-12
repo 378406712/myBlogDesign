@@ -55,9 +55,9 @@ export default {
   data() {
     return {
       options: ["作者", "评论", "回复至", "提交于", "QQ"]
-    };
+    }
   }
-};
+}
 </script>
 <style scoped>
 .card {

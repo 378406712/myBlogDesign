@@ -268,8 +268,8 @@
 </template>
 
 <script>
-import "../../assets/css/home.css";
-import $ from "jquery";
+import "../../assets/css/home.css"
+import $ from "jquery"
 export default {
   name: "home",
 
@@ -300,58 +300,57 @@ export default {
             "https://www.qdmmz.cn/wp-content/uploads/2019/11/-e1574170877377.jpg"
         }
       ]
-    };
+    }
   },
   methods: {
     toSearch() {
-      $(".js_search").toggleClass("is-visible");
+      $(".js_search").toggleClass("is-visible")
     },
     exitSearch() {
-      $(".js_search").removeClass("is-visible");
+      $(".js_search").removeClass("is-visible")
     },
 
     right(e) {
-      console.log(e);
       $(".info h3")
         .eq(e)
-        .addClass("left");
+        .addClass("left")
       $(".info p")
         .eq(e)
-        .addClass("right");
+        .addClass("right")
       $(".info")
         .eq(e)
-        .addClass("visible");
+        .addClass("visible")
     },
     left(e) {
       $(".info h3")
         .eq(e)
-        .removeClass("left");
+        .removeClass("left")
       $(".info p")
         .eq(e)
-        .removeClass("right");
+        .removeClass("right")
       $(".info")
         .eq(e)
-        .removeClass("visible");
+        .removeClass("visible")
     }
   },
   mounted() {
     this.$axios.get("https://v1.hitokoto.cn/?c=b").then(res => {
-      console.log(res);
+      console.log(res)
       this.hitokoto = res.data.hitokoto + " ---" + res.data.from;
     });
 
     function fun() {
-      let h = $(window).height() + "px";
-      $("#centerBg").css("height", h);
+      let h = $(window).height() + "px"
+      $("#centerBg").css("height", h)
     }
     fun();
     $(function() {
       $(window).resize(() => {
-        fun();
-      });
-    });
+        fun()
+      })
+    })
   }
-};
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

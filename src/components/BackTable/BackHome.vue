@@ -77,11 +77,11 @@
 </template>
 
 <script>
-import Head from "./Head";
-import { mapState } from "vuex";
-import Foot from "./Foot";
-import $ from "jquery";
-import store from "./../../store/store";
+import Head from "./Head"
+import { mapState } from "vuex"
+import Foot from "./Foot"
+import $ from "jquery"
+import store from "./../../store/store"
 export default {
   name: "backhome",
   components: { Head, Foot },
@@ -89,43 +89,41 @@ export default {
   data() {
     return {
       flag: true
-    };
+    }
   },
   methods: {
     childByValue: function(childValue) {
       // childValue就是子组件传过来的值
-      this.flag = childValue;
+      this.flag = childValue
     },
     readComment() {
       this.$store.commit("settingList", {
         username: this.username,
         mode: "readComment",
         data: 1
-      });
-      console.log(this.statistical,'liuliu')
-
-      this.$axios.post("/api/optionStatistical", this.statistical);
+      })
+      this.$axios.post("/api/optionStatistical", this.statistical)
     }
   },
 
   mounted() {
     $(function() {
-      let index = sessionStorage.getItem("sliderStatus");
-      $(".menu li").removeClass("actives");
+      let index = sessionStorage.getItem("sliderStatus")
+      $(".menu li").removeClass("actives")
       $(".menu li")
         .eq(index)
-        .addClass("actives");
+        .addClass("actives")
       $(".menu li").on("click", function() {
-        store.commit("sliderList", $(this).index());
+        store.commit("sliderList", $(this).index())
 
-        $(".menu li").removeClass("actives");
-        $(this).addClass("actives");
-      });
-    });
+        $(".menu li").removeClass("actives")
+        $(this).addClass("actives")
+      })
+    })
   },
   created() {
-    let info = JSON.parse(localStorage.getItem("token"));
-    this.username = info.data.username;
+    let info = JSON.parse(localStorage.getItem("token"))
+    this.username = info.data.username
     this.$axios
       .get("/api/optionStatistical", {
         params: {
@@ -134,20 +132,20 @@ export default {
       })
       .then(res => {
         if (res.data.length != 0) {
-          this.$store.commit("settingList", ...res.data);
+          this.$store.commit("settingList", ...res.data)
         }
        
       delete this.statistical._id
 
-        this.settingData = this.statistical;
-      });
+        this.settingData = this.statistical
+      })
   },
   computed: {
     ...mapState({
       statistical: state => state.setting
     })
   }
-};
+}
 </script>
 
 <style scoped>

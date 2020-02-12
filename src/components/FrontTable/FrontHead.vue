@@ -6,7 +6,7 @@
 export default {
   name: "front_head",
   data() {
-    return {};
+    return {}
   }
 };
 </script>

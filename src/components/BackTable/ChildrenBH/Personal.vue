@@ -256,11 +256,11 @@
 </template>
 
 <script>
-import $ from "jquery";
-import { mapState } from "vuex";
-import { JSEncrypt } from "jsencrypt";
-import "../../../assets/css/personal.css";
-import { regionData, CodeToText } from "element-china-area-data";
+import $ from "jquery"
+import { mapState } from "vuex"
+import { JSEncrypt } from "jsencrypt"
+import "../../../assets/css/personal.css"
+import { regionData, CodeToText } from "element-china-area-data"
 
 export default {
   name: "personal",
@@ -294,42 +294,42 @@ export default {
       //数据可视化
       settingData: {},
       settingSum: 0
-    };
+    }
   },
   methods: {
     //地区处理
     handleChange(value) {
-      this.ruleForm.hometown = value;
+      this.ruleForm.hometown = value
     },
     //修改密码
     alterPass() {
-      let { originPass, againPass, newPass } = this.alterForm;
+      let { originPass, againPass, newPass } = this.alterForm
       if (originPass == "" || againPass == "" || newPass == "") {
         swal({
           title: "有未输入内容!",
           text: "请重新输入",
           icon: "warning",
           button: "OK"
-        });
+        })
       } else if (originPass == newPass && originPass != "") {
         swal({
           title: "修改密码失败!",
           text: "原密码与新密码相同",
           icon: "warning",
           button: "OK"
-        });
+        })
       } else if (newPass == againPass && newPass != "") {
         this.$axios.get("/api/getPublicKey").then(res => {
           //先获取公钥
           if (res.data.status === 0) {
-            let encryptor = new JSEncrypt(); //实例化
-            encryptor.setPublicKey(res.data.resultmap); //设置公钥
+            let encryptor = new JSEncrypt() //实例化
+            encryptor.setPublicKey(res.data.resultmap) //设置公钥
 
             let PwdData = {
               e_mail: this.e_mail,
               originPass: encryptor.encrypt(originPass),
               againPass: encryptor.encrypt(againPass)
-            };
+            }
             this.$axios.post("/api/userPassAlter", PwdData).then(res => {
               if (res.data.status == "0") {
                 swal({
@@ -339,48 +339,48 @@ export default {
                   button: "OK"
                 })
                   .then(() => {
-                    delete localStorage.token;
-                    this.$router.go(0);
+                    delete localStorage.token
+                    this.$router.go(0)
                   })
                   .then(() => {
                     this.$store.commit("settingList", {
                       username: this.ruleForm.username,
                       mode: "alterPass",
                       data: 1
-                    });
+                    })
 
                     this.$axios.post(
                       "/api/optionStatistical",
                       this.statistical
-                    );
-                  });
+                    )
+                  })
               } else if (res.data.status === "1") {
                 swal({
                   title: "修改密码失败!",
                   text: "原密码错误",
                   icon: "error",
                   button: "OK"
-                });
+                })
               } else if (res.date.status == "2") {
                 swal({
                   title: "修改密码失败!",
                   text: "网络好像有点问题～",
                   icon: "warn",
                   button: "OK"
-                });
+                })
               }
-            });
+            })
           } else {
             //网络问题
           }
-        });
+        })
       } else if (newPass != againPass) {
         swal({
           title: "修改密码失败!",
           text: "两次输入不符合",
           icon: "error",
           button: "OK"
-        });
+        })
       }
     },
     //设置个人资料
@@ -395,9 +395,9 @@ export default {
         hometown,
         job,
         birthday
-      } = this.ruleForm;
+      } = this.ruleForm
       if (hometown.length === 0) {
-        hometown = this.ruleForm.area.hometown;
+        hometown = this.ruleForm.area.hometown
       }
       let userInfo = {
         url,
@@ -409,8 +409,8 @@ export default {
         job,
         birthday,
         hometown
-      };
-      this.ruleForm.param.append("message", JSON.stringify(userInfo));
+      }
+      this.ruleForm.param.append("message", JSON.stringify(userInfo))
       this.$axios.post("/api/userInfoAdd", this.ruleForm.param).then(res => {
         if (res.data == "0") {
           swal({
@@ -418,8 +418,8 @@ export default {
             icon: "success",
             button: "Aww yiss!"
           }).then(() => {
-            this.$router.go(0);
-          });
+            this.$router.go(0)
+          })
         } else if (res.data == "1") {
           swal({
             title: "更新成功!",
@@ -428,26 +428,26 @@ export default {
             button: "Aww yiss!"
           })
             .then(() => {
-              this.$router.go(0);
+              this.$router.go(0)
             })
             .then(() => {
               this.$store.commit("settingList", {
                 username: this.ruleForm.username,
                 mode: "updateData",
                 data: 1
-              });
+              })
 
-              this.$axios.post("/api/optionStatistical", this.statistical);
-            });
+              this.$axios.post("/api/optionStatistical", this.statistical)
+            })
         } else {
           swal({
             title: "设置失败!",
             text: "网络好像有点问题",
             icon: "error",
             button: "yiss Aww!"
-          });
+          })
         }
-      });
+      })
     },
     //获取个人资料显示在表单
     getPersonal() {
@@ -466,15 +466,15 @@ export default {
             birthday,
             desc,
             uploadUrl
-          } = res.data;
-          this.ruleForm.nickname = nickname;
-          this.ruleForm.sex = sex;
-          this.ruleForm.job = job;
-          this.ruleForm.birthday = birthday;
-          this.ruleForm.desc = desc;
-          this.ruleForm.url = uploadUrl;
-          this.ruleForm.area.hometown = hometown;
-        });
+          } = res.data
+          this.ruleForm.nickname = nickname
+          this.ruleForm.sex = sex
+          this.ruleForm.job = job
+          this.ruleForm.birthday = birthday
+          this.ruleForm.desc = desc
+          this.ruleForm.url = uploadUrl
+          this.ruleForm.area.hometown = hometown
+        })
     },
     //删除账号
     removePass() {
@@ -488,7 +488,7 @@ export default {
             params: {
               e_mail: this.e_mail
             }
-          };
+          }
           this.$axios.get("/api/userRemove", removeData).then(res => {
             if (res.data.status == "0") {
               swal({
@@ -496,40 +496,40 @@ export default {
                 icon: "success",
                 button: "Aww yiss!"
               }).then(() => {
-                delete localStorage.token;
-                this.$router.go(0);
-              });
+                delete localStorage.token
+                this.$router.go(0)
+              })
             } else {
               swal({
                 title: "删除失败,网络好像出了小差～",
                 icon: "error",
                 button: "yiss Aww!"
-              });
+              })
             }
-          });
+          })
         })
         .catch(() => {
           this.$message({
             type: "info",
             message: "已取消删除"
-          });
-        });
+          })
+        })
     },
 
     //阻止upload的自动上传，进行再操作
     beforeupload(file) {
       //创建临时的路径来展示图片
-      var windowURL = window.URL || window.webkitURL;
-      this.ruleForm.url = windowURL.createObjectURL(file);
+      var windowURL = window.URL || window.webkitURL
+      this.ruleForm.url = windowURL.createObjectURL(file)
       //重新写一个表单上传的方法
-      this.ruleForm.param.append("file", file, file.name);
-      return false;
+      this.ruleForm.param.append("file", file, file.name)
+      return false
     },
     //覆盖默认的上传行为
     httprequest() {},
     //echarts可视化图
     drawChart() {
-      let myChart = this.$echarts.init(document.getElementById("main"));
+      let myChart = this.$echarts.init(document.getElementById("main"))
 
       // 指定图表的配置项和数据
       let option = {
@@ -573,8 +573,8 @@ export default {
               "</br>" +
               "占比：" +
               parms.percent +
-              "%";
-            return str;
+              "%"
+            return str
           }
         },
         legend: {
@@ -601,7 +601,7 @@ export default {
                 show: true,
                 position: "outter",
                 formatter: function(parms) {
-                  return parms.data.legendname;
+                  return parms.data.legendname
                 }
               }
             },
@@ -646,17 +646,17 @@ export default {
             ]
           }
         ]
-      };
+      }
       // 使用刚指定的配置项和数据显示图表。
-      myChart.setOption(option);
+      myChart.setOption(option)
     }
   },
   created() {
-    let info = JSON.parse(localStorage.getItem("token"));
-    this.ruleForm.username = info.data.username;
-    this.e_mail = info.data.e_mail;
-    this.ruleForm.e_mail = info.data.e_mail;
-    this.getPersonal();
+    let info = JSON.parse(localStorage.getItem("token"))
+    this.ruleForm.username = info.data.username
+    this.e_mail = info.data.e_mail
+    this.ruleForm.e_mail = info.data.e_mail
+    this.getPersonal()
 
     this.$axios
       .get("/api/optionStatistical", {
@@ -666,18 +666,18 @@ export default {
       })
       .then(res => {
         if (res.data.length != 0) {
-          this.$store.commit("settingList", ...res.data);
+          this.$store.commit("settingList", ...res.data)
         }
-        delete this.statistical._id;
+        delete this.statistical._id
 
-        this.settingData = this.statistical;
+        this.settingData = this.statistical
         Object.keys(this.settingData).forEach((item, key) => {
           if (item != "_id" && item != "username") {
-            this.settingSum += this.settingData[item];
+            this.settingSum += this.settingData[item]
           }
-        });
-        this.drawChart();
-      });
+        })
+        this.drawChart()
+      })
   },
   mounted() {},
   computed: {
@@ -685,7 +685,7 @@ export default {
       statistical: state => state.setting
     })
   }
-};
+}
 </script>
 
 <style>

@@ -67,11 +67,11 @@
 </template>
 
 <script>
-import "../assets/css/login_register.css";
-import resizeImage from "../assets/login";
-import getInfo from "./../assets/info";
-import $ from "jquery";
-import { JSEncrypt } from "jsencrypt";
+import "../assets/css/login_register.css"
+import resizeImage from "../assets/login"
+import getInfo from "./../assets/info"
+import $ from "jquery"
+import { JSEncrypt } from "jsencrypt"
 
 export default {
   name: "Login",
@@ -85,24 +85,24 @@ export default {
       password: "",
       a_user: "",
       e_mail: null
-    };
+    }
   },
   methods: {
     //登录
     tologin() {
-      this.$store.commit('sliderList',0);
+      this.$store.commit('sliderList',0)
 
       this.$axios.get("api/getPublicKey").then(res => {
         
         //先获取公钥
         if (res.data.status === 0) {
-          let encryptor = new JSEncrypt(); //实例化
-          encryptor.setPublicKey(res.data.resultmap); //设置公钥
+          let encryptor = new JSEncrypt() //实例化
+          encryptor.setPublicKey(res.data.resultmap) //设置公钥
 
           let LoginData = {
             username: this.user,
             password: encryptor.encrypt(this.password)
-          };
+          }
 
           //登录
           this.$axios.post("api/userLogin", LoginData).then(res => {
@@ -112,37 +112,37 @@ export default {
                 showClose: true,
                 message: "不存在用户",
                 type: "error"
-              });
+              })
             } else if (res.data.status == "2") {
               this.$message({
                 showClose: true,
                 message: "密码不正确",
                 type: "error"
-              });
+              })
             } else if (res.data.status == "1") {
-              this.e_mail = res.data.e_mail;
+              this.e_mail = res.data.e_mail
 
               //设置token作登录判断，存入localstorage并设置过期时间
-              let setTime = new Date().getTime() + 1000 * 60 * 30; // 设置30分钟后数据过期,main.js下做判断
-              let datas = res.data;
+              let setTime = new Date().getTime() + 1000 * 60 * 30 // 设置30分钟后数据过期,main.js下做判断
+              let datas = res.data
               localStorage.setItem(
                 "token",
                 JSON.stringify({
                   data: datas,
                   expiration: setTime
                 })
-              );
+              )
 
               //用户名密码都正确
-              var data = JSON.parse(res.config.data);
-              this.a_user = data.username;
+              var data = JSON.parse(res.config.data)
+              this.a_user = data.username
 
               this.$message({
                 message: "登录成功",
                 type: "success"
-              });
+              })
               
-              this.checkin = false;
+              this.checkin = false
 
               //设备信息
               /*
@@ -150,8 +150,8 @@ export default {
                */
 
               //console.log(getInfo.getOsInfo()) //OS信息
-              //console.log(getInfo.getDigits());
-              //console.log(getInfo.getBrowser());
+              //console.log(getInfo.getDigits())
+              //console.log(getInfo.getBrowser())
             let InfoData = {
               username: this.user,
               e_mail:this.e_mail,
@@ -163,14 +163,14 @@ export default {
               //登录信息,登录时间,ip,设备信息
               this.$axios.post('api/postServerInfo',InfoData)
             }
-          });
+          })
         }
-      });
+      })
     },
     //登出
     toquit() {
-      localStorage.removeItem("token");
-      this.checkin = true;
+      localStorage.removeItem("token")
+      this.checkin = true
     }
   },
 
@@ -183,13 +183,13 @@ export default {
       height: "100%",
       "z-index": -1,
       overflow: "hidden"
-    });
+    })
 
     $(window).resize(() => {
       resizeImage("bg_lr");
-    });
+    })
   }
-};
+}
 </script>
 
 <style scoped>

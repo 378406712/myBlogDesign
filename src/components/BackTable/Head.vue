@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import $ from "jquery";
+import $ from "jquery"
 export default {
   name: "heads",
   data() {
@@ -60,13 +60,13 @@ export default {
   },
   methods: {
     childClick() {
-      this.show = !this.show;
-      this.$emit("childByValue", this.show);
+      this.show = !this.show
+      this.$emit("childByValue", this.show)
     }
   },
   created() {
-    let info = JSON.parse(localStorage.getItem("token"));
-    this.username = info.data.username;
+    let info = JSON.parse(localStorage.getItem("token"))
+    this.username = info.data.username
     this.$axios
       .get("/api/userInfoData", {
         params: {
@@ -74,35 +74,35 @@ export default {
         }
       })
       .then(res => {
-        this.avatar = res.data.uploadUrl;
-      });
+        this.avatar = res.data.uploadUrl
+      })
   },
 
   mounted() {
     $(".navclick").on("click", function() {
-      $(".slide").toggleClass("siderbar-mini");
-      $(".content").toggleClass("content-mini");
-      $(".navbar").toggleClass("navbar-mini");
+      $(".slide").toggleClass("siderbar-mini")
+      $(".content").toggleClass("content-mini")
+      $(".navbar").toggleClass("navbar-mini")
       // $(".siderbar-mini .menu li a").on("mouseover", function() {
       //   $(".siderbar-mini .menu li a").removeClass("aria")
       //   $(this).toggleClass("aria")
       // })
       $(".siderbar-mini .menu li").on("click", function() {
-        $(".slide").removeClass("siderbar-mini");
-        $(".content").removeClass("content-mini");
-        $(".navbar").removeClass("navbar-mini");
-      });
-    });
+        $(".slide").removeClass("siderbar-mini")
+        $(".content").removeClass("content-mini")
+        $(".navbar").removeClass("navbar-mini")
+      })
+    })
 
     $(".navbar-right").click(function(e) {
-      $(".dropdown-menu").toggleClass("show");
-      e.stopPropagation();
-    });
+      $(".dropdown-menu").toggleClass("show")
+      e.stopPropagation()
+    })
     $(window).click("click", function() {
-      $(".dropdown-menu").removeClass("show");
-    });
+      $(".dropdown-menu").removeClass("show")
+    })
   }
-};
+}
 </script>
 
 <style scoped>

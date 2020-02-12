@@ -69,8 +69,8 @@
 </template>
 
 <script>
-import $ from "jquery";
-import "../../../assets/css/essay_compile_edit.css";
+import $ from "jquery"
+import "../../../assets/css/essay_compile_edit.css"
 export default {
   name: "compile",
   data() {
@@ -85,34 +85,34 @@ export default {
         input_label: true,
         active_essay: true
       }
-    };
+    }
   },
   computed: {
     captions() {
       if (this.caption !== "" && this.caption.length > 15) {
-        return this.caption.slice(0, 15) + "...";
+        return this.caption.slice(0, 15) + "..."
       } else {
-        return this.caption;
+        return this.caption
       }
     },
     contents() {
       if (this.content !== "" && this.content.length > 30) {
-        return this.content.slice(0, 30) + "...";
+        return this.content.slice(0, 30) + "..."
       } else {
-        return this.content;
+        return this.content
       }
     }
   },
   methods: {
     changeStyle() {
-      this.tag = true;
-      this.labelStyle.active_essay = true;
+      this.tag = true
+      this.labelStyle.active_essay = true
     },
     removeStyle() {
       if (this.$refs.textarea.value == "") {
-        this.labelStyle.active_essay = false;
+        this.labelStyle.active_essay = false
       }
-      this.tag = false;
+      this.tag = false
     },
     publish() {
       if (this.caption != "" && this.content != "") {
@@ -122,32 +122,31 @@ export default {
             caption: this.caption
           })
           .then(res => {
-            console.log(res);
             this.$message({
               message: "恭喜你，这是一条成功消息",
               type: "success"
-            });
-            this.$router.push("/backhome/edit");
-          });
+            })
+            this.$router.push("/backhome/edit")
+          })
       } else if (this.caption != "") {
         this.$message({
           message: "标题为为空~",
           type: "warning"
-        });
+        })
       } else if (this.content != "") {
         this.$message({
           message: "写点内容吧~",
           type: "warning"
-        });
+        })
       } else {
         this.$message({
           message: "错误：请输入内容",
           type: "warning"
-        });
+        })
       }
 
-      this.caption = "";
-      this.content = "";
+      this.caption = ""
+      this.content = ""
     }
   },
 
@@ -157,10 +156,10 @@ export default {
     this.$axios
       .get("https://myblog-bb162.firebaseio.com/essay/" + this.id + ".json")
       .then(res => {
-        console.log(res.data);
-        this.content = res.data.content;
-        this.caption = res.data.caption;
-      });
+        console.log(res.data)
+        this.content = res.data.content
+        this.caption = res.data.caption
+      })
 
     //上传图片
     $('input[type="file"]').each(function() {
@@ -168,7 +167,7 @@ export default {
       var $file = $(this),
         $label = $file.next("label"),
         $labelText = $label.find("span"),
-        labelDefault = $labelText.text();
+        labelDefault = $labelText.text()
 
       // When a new file is selected
       $file.on("change", function(event) {
@@ -176,23 +175,23 @@ export default {
             .val()
             .split("\\")
             .pop(),
-          tmppath = URL.createObjectURL(event.target.files[0]);
+          tmppath = URL.createObjectURL(event.target.files[0])
         //Check successfully selection
         if (fileName) {
           $label
             .addClass("file-ok")
-            .css("background-image", "url(" + tmppath + ")");
-          $labelText.text(fileName);
+            .css("background-image", "url(" + tmppath + ")")
+          $labelText.text(fileName)
         } else {
-          $label.removeClass("file-ok");
-          $labelText.text(labelDefault);
+          $label.removeClass("file-ok")
+          $labelText.text(labelDefault)
         }
-      });
+      })
 
       // End loop of file input elements
-    });
+    })
   }
-};
+}
 </script>
 <style>
 .area {

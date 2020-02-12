@@ -82,7 +82,8 @@
 </template>
 
 <script>
-import "../../../assets/css/essay_compile_edit.css";
+import "../../../assets/css/essay_compile_edit.css"
+
 
 export default {
   inject: ["reload"],
@@ -94,46 +95,46 @@ export default {
       characters: ["caption", "content", "operation"],
       items: [],
       search: ""
-    };
+    }
   },
   mounted() {
     this.$axios
       .get("https://myblog-bb162.firebaseio.com/essay.json")
       .then(res => {
-        return res.data;
+        return res.data
       })
       .then(data => {
-        let dataArr = [];
+        let dataArr = []
         for (let key in data) {
-          data[key].id = key; //添加唯一标识key值
+          data[key].id = key //添加唯一标识key值
           if (data[key].content.length > 75) {
-            data[key].content = data[key].content.slice(0, 75) + " ...";
+            data[key].content = data[key].content.slice(0, 75) + " ..."
           }
           if (data[key].caption.length > 15) {
-            data[key].caption = data[key].caption.slice(0, 75) + " ...";
+            data[key].caption = data[key].caption.slice(0, 75) + " ..."
           }
-          dataArr.push(data[key]);
+          dataArr.push(data[key])
         }
-        this.items = dataArr.reverse();
-      });
+        this.items = dataArr.reverse()
+      })
   },
   methods: {
     del(id) {
       this.$axios
         .delete("https://myblog-bb162.firebaseio.com/essay/" + id + ".json")
         .then(res => {
-          this.reload();
-        });
+          this.reload()
+        })
     }
   },
   computed: {
     filterItem() {
       return this.items.filter(data => {
-        return data.caption.match(this.search);
-      });
+        return data.caption.match(this.search)
+      })
     }
   }
-};
+}
 </script>
 
 <style scoped>

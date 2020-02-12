@@ -86,9 +86,9 @@
 </template>
 
 <script>
-import "../assets/css/login_register.css";
-import $ from "jquery";
-import { JSEncrypt } from "jsencrypt";
+import "../assets/css/login_register.css"
+import $ from "jquery"
+import { JSEncrypt } from "jsencrypt"
 
 export default {
   name: "Register",
@@ -109,38 +109,38 @@ export default {
       w_mail: "",
       timer:null,
       num:3
-    };
+    }
   },
   methods: {
     confirm() {
-      var reg = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{8,}$/;
-      var exp = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+      var reg = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{8,}$/
+      var exp = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/
       if (this.username.length > 10) {
-        this.w_user = "用户名长度需少于10位。";
-        this.flag = false;
-        this.tag = false;
+        this.w_user = "用户名长度需少于10位。"
+        this.flag = false
+        this.tag = false
       }
       if (this.username == "") {
-        this.w_user = "用户名不能为空。";
-        this.flag = false;
-        this.tag = false;
+        this.w_user = "用户名不能为空。"
+        this.flag = false
+        this.tag = false
       }
       if (this.pass1 !== this.pass2) {
-        this.w_pass = "两次输入的密码不一致。";
+        this.w_pass = "两次输入的密码不一致。"
 
-        this.flag = false;
-        this.peg = false;
+        this.flag = false
+        this.peg = false
       }
       if (this.pass1 == this.pass2 && !reg.test(this.pass1)) {
-        this.flag = false;
-        this.peg = false;
+        this.flag = false
+        this.peg = false
         this.w_pass =
-          "密码必须符合由数字,大写字母,小写字母,至少其中两种组成，且长度不小于8，同时第一位不能为数字";
+          "密码必须符合由数字,大写字母,小写字母,至少其中两种组成，且长度不小于8，同时第一位不能为数字"
       }
       if (!exp.test(this.e_mail)) {
-        this.w_mail = "邮箱格式不正确。 ";
-        this.flag = false;
-        this.lab = false;
+        this.w_mail = "邮箱格式不正确。"
+        this.flag = false
+        this.lab = false
       }
 
       if (
@@ -154,8 +154,8 @@ export default {
         this.$axios.get("api/getPublicKey").then(res => {
       
           if (res.data.status === 0) {
-            let encryptor = new JSEncrypt(); //实例化
-            encryptor.setPublicKey(res.data.resultmap); //设置公钥
+            let encryptor = new JSEncrypt() //实例化
+            encryptor.setPublicKey(res.data.resultmap) //设置公钥
 
        
 
@@ -163,7 +163,7 @@ export default {
               username: this.username,
               password: encryptor.encrypt(this.pass2),
               e_mail: this.e_mail
-            };
+            }
       
           this.$axios
             .post("api/userRegister", registerData)
@@ -174,7 +174,7 @@ export default {
                   showClose: true,
                   message: "用户名已存在",
                   type: "error"
-                });
+                })
               }
               if (res.data == "0") {
                 //邮箱已经被注册
@@ -182,16 +182,16 @@ export default {
                   showClose: true,
                   message: "邮箱已经被注册",
                   type: "error"
-                });
+                })
               }
               if (res.data == "1") {
                 this.$message({
                   message: `注册成功,${this.num}秒后跳转~`,
                   type: "success"
-                });
+                })
                 setTimeout(() => {
-                  this.$router.push("/login");
-                }, 3000);
+                  this.$router.push("/login")
+                }, 3000)
               }
               if (res.data == "2") {
                 //注册失败
@@ -199,7 +199,7 @@ export default {
                   showClose: true,
                   message: "好像发生了点问题，再试一次吧~",
                   type: "error"
-                });
+                })
               }
             })
             .catch(() => {
@@ -207,13 +207,13 @@ export default {
                 showClose: true,
                 message: "网络好像有点问题~。",
                 type: "error"
-              });
-            });    }
-        });
+              })
+            })   }
+        })
       }
     }
   }
-};
+}
 </script>
 
 <style  scoped>

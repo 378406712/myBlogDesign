@@ -18,7 +18,7 @@
 export default {
   name: "foot_front",
   data() {
-    return {};
+    return {}
   }
 };
 </script>

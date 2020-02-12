@@ -93,9 +93,8 @@
 </template>
 
 <script>
-import $ from "jquery";
-
-import "../../../assets/css/essay_compile_edit.css";
+import $ from "jquery"
+import "../../../assets/css/essay_compile_edit.css"
 export default {
   name: "essay",
   data() {
@@ -109,19 +108,19 @@ export default {
         input_label: true,
         active_essay: false
       }
-    };
+    }
   },
 
   methods: {
     changeStyle() {
-      this.tag = true;
-      this.labelStyle.active_essay = true;
+      this.tag = true
+      this.labelStyle.active_essay = true
     },
     removeStyle() {
       if (this.$refs.textarea.value == "") {
-        this.labelStyle.active_essay = false;
+        this.labelStyle.active_essay = false
       }
-      this.tag = false;
+      this.tag = false
     },
     publish() {
       if (this.caption != "" && this.content != "") {
@@ -131,31 +130,30 @@ export default {
             caption: this.caption
           })
           .then(res => {
-            console.log(res);
             this.$message({
               message: "恭喜你，这是一条成功消息",
               type: "success"
-            });
-          });
+            })
+          })
       } else if (this.caption != "") {
         this.$message({
           message: "标题为空~",
           type: "warning"
-        });
+        })
       } else if (this.content != "") {
         this.$message({
           message: "写点内容吧~",
           type: "warning"
-        });
+        })
       } else {
         this.$message({
           message: "错误：请输入内容",
           type: "warning"
-        });
+        })
       }
 
-      this.caption = "";
-      this.content = "";
+      this.caption = ""
+      this.content = ""
     }
   },
 
@@ -166,7 +164,7 @@ export default {
       var $file = $(this),
         $label = $file.next("label"),
         $labelText = $label.find("span"),
-        labelDefault = $labelText.text();
+        labelDefault = $labelText.text()
 
       // When a new file is selected
       $file.on("change", function(event) {
@@ -174,23 +172,23 @@ export default {
             .val()
             .split("\\")
             .pop(),
-          tmppath = URL.createObjectURL(event.target.files[0]);
+          tmppath = URL.createObjectURL(event.target.files[0])
         //Check successfully selection
         if (fileName) {
           $label
             .addClass("file-ok")
             .css("background-image", "url(" + tmppath + ")");
-          $labelText.text(fileName);
+          $labelText.text(fileName)
         } else {
-          $label.removeClass("file-ok");
-          $labelText.text(labelDefault);
+          $label.removeClass("file-ok")
+          $labelText.text(labelDefault)
         }
-      });
+      })
 
       // End loop of file input elements
-    });
+    })
   }
-};
+}
 </script>
 <style scoped>
 .area {
