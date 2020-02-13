@@ -168,7 +168,7 @@
                         v-model="search"
                         size="mini"
                         placeholder="输入关键字搜索"
-                        @click="show(scope.row)"
+                        @change="show(scope.row)"
                       />
                     </template>
                     <template slot-scope="scope">
@@ -252,8 +252,8 @@ export default {
           this.$message({
             type: "info",
             message: "已取消删除"
-          });
-        });
+          })
+        })
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
@@ -266,28 +266,30 @@ export default {
           }
         })
         .then(res => {
-          res.data.map((item, index) => {
-            item.browser.version = item.browser.version.replace("/", " ")
-          });
+         if(res.data.length!=0){
+             res.data.map((item, index) => {
+            item.browser.version = item.browser.version.replace("/", " ");
+          })
           this.length = res.data.length;
           this.$store.commit("settingList", {
             username: this.username,
             mode: "loginCounts",
             data: this.length
-          });
+          })
           this.tableData2 = res.data
             .reverse()
-            .slice(this.size * (this.page - 1), this.size * this.page)
+            .slice(this.size * (this.page - 1), this.size * this.page);
           if (this.tableData2.length == 0) {
             this.page -= 1
             this.getServerInfo()
           }
-        });
+         }
+        })
     },
     jumpToPersonal() {
-      this.$router.push("/backhome/personal");
-      this.$store.commit("sliderList", 2);
-      this.$router.go(0);
+      this.$router.push("/backhome/personal")
+      this.$store.commit("sliderList", 2)
+      this.$router.go(0)
     },
     submitForm(formName) {},
     resetForm(formName) {},
@@ -302,15 +304,15 @@ export default {
           this.userInfoData = res.data;
           let hometown = [];
           res.data.hometown.map((item, index) => {
-            hometown += CodeToText[item] + " "
+            hometown += CodeToText[item] + " ";
             this.userInfoData.hometown = hometown;
           });
           if (this.userInfoData.hometown.length == 0) {
-            this.userInfoData.hometown = ""
+            this.userInfoData.hometown = "";
           }
         })
         .catch(err => {
-          console.log(err)
+          console.log(err);
         });
     },
     showUserInfo() {
@@ -319,13 +321,11 @@ export default {
     },
     pageValue(pageValue) {
       this.page = pageValue;
-      console.log(`当前页数${this.page}`)
-      this.getServerInfo()
+      this.getServerInfo();
     },
     sizeValue(sizeValue) {
       this.size = sizeValue;
       this.getServerInfo();
-      console.log(`每页${this.size}条`);
     },
     drawChart() {
       // 基于准备好的dom，初始化echarts实例
@@ -360,62 +360,62 @@ export default {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
-        }).then(() => {
-          const data = [];
-          this.multipleSelection.map(item => {
-            Object.getOwnPropertyNames(item).forEach(function(key) {
-              if (key == "_id") {
-                data.push(item[key]);
-              }
+        })
+          .then(() => {
+            const data = [];
+            this.multipleSelection.map(item => {
+              Object.getOwnPropertyNames(item).forEach(function(key) {
+                if (key == "_id") {
+                  data.push(item[key])
+                }
+              })
+            })
+            this.$axios
+              .get("/api/deleteAllServerInfo", {
+                params: {
+                  _id: JSON.stringify(data)
+                }
+              })
+              .then(res => {
+                if (res.data.status == "0") {
+                  this.$message({
+                    type: "success",
+                    message: "删除成功!"
+                  });
+                  this.getServerInfo();
+                } else {
+                  this.$message({
+                    type: "error",
+                    message: "网络可能有点问题～"
+                  });
+                }
+              });
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消删除"
             });
           });
-
-          this.$axios
-            .get("/api/deleteAllServerInfo", {
-              params: {
-                _id: JSON.stringify(data)
-              }
-            })
-            .then(res => {
-              if (res.data.status == "0") {
-                this.$message({
-                  type: "success",
-                  message: "删除成功!"
-                })
-                this.getServerInfo()
-              } else {
-                this.$message({
-                  type: "error",
-                  message: "网络可能有点问题～"
-                })
-              }
-            })
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })          
-        })
-      }
-      else{
-         this.$message({
-          message: '先选中～',
-          type: 'warning'
-        })
+      } else {
+        this.$message({
+          message: "先选中～",
+          type: "warning"
+        });
       }
     }
   },
   created() {
-    let info = JSON.parse(localStorage.getItem("token"))
-    this.username = info.data.username
-    this.e_mail = info.data.e_mail
-    this.getUserInfo()
+    let info = JSON.parse(localStorage.getItem("token"));
+    this.username = info.data.username;
+    this.e_mail = info.data.e_mail;
+    this.getUserInfo();
+    this.getServerInfo();
   },
   mounted() {
-    this.getServerInfo()
-    this.drawChart()
+    this.drawChart();
   }
-}
+};
 </script>
 <style scoped>
 .content-header {
