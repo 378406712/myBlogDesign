@@ -18,6 +18,7 @@ import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 Vue.use(VueSwal)
 import BootstrapVue from 'bootstrap-vue'
+import Validate from './utils/validate'
 // main.js 中
  
 import fontawesome from '@fortawesome/fontawesome'
@@ -34,6 +35,8 @@ fontawesome.library.add(brands)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 // Vue.prototype.$liu = new Vue() //添加liu属性，用于监听
+
+Vue.prototype.$validate = Validate
 
 Vue.prototype.$axios = Axios
 Vue.config.productionTip = false

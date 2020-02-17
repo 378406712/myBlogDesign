@@ -105,15 +105,27 @@
                     </el-drawer>
                   </div>
                 </div>
+            <el-row  type ="flex">
+                <el-col :span="8"> 
+                  <el-row>
+                    <el-col>
                 <ul class="card-inner card-mine">
                   <li>用户名 :</li>
                   <li v-changeColor="{ font: 21 + 'px' }">{{ username }}</li>
                   <li>邮箱 :</li>
                   <li v-changeColor="{ font: 21 + 'px' }">{{ e_mail }}</li>
                   <li>
-                    <div id="main" style="width: 600px;height:400px;"></div>
+                  
                   </li>
                 </ul>
+                  </el-col>
+                  <el-col>饼图</el-col>
+                 </el-row>
+                </el-col>
+                <el-col  :span="16">
+              <div id="main" style="width: 600px;height:400px;"></div>
+                </el-col>
+            </el-row>
               </div>
             </div>
           </section>
@@ -199,9 +211,10 @@
 </template>
 
 <script>
-import store from "./../../../store/store";
-import Paginations from "../Pagination";
-import { CodeToText } from "element-china-area-data";
+import store from "./../../../store/store"
+import Paginations from "../Pagination"
+import "../../../assets/css/center.css"
+import { CodeToText } from "element-china-area-data"
 export default {
   name: "center",
   components: { Paginations },
@@ -241,7 +254,6 @@ export default {
             })
             .then(res => {
               this.getServerInfo();
-
               this.$message({
                 type: "success",
                 message: "删除成功!"
@@ -270,7 +282,7 @@ export default {
              res.data.map((item, index) => {
             item.browser.version = item.browser.version.replace("/", " ");
           })
-          this.length = res.data.length;
+          this.length = res.data.length
           this.$store.commit("settingList", {
             username: this.username,
             mode: "loginCounts",
@@ -283,6 +295,9 @@ export default {
             this.page -= 1
             this.getServerInfo()
           }
+         }
+         else{
+            this.tableData2 = res.data
          }
         })
     },
@@ -381,8 +396,8 @@ export default {
                   this.$message({
                     type: "success",
                     message: "删除成功!"
-                  });
-                  this.getServerInfo();
+                  })
+                  this.getServerInfo();//bug 此处不执行
                 } else {
                   this.$message({
                     type: "error",
@@ -410,50 +425,15 @@ export default {
     this.username = info.data.username;
     this.e_mail = info.data.e_mail;
     this.getUserInfo();
-    this.getServerInfo();
   },
   mounted() {
     this.drawChart();
+   this.getServerInfo();
   }
 };
 </script>
 <style scoped>
 .content-header {
   background-image: url("./../../../assets/bg/bg_back/bg.png");
-}
-</style>
-
-<style>
-.card-mine li {
-  margin-bottom: 10px !important;
-}
-button:focus {
-  outline: none;
-
-  box-shadow: none;
-}
-.el-table th,
-.el-table--enable-row-transition .el-table__body td {
-  text-align: center;
-}
-
-.account {
-  float: right;
-}
-.more_detail {
-  padding: 0 20px 20px 20px;
-}
-.demo-fit .block {
-  display: flex;
-}
-.demo-fit .block .block_item1 {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.drawers {
-  background-image: url("../../../assets/media_icon/iloli.gif");
-  background-position: 150px 420px;
-  background-repeat: no-repeat;
 }
 </style>
