@@ -66,22 +66,24 @@
         </div>
       </div>
     </div>
+  <Editor/>
   </div>
 </template>
 
 <script>
 import '../../../assets/css/essay_compile_edit.css'
-
+import Editor from '../Components/Editor'
 export default {
-  inject: ['reload'],
-  name: 'edit',
+name: 'edit',
+components:{Editor},
   data() {
     return {
       search: '',
       flag: false,
       characters: ['caption', 'content', 'operation'],
       items: [],
-      search: ''
+      search: '',
+      value:''
     }
   },
   mounted() {

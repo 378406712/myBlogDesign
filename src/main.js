@@ -20,7 +20,8 @@ Vue.use(VueSwal)
 import BootstrapVue from 'bootstrap-vue'
 import Validate from './utils/validate'
 // main.js 中
- 
+import { MarkdownPreview } from 'vue-meditor'
+
 import fontawesome from '@fortawesome/fontawesome'
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
