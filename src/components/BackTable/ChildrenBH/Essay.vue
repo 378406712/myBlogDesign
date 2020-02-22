@@ -16,7 +16,9 @@
               <div class="card-main">
                 <ul class="card-inner essay-card">
                   <li v-changeColor="{ font: 32 + 'px' }">
-                    <p class="tit"><i class="el-icon-edit"></i>博文总览</p>
+                    <p class="tit">
+                      <i class="el-icon-edit"></i>博文总览
+                    </p>
                   </li>
                   <li>
                     <span>文章标题:{{ caption | limit }}</span>
@@ -65,16 +67,9 @@
 
                   <li>
                     <div class="submit-btn">
-                      <a @click="publish" href="javascript:;" class="publish"
-                        >发布~</a
-                      >
+                      <a @click="publish" href="javascript:;" class="publish">发布~</a>
                       <div class="wrap-custom-file">
-                        <input
-                          type="file"
-                          name="image2"
-                          id="image2"
-                          accept=".gif, .jpg, .png"
-                        />
+                        <input type="file" name="image2" id="image2" accept=".gif, .jpg, .png" />
                         <label for="image2">
                           <span>Select Image</span>
                           <i class="fa fa-plus-circle"></i>
@@ -93,14 +88,14 @@
 </template>
 
 <script>
-import $ from "jquery"
-import "../../../assets/css/essay_compile_edit.css"
+import $ from 'jquery'
+import '../../../assets/css/essay_compile_edit.css'
 export default {
-  name: "essay",
+  name: 'essay',
   data() {
     return {
-      content: "",
-      caption: "",
+      content: '',
+      caption: '',
       flag: false,
       tag: false,
       reg: false,
@@ -117,43 +112,43 @@ export default {
       this.labelStyle.active_essay = true
     },
     removeStyle() {
-      if (this.$refs.textarea.value == "") {
+      if (this.$refs.textarea.value == '') {
         this.labelStyle.active_essay = false
       }
       this.tag = false
     },
     publish() {
-      if (this.caption != "" && this.content != "") {
+      if (this.caption != '' && this.content != '') {
         this.$axios
-          .post("https://myblog-bb162.firebaseio.com/essay.json", {
+          .post('https://myblog-bb162.firebaseio.com/essay.json', {
             content: this.content,
             caption: this.caption
           })
           .then(res => {
             this.$message({
-              message: "恭喜你，这是一条成功消息",
-              type: "success"
+              message: '恭喜你，这是一条成功消息',
+              type: 'success'
             })
           })
-      } else if (this.caption != "") {
+      } else if (this.caption != '') {
         this.$message({
-          message: "标题为空~",
-          type: "warning"
+          message: '标题为空~',
+          type: 'warning'
         })
-      } else if (this.content != "") {
+      } else if (this.content != '') {
         this.$message({
-          message: "写点内容吧~",
-          type: "warning"
+          message: '写点内容吧~',
+          type: 'warning'
         })
       } else {
         this.$message({
-          message: "错误：请输入内容",
-          type: "warning"
+          message: '错误：请输入内容',
+          type: 'warning'
         })
       }
 
-      this.caption = ""
-      this.content = ""
+      this.caption = ''
+      this.content = ''
     }
   },
 
@@ -162,25 +157,25 @@ export default {
     $('input[type="file"]').each(function() {
       // Refs
       var $file = $(this),
-        $label = $file.next("label"),
-        $labelText = $label.find("span"),
+        $label = $file.next('label'),
+        $labelText = $label.find('span'),
         labelDefault = $labelText.text()
 
       // When a new file is selected
-      $file.on("change", function(event) {
+      $file.on('change', function(event) {
         var fileName = $file
             .val()
-            .split("\\")
+            .split('\\')
             .pop(),
           tmppath = URL.createObjectURL(event.target.files[0])
         //Check successfully selection
         if (fileName) {
           $label
-            .addClass("file-ok")
-            .css("background-image", "url(" + tmppath + ")");
+            .addClass('file-ok')
+            .css('background-image', 'url(' + tmppath + ')')
           $labelText.text(fileName)
         } else {
-          $label.removeClass("file-ok")
+          $label.removeClass('file-ok')
           $labelText.text(labelDefault)
         }
       })
@@ -192,7 +187,7 @@ export default {
 </script>
 <style scoped>
 .area {
-  background-image: url("./../../../assets/bg/icon/comment-icon.png");
+  background-image: url('./../../../assets/bg/icon/comment-icon.png');
 }
 
 .submit-btn {
@@ -200,6 +195,6 @@ export default {
 }
 
 .content-header {
-  background-image: url("./../../../assets/bg/bg_back/bg-essay.png");
+  background-image: url('./../../../assets/bg/bg_back/bg-essay.png');
 }
 </style>

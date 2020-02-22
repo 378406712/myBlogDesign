@@ -16,10 +16,7 @@
               <div class="card-main">
                 <ul class="card-inner">
                   <li class="card-search">
-                    <span
-                      class="el-icon-search"
-                      :class="{ searh_color: flag }"
-                    ></span>
+                    <span class="el-icon-search" :class="{ searh_color: flag }"></span>
                     <input
                       @focus="flag = !flag"
                       @blur="flag = !flag"
@@ -42,9 +39,7 @@
                     <table class="table table-striped">
                       <thead>
                         <tr id="first">
-                          <td v-for="item of characters" :key="item">
-                            {{ item }}
-                          </td>
+                          <td v-for="item of characters" :key="item">{{ item }}</td>
                         </tr>
                       </thead>
                       <tbody id="app">
@@ -53,17 +48,10 @@
                           <td>{{ item.content | limit }}</td>
                           <td>
                             <router-link :to="'/backhome/compile/' + item.id">
-                              <button class="btn btn-primary edits">
-                                编辑
-                              </button>
+                              <button class="btn btn-primary edits">编辑</button>
                             </router-link>
 
-                            <button
-                              class="btn btn-danger del"
-                              @click="del(item.id)"
-                            >
-                              删除
-                            </button>
+                            <button class="btn btn-danger del" @click="del(item.id)">删除</button>
                           </td>
                           <router-view></router-view>
                         </tr>
@@ -82,24 +70,23 @@
 </template>
 
 <script>
-import "../../../assets/css/essay_compile_edit.css"
-
+import '../../../assets/css/essay_compile_edit.css'
 
 export default {
-  inject: ["reload"],
-  name: "edit",
+  inject: ['reload'],
+  name: 'edit',
   data() {
     return {
-      search: "",
+      search: '',
       flag: false,
-      characters: ["caption", "content", "operation"],
+      characters: ['caption', 'content', 'operation'],
       items: [],
-      search: ""
+      search: ''
     }
   },
   mounted() {
     this.$axios
-      .get("https://myblog-bb162.firebaseio.com/essay.json")
+      .get('https://myblog-bb162.firebaseio.com/essay.json')
       .then(res => {
         return res.data
       })
@@ -108,10 +95,10 @@ export default {
         for (let key in data) {
           data[key].id = key //添加唯一标识key值
           if (data[key].content.length > 75) {
-            data[key].content = data[key].content.slice(0, 75) + " ..."
+            data[key].content = data[key].content.slice(0, 75) + ' ...'
           }
           if (data[key].caption.length > 15) {
-            data[key].caption = data[key].caption.slice(0, 75) + " ..."
+            data[key].caption = data[key].caption.slice(0, 75) + ' ...'
           }
           dataArr.push(data[key])
         }
@@ -121,7 +108,7 @@ export default {
   methods: {
     del(id) {
       this.$axios
-        .delete("https://myblog-bb162.firebaseio.com/essay/" + id + ".json")
+        .delete('https://myblog-bb162.firebaseio.com/essay/' + id + '.json')
         .then(res => {
           this.reload()
         })
@@ -139,7 +126,7 @@ export default {
 
 <style scoped>
 .content-header {
-  background-image: url("./../../../assets/bg/bg_back/bg-edit.png");
+  background-image: url('./../../../assets/bg/bg_back/bg-edit.png');
 }
 </style>
 <style>

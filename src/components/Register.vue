@@ -86,12 +86,12 @@
 </template>
 
 <script>
-import "../assets/css/login_register.css"
-import $ from "jquery"
-import { JSEncrypt } from "jsencrypt"
+import '../assets/css/login_register.css'
+import $ from 'jquery'
+import { JSEncrypt } from 'jsencrypt'
 
 export default {
-  name: "Register",
+  name: 'Register',
   data() {
     return {
       flag: true,
@@ -99,16 +99,16 @@ export default {
       peg: true,
       lab: true,
 
-      username: "",
-      pass1: "",
-      pass2: "",
-      e_mail: "",
+      username: '',
+      pass1: '',
+      pass2: '',
+      e_mail: '',
 
-      w_user: "",
-      w_pass: "",
-      w_mail: "",
-      timer:null,
-      num:3
+      w_user: '',
+      w_pass: '',
+      w_mail: '',
+      timer: null,
+      num: 3
     }
   },
   methods: {
@@ -116,17 +116,17 @@ export default {
       var reg = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)\S{8,}$/
       var exp = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/
       if (this.username.length > 10) {
-        this.w_user = "用户名长度需少于10位。"
+        this.w_user = '用户名长度需少于10位。'
         this.flag = false
         this.tag = false
       }
-      if (this.username == "") {
-        this.w_user = "用户名不能为空。"
+      if (this.username == '') {
+        this.w_user = '用户名不能为空。'
         this.flag = false
         this.tag = false
       }
       if (this.pass1 !== this.pass2) {
-        this.w_pass = "两次输入的密码不一致。"
+        this.w_pass = '两次输入的密码不一致。'
 
         this.flag = false
         this.peg = false
@@ -135,80 +135,77 @@ export default {
         this.flag = false
         this.peg = false
         this.w_pass =
-          "密码必须符合由数字,大写字母,小写字母,至少其中两种组成，且长度不小于8，同时第一位不能为数字"
+          '密码必须符合由数字,大写字母,小写字母,至少其中两种组成，且长度不小于8，同时第一位不能为数字'
       }
       if (!exp.test(this.e_mail)) {
-        this.w_mail = "邮箱格式不正确。"
+        this.w_mail = '邮箱格式不正确。'
         this.flag = false
         this.lab = false
       }
 
       if (
         this.username.length < 10 &&
-        this.username != "" &&
+        this.username != '' &&
         this.pass1 === this.pass2 &&
         reg.test(this.pass1) &&
         exp.test(this.e_mail)
       ) {
-    
-        this.$axios.get("api/getPublicKey").then(res => {
-      
+        this.$axios.get('api/getPublicKey').then(res => {
           if (res.data.status === 0) {
             let encryptor = new JSEncrypt() //实例化
             encryptor.setPublicKey(res.data.resultmap) //设置公钥
-
-       
 
             let registerData = {
               username: this.username,
               password: encryptor.encrypt(this.pass2),
               e_mail: this.e_mail
             }
-      
-          this.$axios
-            .post("api/userRegister", registerData)
-            .then(res => {
-              if (res.data == "-1") {
-                //用户名已经存在
-                this.$message({
-                  showClose: true,
-                  message: "用户名已存在",
-                  type: "error"
-                })
-              }
-              if (res.data == "0") {
-                //邮箱已经被注册
-                this.$message({
-                  showClose: true,
-                  message: "邮箱已经被注册",
-                  type: "error"
-                })
-              }
-              if (res.data == "1") {
-                this.$message({
-                  message: `注册成功,${this.num}秒后跳转~`,
-                  type: "success"
-                })
-                setTimeout(() => {
-                  this.$router.push("/login")
-                }, 3000)
-              }
-              if (res.data == "2") {
-                //注册失败
-                this.$message({
-                  showClose: true,
-                  message: "好像发生了点问题，再试一次吧~",
-                  type: "error"
-                })
-              }
-            })
-            .catch(() => {
-              this.$message({
-                showClose: true,
-                message: "网络好像有点问题~。",
-                type: "error"
+
+            this.$axios
+              .post('api/userRegister', registerData)
+              .then(res => {
+                if (res.data == '-1') {
+                  //用户名已经存在
+                  this.$message({
+                    showClose: true,
+                    message: '用户名已存在',
+                    type: 'error'
+                  })
+                }
+                if (res.data == '0') {
+                  //邮箱已经被注册
+                  this.$message({
+                    showClose: true,
+                    message: '邮箱已经被注册',
+                    type: 'error'
+                  })
+                }
+                if (res.data == '1') {
+                  this.$message({
+                    message: `注册成功,${this.num}秒后跳转~`,
+                    type: 'success'
+                  })
+                  setTimeout(() => {
+                    this.$router.push('/login')
+                  }, 3000)
+                }
+                if (res.data == '2') {
+                  //注册失败
+                  this.$message({
+                    showClose: true,
+                    message: '好像发生了点问题，再试一次吧~',
+                    type: 'error'
+                  })
+                }
               })
-            })   }
+              .catch(() => {
+                this.$message({
+                  showClose: true,
+                  message: '网络好像有点问题~。',
+                  type: 'error'
+                })
+              })
+          }
         })
       }
     }
@@ -223,8 +220,8 @@ export default {
 .register_logo {
   font-size: 24px;
   color: #666;
-  font-family: "Noto Serif SC", "Source Han Serif SC", "Source Han Serif",
-    source-han-serif-sc, "PT Serif", "SongTi SC", "MicroSoft Yahei", Georgia,
+  font-family: 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif',
+    source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia,
     serif;
 }
 .submit_register {
@@ -248,7 +245,7 @@ export default {
   outline: 0;
   border-radius: 3px;
   font-size: 16px;
-  font: 300 14px miranafont, "Hiragino Sans GB", "Microsoft YaHei", STXihei,
+  font: 300 14px miranafont, 'Hiragino Sans GB', 'Microsoft YaHei', STXihei,
     SimSun, sans-serif;
   -webkit-transition: 0.4s ease all;
   -moz-transition: 0.4s ease all;

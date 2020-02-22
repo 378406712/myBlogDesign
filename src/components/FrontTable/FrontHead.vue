@@ -4,11 +4,11 @@
 
 <script>
 export default {
-  name: "front_head",
+  name: 'front_head',
   data() {
     return {}
   }
-};
+}
 </script>
 
 <style scoped></style>

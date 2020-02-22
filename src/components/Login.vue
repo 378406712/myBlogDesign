@@ -67,33 +67,32 @@
 </template>
 
 <script>
-import "../assets/css/login_register.css"
-import resizeImage from "../assets/login"
-import getInfo from "./../assets/info"
-import $ from "jquery"
-import { JSEncrypt } from "jsencrypt"
+import '../assets/css/login_register.css'
+import resizeImage from '../assets/login'
+import getInfo from './../assets/info'
+import $ from 'jquery'
+import { JSEncrypt } from 'jsencrypt'
 
 export default {
-  name: "Login",
+  name: 'Login',
 
   data() {
     return {
       flag: false,
       tag: false,
       checkin: true,
-      user: "",
-      password: "",
-      a_user: "",
+      user: '',
+      password: '',
+      a_user: '',
       e_mail: null
     }
   },
   methods: {
     //登录
     tologin() {
-      this.$store.commit('sliderList',0)
+      this.$store.commit('sliderList', 0)
 
-      this.$axios.get("api/getPublicKey").then(res => {
-        
+      this.$axios.get('api/getPublicKey').then(res => {
         //先获取公钥
         if (res.data.status === 0) {
           let encryptor = new JSEncrypt() //实例化
@@ -105,28 +104,27 @@ export default {
           }
 
           //登录
-          this.$axios.post("api/userLogin", LoginData).then(res => {
-          
-            if (res.data.status == "0") {
+          this.$axios.post('api/userLogin', LoginData).then(res => {
+            if (res.data.status == '0') {
               this.$message({
                 showClose: true,
-                message: "不存在用户",
-                type: "error"
+                message: '不存在用户',
+                type: 'error'
               })
-            } else if (res.data.status == "2") {
+            } else if (res.data.status == '2') {
               this.$message({
                 showClose: true,
-                message: "密码不正确",
-                type: "error"
+                message: '密码不正确',
+                type: 'error'
               })
-            } else if (res.data.status == "1") {
+            } else if (res.data.status == '1') {
               this.e_mail = res.data.e_mail
 
               //设置token作登录判断，存入localstorage并设置过期时间
               let setTime = new Date().getTime() + 1000 * 60 * 30 // 设置30分钟后数据过期,main.js下做判断
               let datas = res.data
               localStorage.setItem(
-                "token",
+                'token',
                 JSON.stringify({
                   data: datas,
                   expiration: setTime
@@ -138,10 +136,10 @@ export default {
               this.a_user = data.username
 
               this.$message({
-                message: "登录成功",
-                type: "success"
+                message: '登录成功',
+                type: 'success'
               })
-              
+
               this.checkin = false
 
               //设备信息
@@ -152,16 +150,15 @@ export default {
               //console.log(getInfo.getOsInfo()) //OS信息
               //console.log(getInfo.getDigits())
               //console.log(getInfo.getBrowser())
-            let InfoData = {
-              username: this.user,
-              e_mail:this.e_mail,
-              os:getInfo.getOsInfo(),
-              digits:getInfo.getDigits(),
-              browser:getInfo.getBrowser()
-
-            }
+              let InfoData = {
+                username: this.user,
+                e_mail: this.e_mail,
+                os: getInfo.getOsInfo(),
+                digits: getInfo.getDigits(),
+                browser: getInfo.getBrowser()
+              }
               //登录信息,登录时间,ip,设备信息
-              this.$axios.post('api/postServerInfo',InfoData)
+              this.$axios.post('api/postServerInfo', InfoData)
             }
           })
         }
@@ -169,24 +166,24 @@ export default {
     },
     //登出
     toquit() {
-      localStorage.removeItem("token")
+      localStorage.removeItem('token')
       this.checkin = true
     }
   },
 
   mounted() {
-    $("#bg_lr").css({
-      position: "absolute",
-      top: "0px",
-      left: "0px",
-      width: "100%",
-      height: "100%",
-      "z-index": -1,
-      overflow: "hidden"
+    $('#bg_lr').css({
+      position: 'absolute',
+      top: '0px',
+      left: '0px',
+      width: '100%',
+      height: '100%',
+      'z-index': -1,
+      overflow: 'hidden'
     })
 
     $(window).resize(() => {
-      resizeImage("bg_lr");
+      resizeImage('bg_lr')
     })
   }
 }

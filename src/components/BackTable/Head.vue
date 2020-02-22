@@ -47,28 +47,28 @@
 </template>
 
 <script>
-import $ from "jquery"
+import $ from 'jquery'
 export default {
-  name: "heads",
+  name: 'heads',
   data() {
     return {
       show: true,
-      username: "",
+      username: '',
       avatar:
-        "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-    };
+        'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+    }
   },
   methods: {
     childClick() {
       this.show = !this.show
-      this.$emit("childByValue", this.show)
+      this.$emit('childByValue', this.show)
     }
   },
   created() {
-    let info = JSON.parse(localStorage.getItem("token"))
+    let info = JSON.parse(localStorage.getItem('token'))
     this.username = info.data.username
     this.$axios
-      .get("/api/userInfoData", {
+      .get('/api/userInfoData', {
         params: {
           username: this.username
         }
@@ -79,27 +79,27 @@ export default {
   },
 
   mounted() {
-    $(".navclick").on("click", function() {
-      $(".slide").toggleClass("siderbar-mini")
-      $(".content").toggleClass("content-mini")
-      $(".navbar").toggleClass("navbar-mini")
+    $('.navclick').on('click', function() {
+      $('.slide').toggleClass('siderbar-mini')
+      $('.content').toggleClass('content-mini')
+      $('.navbar').toggleClass('navbar-mini')
       // $(".siderbar-mini .menu li a").on("mouseover", function() {
       //   $(".siderbar-mini .menu li a").removeClass("aria")
       //   $(this).toggleClass("aria")
       // })
-      $(".siderbar-mini .menu li").on("click", function() {
-        $(".slide").removeClass("siderbar-mini")
-        $(".content").removeClass("content-mini")
-        $(".navbar").removeClass("navbar-mini")
+      $('.siderbar-mini .menu li').on('click', function() {
+        $('.slide').removeClass('siderbar-mini')
+        $('.content').removeClass('content-mini')
+        $('.navbar').removeClass('navbar-mini')
       })
     })
 
-    $(".navbar-right").click(function(e) {
-      $(".dropdown-menu").toggleClass("show")
+    $('.navbar-right').click(function(e) {
+      $('.dropdown-menu').toggleClass('show')
       e.stopPropagation()
     })
-    $(window).click("click", function() {
-      $(".dropdown-menu").removeClass("show")
+    $(window).click('click', function() {
+      $('.dropdown-menu').removeClass('show')
     })
   }
 }

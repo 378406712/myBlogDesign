@@ -13,19 +13,13 @@
                     <table class="table table-striped">
                       <thead>
                         <tr id="first">
-                          <td v-for="item of options" :key="item">
-                            {{ item }}
-                          </td>
+                          <td v-for="item of options" :key="item">{{ item }}</td>
                         </tr>
                       </thead>
                       <tbody id="app">
                         <tr>
                           <td>
-                            <img
-                              class="c_avatar"
-                              src="./../../../assets/bg/icon/none.png"
-                              alt
-                            />
+                            <img class="c_avatar" src="./../../../assets/bg/icon/none.png" alt />
                             <span class="names">Clover</span>
                           </td>
                           <td>2</td>
@@ -51,10 +45,10 @@
 
 <script>
 export default {
-  name: "",
+  name: '',
   data() {
     return {
-      options: ["作者", "评论", "回复至", "提交于", "QQ"]
+      options: ['作者', '评论', '回复至', '提交于', 'QQ']
     }
   }
 }

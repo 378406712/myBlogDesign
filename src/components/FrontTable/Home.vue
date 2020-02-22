@@ -16,11 +16,7 @@
               <p>猫になりたい</p>
               <div class="social_media">
                 <li class="bg-pre">
-                  <img
-                    class="left_arrow"
-                    src="./../../assets/media_icon/next-b.svg"
-                    alt
-                  />
+                  <img class="left_arrow" src="./../../assets/media_icon/next-b.svg" alt />
                 </li>
                 <li>
                   <a href>
@@ -62,11 +58,7 @@
               </a>
             </div>
 
-            <div
-              class="h_user_avatar"
-              @mouseenter="flag = !flag"
-              @mouseleave="flag = !flag"
-            >
+            <div class="h_user_avatar" @mouseenter="flag = !flag" @mouseleave="flag = !flag">
               <img src="./../../assets/avatar.jpg" alt />
               <transition name="fade">
                 <div class="header_user_menu" v-show="flag">
@@ -117,9 +109,7 @@
           <div class="p_notice">
             <i class="iconfont icon-yinliang"></i>
             <div>
-              <p class="notice_content" v-changeColor="{ font: 15 + 'px' }">
-                {{ hitokoto }}
-              </p>
+              <p class="notice_content" v-changeColor="{ font: 15 + 'px' }">{{ hitokoto }}</p>
             </div>
           </div>
           <!-- 3张封面图 -->
@@ -151,9 +141,7 @@
               <h1 class="main-title">
                 <i class="fa fa-envira" aria-hidden="true"></i> Dirctory
               </h1>
-              <article
-                class="post post-list-thumb post-list-thumb-left post-list-show"
-              >
+              <article class="post post-list-thumb post-list-thumb-left post-list-show">
                 <div class="post-thumb">
                   <a href="https://www.qdmmz.cn/archives/387/378406712qq-com/">
                     <img
@@ -168,25 +156,20 @@
                     <div class="post-date">
                       <i class="iconfont icon-time"></i>发布于 45 分钟前
                     </div>
-                    <a
-                      href="https://www.qdmmz.cn/archives/387/378406712qq-com/"
-                      class="post-title"
-                      ><h3>vue-thinking</h3></a
-                    >
+                    <a href="https://www.qdmmz.cn/archives/387/378406712qq-com/" class="post-title">
+                      <h3>vue-thinking</h3>
+                    </a>
                     <div class="post-meta">
-                      <span
-                        ><i class="iconfont icon-attention"></i>25 热度</span
-                      >
-                      <span class="comments-number"
-                        ><i class="iconfont icon-mark"></i
-                        ><a
-                          href="https://www.qdmmz.cn/archives/387/378406712qq-com/#respond"
-                          >NOTHING</a
-                        ></span
-                      >
-                      <span
-                        ><i class="iconfont icon-file"></i
-                        ><a href="https://www.qdmmz.cn/thinking/">随想</a>
+                      <span>
+                        <i class="iconfont icon-attention"></i>25 热度
+                      </span>
+                      <span class="comments-number">
+                        <i class="iconfont icon-mark"></i>
+                        <a href="https://www.qdmmz.cn/archives/387/378406712qq-com/#respond">NOTHING</a>
+                      </span>
+                      <span>
+                        <i class="iconfont icon-file"></i>
+                        <a href="https://www.qdmmz.cn/thinking/">随想</a>
                       </span>
                     </div>
                     <div class="float-content">
@@ -199,8 +182,9 @@
                         <a
                           href="https://www.qdmmz.cn/archives/387/378406712qq-com/"
                           class="button-normal"
-                          ><i class="iconfont icon-caidan"></i
-                        ></a>
+                        >
+                          <i class="iconfont icon-caidan"></i>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -253,12 +237,7 @@
         <div class="micro">
           <p>想要找点什么呢?</p>
           <span class="iconfont icon-search"></span>
-          <input
-            type="seach"
-            class="text-input"
-            placeholder="Search"
-            required
-          />
+          <input type="seach" class="text-input" placeholder="Search" required />
         </div>
       </div>
 
@@ -268,82 +247,82 @@
 </template>
 
 <script>
-import "../../assets/css/home.css"
-import $ from "jquery"
+import '../../assets/css/home.css'
+import $ from 'jquery'
 export default {
-  name: "home",
+  name: 'home',
 
   data() {
     return {
       flag: false,
-      hitokoto: "",
+      hitokoto: '',
       preson: [
         {
           id: 0,
-          characters: "冬马和纱",
-          name: "とうま かずさ / Touma Kazusa",
+          characters: '冬马和纱',
+          name: 'とうま かずさ / Touma Kazusa',
           imgUrl:
-            "https://www.qdmmz.cn/wp-content/uploads/2019/11/-e1574170806519.jpg"
+            'https://www.qdmmz.cn/wp-content/uploads/2019/11/-e1574170806519.jpg'
         },
         {
           id: 1,
-          characters: "轻度喵症",
-          name: "軽度 ニャース症 / Clover Liu",
+          characters: '轻度喵症',
+          name: '軽度 ニャース症 / Clover Liu',
           imgUrl:
-            "https://www.qdmmz.cn/wp-content/uploads/2019/11/BA539A16F3F2F6DEDBD66A59AABEB1A6-e1574170914911.jpg"
+            'https://www.qdmmz.cn/wp-content/uploads/2019/11/BA539A16F3F2F6DEDBD66A59AABEB1A6-e1574170914911.jpg'
         },
         {
           id: 2,
-          characters: "小木曾雪菜",
-          name: "おぎそ せつな / Ogiso Setsuna",
+          characters: '小木曾雪菜',
+          name: 'おぎそ せつな / Ogiso Setsuna',
           imgUrl:
-            "https://www.qdmmz.cn/wp-content/uploads/2019/11/-e1574170877377.jpg"
+            'https://www.qdmmz.cn/wp-content/uploads/2019/11/-e1574170877377.jpg'
         }
       ]
     }
   },
   methods: {
     toSearch() {
-      $(".js_search").toggleClass("is-visible")
+      $('.js_search').toggleClass('is-visible')
     },
     exitSearch() {
-      $(".js_search").removeClass("is-visible")
+      $('.js_search').removeClass('is-visible')
     },
 
     right(e) {
-      $(".info h3")
+      $('.info h3')
         .eq(e)
-        .addClass("left")
-      $(".info p")
+        .addClass('left')
+      $('.info p')
         .eq(e)
-        .addClass("right")
-      $(".info")
+        .addClass('right')
+      $('.info')
         .eq(e)
-        .addClass("visible")
+        .addClass('visible')
     },
     left(e) {
-      $(".info h3")
+      $('.info h3')
         .eq(e)
-        .removeClass("left")
-      $(".info p")
+        .removeClass('left')
+      $('.info p')
         .eq(e)
-        .removeClass("right")
-      $(".info")
+        .removeClass('right')
+      $('.info')
         .eq(e)
-        .removeClass("visible")
+        .removeClass('visible')
     }
   },
   mounted() {
-    this.$axios.get("https://v1.hitokoto.cn/?c=b").then(res => {
+    this.$axios.get('https://v1.hitokoto.cn/?c=b').then(res => {
       console.log(res)
-      this.hitokoto = res.data.hitokoto + " ---" + res.data.from;
-    });
+      this.hitokoto = res.data.hitokoto + ' ---' + res.data.from
+    })
 
     function fun() {
-      let h = $(window).height() + "px"
-      $("#centerBg").css("height", h)
+      let h = $(window).height() + 'px'
+      $('#centerBg').css('height', h)
     }
-    fun();
+    fun()
     $(function() {
       $(window).resize(() => {
         fun()

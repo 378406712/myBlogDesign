@@ -4,7 +4,7 @@
       <p class="copyright">Copyright &copy; by 轻度喵症 All Rights Reserved.</p>
       <p class="from">2019.11.7 | start</p>
       <p class="maxim">
-        <a href="">当你的才华还撑不起你的野心时，那你就应该静下来学习</a>
+        <a href>当你的才华还撑不起你的野心时，那你就应该静下来学习</a>
       </p>
     </div>
   </div>
@@ -12,11 +12,11 @@
 
 <script>
 export default {
-  name: "foots",
+  name: 'foots',
   data() {
     return {}
   }
-};
+}
 </script>
 
 <style scoped>

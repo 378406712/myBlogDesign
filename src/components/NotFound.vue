@@ -4,7 +4,6 @@
       <div class="error-img">
         <svg class="me404" viewBox="0 0 1000 480">
           <path
-   
             id="cloud"
             class="st0"
             d="M658.4,345.2c-10.9,0-19.7-8.8-19.7-19.7c0-10.9,8.8-19.7,19.7-19.7h50.1c9.9-1.5,17.5-10,17.5-20.3
@@ -336,17 +335,17 @@
 </template>
 
 <script>
-import "../assets/css/404.css"
+import '../assets/css/404.css'
 export default {
-  name: "notFound",
+  name: 'notFound',
   data() {
     return {}
   },
   mounted() {
-    var path = document.getElementById("tail")
+    var path = document.getElementById('tail')
     path.setAttribute(
-      "d",
-      "M89,315c2.2-15.2-23-13.2-21.6,4.8c1.7,22.3,24.4,22.1,42.5,9.1c10.8-7.8,15.3-1.8,19.1,1.1 c2.3,1.7,6.7,3.3,11-3"
+      'd',
+      'M89,315c2.2-15.2-23-13.2-21.6,4.8c1.7,22.3,24.4,22.1,42.5,9.1c10.8-7.8,15.3-1.8,19.1,1.1 c2.3,1.7,6.7,3.3,11-3'
     )
   }
 }
@@ -356,7 +355,7 @@ export default {
 .error-img {
   text-align: center;
   width: 100%;
-  height:100%;
+  height: 100%;
 }
 .err-button.back {
   text-align: center;
@@ -406,7 +405,6 @@ export default {
   box-sizing: border-box;
 }
 .back {
-margin: 20px;
-
+  margin: 20px;
 }
 </style>
