@@ -408,6 +408,7 @@ export default {
         .then(() => {
           let removeData = {
             params: {
+              username: this.username,
               e_mail: this.e_mail
             }
           }
@@ -575,8 +576,9 @@ export default {
   created() {
     let info = JSON.parse(localStorage.getItem('token'))
     this.ruleForm.username = info.data.username
-    this.e_mail = info.data.e_mail
     this.ruleForm.e_mail = info.data.e_mail
+    this.e_mail = info.data.e_mail
+    this.username = info.data.username
     this.getPersonal()
     this.$axios
       .get('/api/optionStatistical', {

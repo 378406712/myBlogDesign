@@ -111,11 +111,10 @@ export default {
   left: 0;
   top: 0;
   width: 100%;
-  background-color: rgba(200, 230, 232, 0.5);
+background:linear-gradient(to right ,#fff1eb,#ace0f9);
   height: 56px;
   z-index: 29;
 }
-
 .navbar {
   height: 56px;
   left: 250px;

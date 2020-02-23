@@ -20,7 +20,12 @@ Vue.use(VueSwal)
 import BootstrapVue from 'bootstrap-vue'
 import Validate from './utils/validate'
 // main.js 中
-import { MarkdownPreview } from 'vue-meditor'
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+Vue.use(VueQuillEditor, /* { default global options } */)
+
 
 import fontawesome from '@fortawesome/fontawesome'
 

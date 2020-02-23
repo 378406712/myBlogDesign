@@ -28,7 +28,7 @@
         <li class="menu-title">功能</li>
 
         <li>
-          <router-link to="/backhome/essay">
+          <router-link to="/backhome/post-new">
             <i class="fas fa-feather"></i>
             <span>撰写</span>
           </router-link>

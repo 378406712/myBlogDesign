@@ -14,7 +14,7 @@ const BackHome = () => import('@/components/BackTable/BackHome')
 
 //后台子页面
 const Center = () => import('@/components/BackTable/ChildrenBH/Center')
-const Essay = () => import('@/components/BackTable/ChildrenBH/Essay')
+const PostNew = () => import('@/components/BackTable/ChildrenBH/PostNew')
 const Edit = () => import('@/components/BackTable/ChildrenBH/Edit')
 const Compile = () => import('@/components/BackTable/ChildrenBH/Compile')
 const Comment = () => import('@/components/BackTable/ChildrenBH/Comment')
@@ -81,8 +81,8 @@ export default new Router({
           name:"center",
           component: Center
         }, {
-          path: 'essay',
-          component: Essay
+          path: 'post-new',
+          component: PostNew
         },
         {
           path: 'edit',

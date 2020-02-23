@@ -1,8 +1,8 @@
-import Vue from "vue"
-import Vuex from "vuex"
-Vue.use(Vuex)
+import Vue from "vue";
+import Vuex from "vuex";
+Vue.use(Vuex);
 
-let store
+let store;
 
 store = new Vuex.Store({
   state: {
@@ -12,6 +12,7 @@ store = new Vuex.Store({
     slider: 0,
     setting: {
       username: "",
+      e_mail: "",
       alterPass: 0,
       updateData: 0,
       editEssay: 0,
@@ -21,33 +22,35 @@ store = new Vuex.Store({
   },
   mutations: {
     initstoreList(state, payload) {
-      state.flag = payload
+      state.flag = payload;
     },
     sliderList(state, payload) {
-      state.slider = payload
+      state.slider = payload;
 
-      sessionStorage.setItem("sliderStatus", payload)
+      sessionStorage.setItem("sliderStatus", payload);
     },
     userAvatar(state, payload) {
-      state.avatar = payload
+      state.avatar = payload;
     },
     settingList(state, payload) {
-      let data = payload.data
+      console.log(payload)
+      let data = payload.data;
       if (payload.mode) {
         Object.keys(state.setting).forEach(key => {
           if (payload.mode == key) {
-            state.setting[key] += data
+            state.setting[key] += data;
             if (payload.mode == "loginCounts") {
-              state.setting.loginCounts = data
+              state.setting.loginCounts = data;
             }
-            state.setting.username = payload.username
+            state.setting.username = payload.username;
+            state.setting.e_mail = payload.e_mail
           }
-        })
+        });
       } else {
-        state.setting = payload
+        state.setting = payload;
       }
     }
   }
-})
+});
 
-export default store
+export default store;
